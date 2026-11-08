@@ -7,13 +7,13 @@ module
 
 public import Ninegates.Defs
 
+/-! ## Sequence insertion and removal -/
+
 @[expose] public section
 
 namespace Mahjong.Hand
 
 variable {n : ℕ}
-
-/-! ## Sequence insertion and removal -/
 
 def insertSeqAt (c : Hand n) (k : Fin (3 * n)) : Hand (n + 1) :=
   ⟨fun i ↦ if h : i.val < k.val then c ⟨i.val, by omega⟩

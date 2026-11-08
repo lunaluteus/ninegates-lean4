@@ -7,7 +7,7 @@ module
 
 public import Mathlib.Algebra.Module.Basic
 public import Mathlib.Data.Fintype.Basic
-public import Mathlib.Data.FunLike.IsApply
+public import Mathlib.Algebra.Group.IsApply
 public import Mathlib.Algebra.BigOperators.Ring.Finset
 public import Mathlib.Tactic
 

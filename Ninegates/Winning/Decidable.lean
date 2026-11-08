@@ -342,9 +342,9 @@ lemma nextState_to_scanStep (s t : State) (takePair : Bool) (x : Nat)
         Bool.or_false, ite_false, Nat.add_zero] at h
       have hneed : s.a.val + s.b.val ≤ x := by
         by_contra hnot
-        simp only [if_neg hnot] at h
+        simp only [ite_eq_right hnot] at h
         cases h
-      simp only [if_pos hneed] at h
+      simp only [ite_eq_left hneed] at h
       cases h
       let residual := x - (s.a.val + s.b.val)
       refine ⟨⟨residual / 3, ⟨residual % 3, Nat.mod_lt _ (by omega)⟩⟩, ?_⟩
@@ -356,9 +356,9 @@ lemma nextState_to_scanStep (s t : State) (takePair : Bool) (x : Nat)
             Bool.or_true, ite_false, ite_true] at h
           have hneed : s.a.val + s.b.val + 2 ≤ x := by
             by_contra hnot
-            simp only [if_neg hnot] at h
+            simp only [ite_eq_right hnot] at h
             cases h
-          simp only [if_pos hneed] at h
+          simp only [ite_eq_left hneed] at h
           cases h
           let residual := x - (s.a.val + s.b.val + 2)
           refine ⟨⟨residual / 3, ⟨residual % 3, Nat.mod_lt _ (by omega)⟩⟩, ?_⟩
@@ -651,7 +651,7 @@ lemma dpWinning_to_winning {c : Hand n} (h : DPWinning c) : Winning c := by
           apply hji
           apply Fin.ext
           simpa [idx] using congrArg Fin.val heq
-        rw [if_neg hji]
+        rw [ite_eq_right hji]
         exact huniq ji hne
     have hbase : d j = (List.ofFn c).get jx - pairTiles (choices.get ji) := by
       simpa [d, handOfList, jx, ji] using hgetj

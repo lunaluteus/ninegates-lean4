@@ -51,7 +51,7 @@ We also prioritizes the following design goals:
 
 ## Soundness
 
-- verified in Lean `v4.33.0`
+- verified in Lean `v4.35.0`
 
 - standard axioms `propext`, `Classical.choice`, `Quot.sound` applied; additional `native_decide` axiom for finite enumeration and meldability / winning / waiting algorithms
 
@@ -121,42 +121,17 @@ serves as a basic verification of the library.
 
 ### Comparator
 
-See the guidelines provided by [Comparator](https://github.com/leanprover/comparator) and configure it yourself if the strongest guarantee of correctness is desired. We provide our configuration below for your reference.
+> Update: Start from Lean v4.35.0, `lake comparator` is directly available.
 
-- First, you'll have to configure a Linux environment with [`landrun`](https://github.com/Zouuup/landrun) installed. 
+```sh
+lake comparator --config="ComparatorChallenges/config.json"
+```
 
-  - This is the most convenient way to run Comparator. Otherwise things might go very tricky! Use WSL2 if you are on Windows.
-  - `landrun` is a Go program. Very likely, you'll have to install `go` as well.
+If you see `Your solution is okay!` in the output, congratulations! Verification is successful.
 
-- Comparator requires `lean4export` executable. We include it as a dependency in our `lakefile`, so build it with
-  
-  ```sh
-  lake build lean4export
-  ```
-  
-  so that you can find it at `.lake/packages/lean4export/.lake/build/bin/lean4export`.
+Use `--inadvisably-no-sandbox` if you are not on Linux, though it is not considered reliable.
 
-- Set the environment variable `COMPARATOR_LEAN4EXPORT` to point to the executable, that is,
-  
-  ```sh
-  export COMPARATOR_LEAN4EXPORT=".lake/packages/lean4export/.lake/build/bin/lean4export"
-  ```
-
-  This tells Comparator where to find the executable.
-
-- Finally, run the following command to verify the main theorem:
-
-  ```sh
-  systemd-run --property=RestrictAddressFamilies=~AF_UNIX --user --pty -E PATH="$PATH" --working-directory $(pwd) -- bash -c 'lake exe comparator ComparatorChallenges/config.json'
-  ```
-
-  If it fails, retreat to a simpler version (less secure) without `systemd-run`:
-
-  ```sh
-  lake exe comparator ComparatorChallenges/config.json
-  ```
-
-  If you see `Your solution is okay!` in the output, congratulations! Verification is successful.
+See the proof verification guidelines [Comparator](https://lean-lang.org/doc/reference/latest/ValidatingProofs/) for more details.
 
 ### Agentic coding
 

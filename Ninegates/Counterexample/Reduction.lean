@@ -68,9 +68,9 @@ theorem Meldable.of_insertSeqAt {c : Hand n} (k : Fin (3 * n))
   by_cases hi : i.val < k.val
   · grind
   by_cases hi' : k.val + 2 ≤ i.val
-  · grind
+  · grind [-HasSeqAt.exists_insertSeqAt]
   have hicases : i.val = k.val ∨ i.val = k.val + 1 := by omega
-  rcases hicases with hik | hik <;> grind
+  rcases hicases with hik | hik <;> grind [-HasSeqAt.exists_insertSeqAt]
 
 theorem Winning.of_insertSeqAt {c : Hand n} (k : Fin (3 * n))
     (hc : Winning (c.insertSeqAt k)) : Winning c := by
