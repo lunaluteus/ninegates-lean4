@@ -13,7 +13,7 @@ permissions:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     steps:
       - name: Cleanup to free disk space # Mathlib is large, may cause disk space issues on GitHub Actions
