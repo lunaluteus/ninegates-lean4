@@ -6,7 +6,7 @@ Authors: Luna Luteus
 module
 
 public import Ninegates.V3.Wait.Basic
-public import Ninegates.V3.Meldable.Virtual
+public import Ninegates.V3.Meldable.ClosedForm
 
 /-!
 # A full wait beyond the old fixed meld count
@@ -102,5 +102,35 @@ lemma lastTile_not_virtuallySequential : ¬VirtuallySequential lastTile := by
 lemma lastTwoTiles_not_virtuallySequential : ¬VirtuallySequential lastTwoTiles := by
   rw [virtuallySequential_iff_scan, sequenceScan_lastTwoTiles]
   norm_num
+
+/-- Both tail obstructions above occur even though all triplet quotients are zero. -/
+lemma canonicalTriplets_lastTile : ∀ i, canonicalTriplet lastTile i = 0 := by
+  intro i
+  fin_cases i <;> norm_num [canonicalTriplet, canonicalSequence, sequenceScan,
+    SequenceScan.run, lastTile, coefficient, single]
+
+lemma canonicalTriplets_lastTwoTiles : ∀ i, canonicalTriplet lastTwoTiles i = 0 := by
+  intro i
+  fin_cases i <;> norm_num [canonicalTriplet, canonicalSequence, sequenceScan,
+    SequenceScan.run, lastTwoTiles, coefficient, single]
+
+/-- Size and rank-sum congruences alone do not ensure actual meldability. -/
+def spacedTiles : VirtualHand 2 := single 0 + single 2 + single 4
+
+lemma spacedTiles_nonnegative : Nonnegative spacedTiles :=
+  ((nonnegative_single _).add (nonnegative_single _)).add (nonnegative_single _)
+
+lemma spacedTiles_virtuallyMeldable : VirtuallyMeldable spacedTiles := by
+  rw [virtuallyMeldable_iff_size_rankSum]
+  decide +kernel
+
+lemma canonicalTriplet_spacedTiles : canonicalTriplet spacedTiles (1 : Rank 2) = -1 := by
+  decide +kernel
+
+lemma spacedTiles_not_meldable : ¬Meldable spacedTiles := by
+  intro meldable
+  have bound := ((meldable_iff_scan spacedTiles).mp meldable).2 (1 : Rank 2)
+  rw [canonicalTriplet_spacedTiles] at bound
+  omega
 
 end Mahjong.V3.Examples

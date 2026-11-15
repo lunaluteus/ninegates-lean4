@@ -25,7 +25,9 @@ variable {R : Type*} [AddCommGroup R]
 
 def run (a : ℕ → R) : ℕ → R × R
   | 0 => (0, 0)
-  | k + 1 => (a k - (run a k).1 - (run a k).2, (run a k).1)
+  | k + 1 =>
+      let previous := run a k
+      (a k - previous.1 - previous.2, previous.1)
 
 @[simp]
 lemma run_zero (a : ℕ → R) : run a 0 = (0, 0) := rfl
