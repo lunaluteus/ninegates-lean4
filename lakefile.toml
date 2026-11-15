@@ -1,7 +1,8 @@
 name = "ninegates"
 version = "0.1.0"
 keywords = ["math"]
-defaultTargets = ["Ninegates"]
+defaultTargets = ["NinegatesV3"]
+moreLeanArgs = ["-j2", "-M4096"]
 
 [leanOptions]
 pp.unicode.fun = true # pretty-prints `fun a ↦ b`
@@ -21,6 +22,9 @@ rev = "v4.35.0"
 
 [[lean_lib]]
 name = "Ninegates"
+
+[[lean_lib]]
+name = "NinegatesV3"
 
 [[lean_lib]]
 name = "ComparatorChallenges"
