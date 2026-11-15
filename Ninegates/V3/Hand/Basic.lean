@@ -111,4 +111,41 @@ lemma rankSum_cast (c : VirtualHand n) :
       intro r _
       simp [classSize, Finset.sum_filter, Finset.mul_sum, mul_ite]
 
+private lemma sum_classes {A : Type*} [AddCommMonoid A] (f : ZMod 3 → A) :
+    ∑ r, f r = f 0 + f 1 + f 2 := by
+  have classes : (Finset.univ : Finset (ZMod 3)) = {0, 1, 2} := by decide +kernel
+  have h01 : (0 : ZMod 3) ≠ 1 := by decide +kernel
+  have h02 : (0 : ZMod 3) ≠ 2 := by decide +kernel
+  have h12 : (1 : ZMod 3) ≠ 2 := by decide +kernel
+  simp [classes, h01, h02, h12, add_assoc]
+
+lemma size_eq_classSizes (c : VirtualHand n) :
+    size c = classSize 0 c + classSize 1 c + classSize 2 c := by
+  rw [size_eq_sum_classSize, sum_classes]
+
+lemma rankSum_cast_eq_classSizes (c : VirtualHand n) :
+    (rankSum c : ZMod 3) = (classSize 1 c : ZMod 3) + 2 * (classSize 2 c : ZMod 3) := by
+  rw [rankSum_cast, sum_classes]
+  simp
+
+/-- The final equivalence in `prp-class-size-sum-congruence`. -/
+lemma classSizes_congruent_iff (c : VirtualHand n) :
+    ((classSize 0 c : ZMod 3) = (classSize 1 c : ZMod 3) ∧
+      (classSize 1 c : ZMod 3) = (classSize 2 c : ZMod 3)) ↔
+      (size c : ZMod 3) = 0 ∧ (rankSum c : ZMod 3) = 0 := by
+  have three : (3 : ZMod 3) = 0 := ZMod.natCast_self 3
+  have zero_mul (a : ZMod 3) : 3 * a = 0 := by rw [three, zero_mul]
+  rw [size_eq_classSizes, rankSum_cast_eq_classSizes]
+  push_cast
+  constructor
+  · rintro ⟨h01, h12⟩
+    rw [h01, h12]
+    constructor <;> linear_combination zero_mul (classSize 2 c)
+  · rintro ⟨total, weighted⟩
+    have h02 : (classSize 0 c : ZMod 3) = (classSize 2 c : ZMod 3) := by
+      linear_combination total - weighted
+    have h12 : (classSize 1 c : ZMod 3) = (classSize 2 c : ZMod 3) := by
+      linear_combination weighted - zero_mul (classSize 2 c)
+    exact ⟨h02.trans h12.symm, h12⟩
+
 end Mahjong.V3.VirtualHand

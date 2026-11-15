@@ -2,6 +2,27 @@ import NinegatesV3
 
 #print axioms Mahjong.V3.VirtualHand.size_eq_sum_classSize
 #print axioms Mahjong.V3.VirtualHand.rankSum_cast
+#print axioms Mahjong.V3.VirtualHand.size_eq_classSizes
+#print axioms Mahjong.V3.VirtualHand.rankSum_cast_eq_classSizes
+#print axioms Mahjong.V3.VirtualHand.classSizes_congruent_iff
+#print axioms Mahjong.V3.VirtualHand.coefficients_ext
+#print axioms Mahjong.V3.VirtualHand.Placement.toHand_apply
+#print axioms Mahjong.V3.VirtualHand.sequenceHand_injective
+#print axioms Mahjong.V3.VirtualHand.VirtuallySequential.unique
+#print axioms Mahjong.V3.VirtualHand.Sequential.meldable
+#print axioms Mahjong.V3.VirtualHand.Placement.canonic_canonicalize
+#print axioms Mahjong.V3.VirtualHand.Placement.toHand_canonicalize
+#print axioms Mahjong.V3.VirtualHand.Placement.nonnegative_canonicalize
+#print axioms Mahjong.V3.VirtualHand.Placement.seqNum_cast_eq
+#print axioms Mahjong.V3.VirtualHand.Placement.Canonic.seqNum_eq
+#print axioms Mahjong.V3.VirtualHand.Placement.canonic_unique
+#print axioms Mahjong.V3.VirtualHand.Placement.Canonic.coefficient_bounds
+#print axioms Mahjong.V3.VirtualHand.Placement.canonicalize_canonicalize
+#print axioms Mahjong.V3.VirtualHand.Placement.meldCount_canonicalize
+#print axioms Mahjong.V3.VirtualHand.VirtuallyMeldable.unique_canonical
+#print axioms Mahjong.V3.VirtualHand.Meldable.unique_canonical
+#print axioms Mahjong.V3.VirtualHand.Placement.Canonic.meldable_iff
+#print axioms Mahjong.V3.VirtualHand.Placement.Canonic.meldable_iff_tripNum_nonnegative
 #print axioms Mahjong.V3.VirtualHand.Placement.size_toHand
 #print axioms Mahjong.V3.VirtualHand.Placement.nonnegative_toHand
 #print axioms Mahjong.V3.VirtualHand.Placement.size_toHand_cast
@@ -17,3 +38,5 @@ import NinegatesV3
 #print axioms Mahjong.V3.Examples.largeHand_isFullWait
 #print axioms Mahjong.V3.Examples.largeHand_not_live_four
 #print axioms Mahjong.V3.Examples.largeHand_live_five
+#print axioms Mahjong.V3.Examples.negativeSequence_canonicalize
+#print axioms Mahjong.V3.Examples.negativeSequence_not_meldable

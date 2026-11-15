@@ -6,6 +6,7 @@ Authors: Luna Luteus
 module
 
 public import Ninegates.V3.Wait.Basic
+public import Ninegates.V3.Meldable.Canonical
 
 /-!
 # A full wait beyond the old fixed meld count
@@ -13,6 +14,8 @@ public import Ninegates.V3.Wait.Basic
 The paper's `(0, 2, 2, 4, 2, 3)` is a full-sided `(2, 4)`-wait. Explicit meld
 placements verify each draw, without a decision procedure for meldability.
 The same hand is live with five copies, but not with four copies.
+An example with a negative sequence coefficient checks the Euclidean-division
+and zero-extension conventions in virtual canonicalization.
 -/
 
 @[expose] public section
@@ -57,5 +60,21 @@ lemma largeHand_live_five : IsLiveFullWait 5 4 largeHand := by
   refine ⟨largeHand_isFullWait, ?_⟩
   intro i
   fin_cases i <;> norm_num [largeHand]
+
+def negativeSequence : Placement 2 := ⟨![-1, 0, 0, 0], 0⟩
+
+lemma negativeSequence_canonicalize : negativeSequence.canonicalize =
+    (⟨![2, 0, 0, 0], ![-1, -1, -1, 0, 0, 0]⟩ : Placement 2) := by
+  apply Placement.ext <;> ext i <;> fin_cases i <;>
+    norm_num [negativeSequence, Placement.canonicalize, coefficient]
+
+lemma negativeSequence_not_meldable : ¬Meldable negativeSequence.toHand := by
+  intro meldable
+  have normalized : Meldable negativeSequence.canonicalize.toHand := by simpa using meldable
+  have nonnegative := negativeSequence.canonic_canonicalize.meldable_iff_tripNum_nonnegative.mp
+    normalized
+  have at_zero := nonnegative (0 : Rank 2)
+  rw [negativeSequence_canonicalize] at at_zero
+  norm_num at at_zero
 
 end Mahjong.V3.Examples

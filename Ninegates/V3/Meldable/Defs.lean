@@ -21,6 +21,7 @@ namespace Mahjong.V3.VirtualHand
 
 variable {n : ℕ}
 
+@[ext]
 structure Placement (n : ℕ) where
   seqNum : Fin (3 * n - 2) → ℤ
   tripNum : Rank n → ℤ
