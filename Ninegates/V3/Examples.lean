@@ -6,7 +6,7 @@ Authors: Luna Luteus
 module
 
 public import Ninegates.V3.Wait.Basic
-public import Ninegates.V3.Meldable.Canonical
+public import Ninegates.V3.Meldable.Virtual
 
 /-!
 # A full wait beyond the old fixed meld count
@@ -76,5 +76,31 @@ lemma negativeSequence_not_meldable : ¬Meldable negativeSequence.toHand := by
   have at_zero := nonnegative (0 : Rank 2)
   rw [negativeSequence_canonicalize] at at_zero
   norm_num at at_zero
+
+/-- Neither of the two right-end conditions may be dropped. These hands have
+zero coefficients at every admissible sequence start, but nonzero scan tails. -/
+def lastTile : VirtualHand 2 := single 5
+def lastTwoTiles : VirtualHand 2 := single 4 + single 5
+
+lemma recoveredSequences_lastTile : recoveredSequences lastTile = 0 := by
+  ext i
+  fin_cases i <;> norm_num [recoveredSequences, sequenceScan, SequenceScan.run,
+    lastTile, coefficient, single]
+
+lemma recoveredSequences_lastTwoTiles : recoveredSequences lastTwoTiles = 0 := by
+  ext i
+  fin_cases i <;> norm_num [recoveredSequences, sequenceScan, SequenceScan.run,
+    lastTwoTiles, coefficient, single]
+
+lemma sequenceScan_lastTile : sequenceScan lastTile 6 = (1, 0) := by decide +kernel
+lemma sequenceScan_lastTwoTiles : sequenceScan lastTwoTiles 6 = (0, 1) := by decide +kernel
+
+lemma lastTile_not_virtuallySequential : ¬VirtuallySequential lastTile := by
+  rw [virtuallySequential_iff_scan, sequenceScan_lastTile]
+  norm_num
+
+lemma lastTwoTiles_not_virtuallySequential : ¬VirtuallySequential lastTwoTiles := by
+  rw [virtuallySequential_iff_scan, sequenceScan_lastTwoTiles]
+  norm_num
 
 end Mahjong.V3.Examples

@@ -36,6 +36,11 @@ lemma sequenceHand_apply (s : Fin (3 * n - 2) → ℤ) (i : Rank n) :
   simpa only [Placement.toHand_no_triplets, Pi.zero_apply, mul_zero, add_zero] using
     Placement.toHand_apply (⟨s, 0⟩ : Placement n) i
 
+lemma Placement.toHand_eq (p : Placement n) :
+    p.toHand = sequenceHand p.seqNum + (3 : ℤ) • p.tripNum := by
+  ext i
+  simp
+
 lemma sequenceHand_injective : Function.Injective (sequenceHand (n := n)) := by
   intro s t equal
   apply coefficients_ext

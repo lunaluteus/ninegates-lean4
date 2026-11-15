@@ -6,7 +6,7 @@ Authors: Luna Luteus
 module
 
 public import Ninegates.V3.Hand.Basic
-public import Ninegates.V3.Meldable.Canonical
+public import Ninegates.V3.Meldable.Virtual
 public import Ninegates.V3.Wait.Basic
 public import Ninegates.V3.Examples
 
