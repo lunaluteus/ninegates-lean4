@@ -28,4 +28,9 @@ jobs:
           swap-storage: false
       - uses: actions/checkout@v5
       - uses: leanprover/lean-action@v1
+      - name: Verify structural proofs and axioms
+        run: |
+          lake build --wfail
+          lake env lean -j2 -M4096 -DwarningAsError=true Audit.lean > axioms.log
+          python3 scripts/check_axioms.py Audit.lean axioms.log
       - uses: leanprover-community/docgen-action@v1
