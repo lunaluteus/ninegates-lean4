@@ -28,6 +28,7 @@ public import Ninegates.Minimal.Alternating.Prefix
 public import Ninegates.Minimal.Alternating.Full
 public import Ninegates.Minimal.Alternating.Scan
 public import Ninegates.Minimal.Alternating.Critical
+public import Ninegates.Minimal.Alternating.Minimal
 public import Ninegates.Examples
 public import Ninegates.MovingExamples
 public import Ninegates.GraphExamples

@@ -55,4 +55,19 @@ theorem alternating_odd (a : ℕ) :
     IsFullWait (9 * a + 10) (AlternatingWait.odd a) :=
   AlternatingWait.odd_full a
 
+theorem alternating_even_minimal (a : ℕ) :
+    IsMinimalFullWait (9 * a + 6) (AlternatingWait.even a) :=
+  AlternatingWait.even_minimal a
+
+theorem alternating_odd_minimal (a : ℕ) :
+    IsMinimalFullWait (9 * a + 10) (AlternatingWait.odd a) :=
+  AlternatingWait.odd_minimal a
+
+theorem maximal_minimal_wait_strong (n : ℕ) (positive : 0 < n) :
+    ∃ M : ℕ, (∃ c : VirtualHand n, IsMinimalFullWait M c) ∧
+      (∀ (m : ℕ) (c : VirtualHand n), IsMinimalFullWait m c → m ≤ M) ∧
+        max (2 * n) (9 * n / 2 - 3) ≤ M ∧ M < 8 * n :=
+  ⟨maxMinimalMeldCount n, exists_minimal_at_max positive, fun _ _ h ↦ h.le_max,
+    maxMinimalMeldCount_strong_bounds positive⟩
+
 end ComparatorChallenges

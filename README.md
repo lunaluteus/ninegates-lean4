@@ -55,15 +55,16 @@ The main declarations are in the `Mahjong.VirtualHand` namespace:
 - [`Minimal/Maximum`](Ninegates/Minimal/Maximum.lean) and
   [`Minimal/Double/Minimal`](Ninegates/Minimal/Double/Minimal.lean): the largest
   minimal meld count `M(n)` exists for every positive order, `M(1)=2`, and
-  `2*n <= M(n) < 8*n`. The minimal family `(3,2,...,2)` gives the lower bound.
-- [`Minimal/Alternating/Full`](Ninegates/Minimal/Alternating/Full.lean): both
-  stronger even/odd alternating constructions are full-sided, with meld counts
-  `9*a+6` and `9*a+10`. Their canonical sequence coefficients have an exact
-  formula for arbitrary order, draw, and pair.
+  `2*n <= M(n) < 8*n`. The minimal family `(3,2,...,2)` gives the first lower bound;
+  the alternating families strengthen it to `9*n/2-3 <= M(n)` (integer division).
+- [`Minimal/Alternating/Minimal`](Ninegates/Minimal/Alternating/Minimal.lean): both
+  stronger even/odd alternating constructions are minimal full-sided waits, with
+  meld counts `9*a+6` and `9*a+10`. Their canonical sequence coefficients have
+  an exact formula for arbitrary order, draw, and pair. Critical draws rule out
+  each elementary removal and hence every nonzero meldable removal.
 
-The alternating families' **minimality and improved lower bound remain work
-in progress**. Some cardinality and numerical examples also remain to be
-formalized. The paper's exact general formula for `M(n)` is a conjecture;
+Some cardinality and numerical examples remain to be formalized. The paper's
+exact general formula for `M(n)` is a conjecture;
 it is neither assumed nor presented as proved. See [DEVELOPMENT.md](DEVELOPMENT.md)
 for the detailed correspondence with the paper.
 
@@ -110,8 +111,8 @@ states use `decide +kernel`; no proof uses native evaluation.
 ### Comparator
 
 The new challenge checks the actual classification, including live uniqueness,
-order one, minimal classification, the attained coarse bounds, and the
-alternating constructions' full-sidedness:
+order one, minimal classification, attained coarse and improved bounds, and
+both full-sidedness and minimality of the alternating constructions:
 
 ```sh
 lake comparator --config=ComparatorChallenges/config.json

@@ -10,7 +10,10 @@
     "ComparatorChallenges.minimal_order_one",
     "ComparatorChallenges.maximal_minimal_wait",
     "ComparatorChallenges.alternating_even",
-    "ComparatorChallenges.alternating_odd"
+    "ComparatorChallenges.alternating_odd",
+    "ComparatorChallenges.alternating_even_minimal",
+    "ComparatorChallenges.alternating_odd_minimal",
+    "ComparatorChallenges.maximal_minimal_wait_strong"
   ],
   "permitted_axioms": [
     "propext",

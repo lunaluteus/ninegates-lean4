@@ -240,8 +240,8 @@ The first draw forces the removed hand to contain only block sequences, with
 no triplets; the corresponding middle draws force every such coefficient to
 vanish. Thus the family is minimal. `maxMinimalMeldCount_bounds` and
 `exists_maximal_minimal_meldCount` now give the full paper bound `2n<=M(n)<8n`,
-including attainment and maximality. The stronger subsequent constructions
-are still pending.
+including attainment and maximality. The alternating constructions below
+strengthen the lower bound.
 
 `Meldable/RemoveSequence` gives an exact removal criterion: either the canonical
 sequence coefficient is positive, or all three covered ranks supply a canonical
@@ -267,8 +267,13 @@ orders and indices; it does not rely on checking finitely many family members.
 `Alternating/Critical` now proves the critical-draw obstructions in the
 alternating middle: the selected draw forces a zero triplet coefficient, or a
 zero sequence coefficient together with a zero covered triplet coefficient.
-These identities hold at arbitrary order. Prefix obstructions and assembly of
-minimality, and hence the stronger lower bound, are still pending.
+These identities hold at arbitrary order. `Alternating/Boundary` transports
+fixed prefix certificates through the common `PrefixModel`; `Exceptional`
+handles the two early draws whose pairs need not lie among the first three
+ranks. `Alternating/Minimal` excludes every elementary removal and therefore
+every nonzero meldable removal. It proves minimality of both families and
+`9*n/2-3 <= M(n)`. Together with the double family the bound is
+`max(2*n,9*n/2-3) <= M(n) < 8*n` at every positive order.
 
 The example `(0,2,2,4,2,3)` is verified by six explicit meld placements as a
 full-sided `(2,4)`-wait. It is live for copy bound five and not live for four.
@@ -342,8 +347,8 @@ checks the order-one exception that the later `m=n+1` classification must retain
 | Existence of the maximum `M(n)` and `M(1)=2` | Proved |
 | Minimal `(3,2,...,2)` family and lower bound `2n<=M(n)` | Proved |
 | Full-sidedness of the stronger even/odd constructions | Proved |
-| Minimality of the stronger constructions and improved lower bound | Pending |
-| Remaining constructions and numerical examples | Pending |
+| Minimality of the stronger constructions and improved lower bound | Proved |
+| Distinct-family cardinalities and Taiwanese counts 149/11/27 | Pending |
 
 The exact general `M(n)` formula remains a conjecture in the paper. It is not
 assumed as an axiom or used to prove any part of this development. Existing
@@ -363,8 +368,10 @@ python3 scripts/check_axioms.py Audit.lean axioms.log
 The audit covers the foundational results and the complete explicit example.
 Allowed axioms are `propext`, `Classical.choice`, and `Quot.sound`. There are no
 placeholder proofs or uses of `native_decide` in the library. `Audit.lean`
-and `scripts/check_axioms.py` enforce the standard axiom set in CI. The new `ComparatorChallenges` target checks nine key statements against a
-definition-only challenge boundary, including the classification itself. Run
+and `scripts/check_axioms.py` enforce the standard axiom set in CI. The new
+`ComparatorChallenges` target checks twelve key statements against a
+definition-only challenge boundary, including the classification itself,
+alternating minimality and the improved bound. Run
 `lake comparator --config=ComparatorChallenges/config.json` with its sandbox
 enabled. Its intentional challenge holes are outside the default library.
 `README.md` introduces the current API; this file records its detailed status.
