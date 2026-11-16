@@ -66,4 +66,39 @@ lemma classSize_zero_blocks (c : VirtualHand n) :
     classSize 0 c = ∑ b : Fin n, c (blockEquiv n (b, 2)) := by
   simpa [show (2 : ZMod 3)+1 = 0 by decide +kernel] using classSize_blocks c 2
 
+@[simp]
+lemma classSize_const (r : ZMod 3) (z : ℤ) : classSize r (fun _ : Rank n ↦ z) = n * z := by
+  let position : Fin 3 := ⟨(r - 1).val, ZMod.val_lt _⟩
+  have equal : (position.val : ZMod 3) + 1 = r := by simp [position]
+  rw [← equal, classSize_blocks]
+  simp
+
+lemma classSize_mono {c d : VirtualHand n} (h : c ≤ d) (r : ZMod 3) :
+    classSize r c ≤ classSize r d := by
+  change (∑ i ∈ Finset.univ.filter (fun i : Rank n ↦ rankClass i = r), c i) ≤ _
+  exact Finset.sum_le_sum fun i _ ↦ h i
+
+lemma Nonnegative.classSize_nonnegative {c : VirtualHand n} (h : Nonnegative c) (r : ZMod 3) :
+    0 ≤ classSize r c := by
+  change 0 ≤ ∑ i ∈ Finset.univ.filter (fun i : Rank n ↦ rankClass i = r), c i
+  exact Finset.sum_nonneg fun i _ ↦ h i
+
+lemma Nonnegative.le_classSize {c : VirtualHand n} (h : Nonnegative c) (i : Rank n) :
+    c i ≤ classSize (rankClass i) c := by
+  change c i ≤ ∑ j ∈ Finset.univ.filter (fun j : Rank n ↦ rankClass j = rankClass i), c j
+  exact Finset.single_le_sum (fun j _ ↦ h j) (by simp)
+
+lemma Nonnegative.add_le_classSize {c : VirtualHand n} (h : Nonnegative c)
+    (i j : Rank n) (different : i ≠ j) (same : rankClass j = rankClass i) :
+    c i + c j ≤ classSize (rankClass i) c := by
+  have subset : ({i, j} : Finset (Rank n)) ⊆
+      Finset.univ.filter (fun k ↦ rankClass k = rankClass i) := by
+    intro k member
+    simp only [Finset.mem_insert, Finset.mem_singleton] at member
+    rcases member with rfl | rfl <;> simp [same]
+  have bound := Finset.sum_le_sum_of_subset_of_nonneg (f := c) subset (fun k _ _ ↦ h k)
+  change c i + c j ≤ ∑ k ∈ Finset.univ.filter
+    (fun k : Rank n ↦ rankClass k = rankClass i), c k
+  simpa [different] using bound
+
 end Mahjong.V3.VirtualHand
