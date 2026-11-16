@@ -37,6 +37,13 @@ lemma rankClass_blockEquiv (b : Fin n) (r : Fin 3) :
   rw [show (3 : ZMod 3) = 0 from ZMod.natCast_self 3]
   ring
 
+lemma exists_rankClass (positive : 0 < n) (s : ZMod 3) : ∃ i : Rank n, rankClass i = s := by
+  let r : Fin 3 := ⟨(s - 1).val, ZMod.val_lt _⟩
+  refine ⟨blockEquiv n (⟨0, positive⟩, r), ?_⟩
+  rw [rankClass_blockEquiv]
+  change ((s - 1).val : ZMod 3) + 1 = s
+  simp
+
 lemma classSize_blocks (c : VirtualHand n) (r : Fin 3) :
     classSize ((r.val : ZMod 3)+1) c = ∑ b : Fin n, c (blockEquiv n (b, r)) := by
   have equal (j : Fin 3) : ((j.val : ZMod 3)+1 = (r.val : ZMod 3)+1) ↔ j = r := by

@@ -70,6 +70,10 @@ lemma nonnegative_zero : Nonnegative (0 : VirtualHand n) := le_refl _
 lemma Nonnegative.add {c d : VirtualHand n} (hc : Nonnegative c) (hd : Nonnegative d) :
     Nonnegative (c + d) := add_nonneg hc hd
 
+lemma Nonnegative.size_nonnegative {c : VirtualHand n} (h : Nonnegative c) : 0 ≤ size c := by
+  change 0 ≤ ∑ i, c i
+  exact Finset.sum_nonneg fun i _ ↦ h i
+
 @[simp]
 lemma size_single (i : Rank n) : size (single i) = 1 := by simp [size, single]
 

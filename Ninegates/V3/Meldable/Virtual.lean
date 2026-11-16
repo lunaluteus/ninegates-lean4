@@ -81,6 +81,12 @@ lemma virtuallyMeldable_iff_size_rankSum (c : VirtualHand n) : VirtuallyMeldable
     (size c : ZMod 3) = 0 ∧ (rankSum c : ZMod 3) = 0 :=
   (virtuallyMeldable_iff_classSizes c).trans (classSizes_congruent_iff c)
 
+lemma VirtuallyMeldable.classSize_cast_eq {c : VirtualHand n} (h : VirtuallyMeldable c)
+    (r s : ZMod 3) : (classSize r c : ZMod 3) = (classSize s c : ZMod 3) := by
+  have same := (virtuallyMeldable_iff_classSizes c).mp h
+  have classes : ∀ t : ZMod 3, t = 0 ∨ t = 1 ∨ t = 2 := by decide +kernel
+  rcases classes r with rfl | rfl | rfl <;> rcases classes s with rfl | rfl | rfl <;> simp_all
+
 lemma exists_unique_canonical_iff (c : VirtualHand n) :
     (∃! p : Placement n, p.Canonic ∧ p.toHand = c) ↔
       (size c : ZMod 3) = 0 ∧ (rankSum c : ZMod 3) = 0 := by
