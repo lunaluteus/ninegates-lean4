@@ -148,6 +148,9 @@ def delta (a b k : ℤ) : ℤ :=
 def shiftAlong (s : Fin (3 * n - 2) → ℤ) (i j : Rank n) : Fin (3 * n - 2) → ℤ :=
   s + fun r ↦ delta i.val j.val r.val
 
+def shiftAlongLeft (s : Fin (3 * n - 2) → ℤ) (i j : Rank n) : Fin (3 * n - 2) → ℤ :=
+  s - fun r ↦ delta j.val i.val r.val
+
 end Moving
 
 def Pillar (c : VirtualHand n) (p : Rank n) : Prop :=

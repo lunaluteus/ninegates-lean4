@@ -588,3 +588,5 @@ import Ninegates
 #print axioms Mahjong.VirtualHand.taiwanese_live_nonminimal_card
 #print axioms Mahjong.VirtualHand.ClassBoundSharpness.live
 #print axioms Mahjong.VirtualHand.ClassBoundSharpness.minimal
+#print axioms Mahjong.VirtualHand.Moving.sequenceHand_shiftAlongLeft
+#print axioms Mahjong.VirtualHand.Moving.shiftAlongLeft_nonnegative_iff

@@ -49,6 +49,7 @@
     "ComparatorChallenges.proposition_3_8_sequential_moveTile_right_iff",
     "ComparatorChallenges.proposition_3_8_sequential_moveTile_left_iff",
     "ComparatorChallenges.proposition_3_8_sequenceHand_shiftAlong",
+    "ComparatorChallenges.proposition_3_8_sequenceHand_shiftAlongLeft",
     "ComparatorChallenges.proposition_3_9_meldable_right_iff",
     "ComparatorChallenges.proposition_3_9_canonical_step_seqNum",
     "ComparatorChallenges.proposition_3_9_canonical_step_tripNum",

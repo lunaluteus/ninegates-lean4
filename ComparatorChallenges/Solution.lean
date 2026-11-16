@@ -365,6 +365,13 @@ theorem proposition_3_8_sequenceHand_shiftAlong :
     → ℤ) → VirtualHand n) s) i j := by
   exact @Mahjong.VirtualHand.Moving.sequenceHand_shiftAlong
 
+theorem proposition_3_8_sequenceHand_shiftAlongLeft :
+    ∀ {n : ℕ} (s : Fin (3 * n - 2) → ℤ) (i j : Rank n),
+      j.val ≤ i.val → rankClass i = rankClass j →
+        Spec.sequenceHand (n := n) (Spec.Moving.shiftAlongLeft s i j) =
+          Spec.moveTile (Spec.sequenceHand (n := n) s) i j := by
+  exact @Mahjong.VirtualHand.Moving.sequenceHand_shiftAlongLeft
+
 /-! Paper Proposition 3.9
 Proposition 3.9 (Tile moving).
 https://arxiv.org/html/2611.06944v1#S3.Thmcounter9 -/

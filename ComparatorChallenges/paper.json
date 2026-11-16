@@ -225,13 +225,15 @@
       "declarations": [
         "ComparatorChallenges.proposition_3_8_sequential_moveTile_right_iff",
         "ComparatorChallenges.proposition_3_8_sequential_moveTile_left_iff",
-        "ComparatorChallenges.proposition_3_8_sequenceHand_shiftAlong"
+        "ComparatorChallenges.proposition_3_8_sequenceHand_shiftAlong",
+        "ComparatorChallenges.proposition_3_8_sequenceHand_shiftAlongLeft"
       ],
       "title": "Proposition 3.8 (Sequential tile moving).",
       "library_declarations": [
         "Mahjong.VirtualHand.sequential_moveTile_right_iff",
         "Mahjong.VirtualHand.sequential_moveTile_left_iff",
-        "Mahjong.VirtualHand.Moving.sequenceHand_shiftAlong"
+        "Mahjong.VirtualHand.Moving.sequenceHand_shiftAlong",
+        "Mahjong.VirtualHand.Moving.sequenceHand_shiftAlongLeft"
       ]
     },
     {
@@ -679,19 +681,19 @@
     }
   ],
   "validation": {
-    "paper_coverage": "passed: all 43 numbered v1 items and all five unnumbered remarks in published order; 117 selected targets",
+    "paper_coverage": "passed: all43 numbered v1 items and all5 unnumbered remarks in published order;118 selected targets",
     "solution_build": "passed: lake build --wfail ComparatorChallenges.Solution (3247 jobs)",
-    "comparator": "passed: sandbox enabled; Lean default kernel accepts all 117 selected targets",
+    "comparator": "passed: sandbox enabled; Lean default kernel accepts all118 selected targets",
     "permitted_axioms": [
       "propext",
       "Classical.choice",
       "Quot.sound"
     ],
     "external_kernels": false,
-    "library_build": "passed: lake build --wfail (3245 jobs); all 107 library modules reachable",
-    "axiom_audit": "passed: 588 declarations; standard axioms only",
-    "coverage_negative_controls": "passed: 13 rejected mutations in temporary copies, including an altered new cardinality statement",
-    "scope": "Excludes Example 6.6, Problems 6.1/6.4, and Conjecture 6.9. The five explicit unnumbered remarks are formalized. New live-next-order results are additional consequences and do not certify 149/11/27. Source correspondence is reviewed manually; the inventory script does not prove semantic equivalence to prose."
+    "library_build": "passed: lake build --wfail (3245 jobs);107 library modules retained",
+    "axiom_audit": "passed:590 declarations; standard axioms only",
+    "coverage_negative_controls": "passed:14 rejected mutations in temporary copies, including an altered leftward-order hypothesis",
+    "scope": "Proposition3.8 now explicitly exposes replacement placements in both directions. Excludes Example6.6, Problems6.1/6.4, and Conjecture6.9. The five explicit unnumbered remarks are formalized. Live-next-order consequences do not certify149/11/27. Source correspondence is reviewed manually; the inventory script does not prove semantic equivalence to prose."
   },
   "additional_declarations": [
     "ComparatorChallenges.alternating_even",

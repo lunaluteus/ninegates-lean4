@@ -7,8 +7,7 @@ module
 
 public import Ninegates.Meldable.Interval
 
-/-! The unique sequence update for a long move is the telescoping replacement
-of starts `i, i+3, ...` by `i+1, i+4, ...`. -/
+/-! Explicit unique sequence updates for long moves in both directions. -/
 
 @[expose] public section
 
@@ -49,6 +48,11 @@ lemma coefficient_delta (i j : Rank n) (same : rankClass i = rankClass j) (k : �
 def shiftAlong (s : Fin (3 * n - 2) → ℤ) (i j : Rank n) : Fin (3 * n - 2) → ℤ :=
   s + fun r ↦ delta i.val j.val r.val
 
+/-- For a leftward move, subtract the rightward update from the target back
+to the source: starts `j+1,j+4,...` become `j,j+3,...`. -/
+def shiftAlongLeft (s : Fin (3 * n - 2) → ℤ) (i j : Rank n) : Fin (3 * n - 2) → ℤ :=
+  s - fun r ↦ delta j.val i.val r.val
+
 lemma sequenceHand_shiftAlong (s : Fin (3 * n - 2) → ℤ) (i j : Rank n)
     (order : i.val ≤ j.val) (same : rankClass i = rankClass j) :
     sequenceHand (shiftAlong s i j) = moveTile (sequenceHand s) i j := by
@@ -64,6 +68,17 @@ lemma sequenceHand_shiftAlong (s : Fin (3 * n - 2) → ℤ) (i j : Rank n)
   have eq_j : (k.val : ℤ) = j.val ↔ k.val = j.val := by omega
   simp only [eq_i, eq_j] at identity
   omega
+
+lemma sequenceHand_shiftAlongLeft (s : Fin (3 * n - 2) → ℤ) (i j : Rank n)
+    (order : j.val ≤ i.val) (same : rankClass i = rankClass j) :
+    sequenceHand (shiftAlongLeft s i j) = moveTile (sequenceHand s) i j := by
+  have backwards : sequenceHand (fun r : Fin (3 * n - 2) ↦ delta j.val i.val r.val) =
+      moveTile 0 j i := by
+    simpa only [shiftAlong, zero_add, map_zero] using
+      sequenceHand_shiftAlong 0 j i order same.symm
+  rw [shiftAlongLeft, map_sub, backwards]
+  unfold moveTile
+  abel
 
 lemma shiftAlong_nonnegative_iff {s : Fin (3 * n - 2) → ℤ} (positive : 0 ≤ s)
     (i j : Rank n) :
@@ -85,6 +100,30 @@ lemma shiftAlong_nonnegative_iff {s : Fin (3 * n - 2) → ℤ} (positive : 0 ≤
     · have needed := required r (by omega) (by omega) (by omega)
       omega
     · omega
+    · omega
+    · omega
+
+lemma shiftAlongLeft_nonnegative_iff {s : Fin (3 * n - 2) → ℤ} (positive : 0 ≤ s)
+    (i j : Rank n) :
+    0 ≤ shiftAlongLeft s i j ↔ ∀ r : Fin (3 * n - 2),
+      j.val ≤ r.val → r.val < i.val → (r.val - j.val) % 3 = 1 → 1 ≤ s r := by
+  constructor
+  · intro result r lower upper congruent
+    have at_r := result r
+    have int_congruent : ((r.val : ℤ) - j.val) % 3 = 1 := by omega
+    have not_zero : ((r.val : ℤ) - j.val) % 3 ≠ 0 := by omega
+    have inside : (j.val : ℤ) ≤ r.val ∧ (r.val : ℤ) < i.val := by omega
+    change 0 ≤ s r - delta j.val i.val r.val at at_r
+    rw [delta, ite_eq_left inside, ite_eq_right not_zero, ite_eq_left int_congruent] at at_r
+    omega
+  · intro required r
+    have original : 0 ≤ s r := positive r
+    change 0 ≤ s r - delta j.val i.val r.val
+    unfold delta
+    split_ifs with inside zero one
+    · omega
+    · have needed := required r (by omega) (by omega) (by omega)
+      omega
     · omega
     · omega
 
@@ -111,44 +150,25 @@ lemma sequential_moveTile_right_iff {s : Fin (3 * n - 2) → ℤ} (positive : 0 
       (Moving.shiftAlong_nonnegative_iff positive i j).mpr required,
       Moving.sequenceHand_shiftAlong s i j order same⟩
 
-/-- The reversed half of `prp-tile-moving`. Required starts are
+/-- `prp-tile-moving`, leftward direction. Required starts are
 `j+1, j+4, ..., i-2`, and their replacements are one rank to the left. -/
 lemma sequential_moveTile_left_iff {s : Fin (3 * n - 2) → ℤ} (positive : 0 ≤ s)
     (i j : Rank n) (order : j.val ≤ i.val) :
     Sequential (moveTile (sequenceHand s) i j) ↔ rankClass i = rankClass j ∧
       ∀ r : Fin (3 * n - 2), j.val ≤ r.val → r.val < i.val →
         (r.val - j.val) % 3 = 1 → 1 ≤ s r := by
-  have bound_i := i.isLt
-  have bound_j := j.isLt
-  have reflected := sequential_moveTile_right_iff (s := fun r ↦ s r.rev)
-    (fun r ↦ positive r.rev) i.rev j.rev
-    (by simp only [Fin.val_rev]; omega)
-  have hand : moveTile (sequenceHand fun r ↦ s r.rev) i.rev j.rev =
-      reverse (moveTile (sequenceHand s) i j) := by simp
-  rw [hand, sequential_reverse_iff] at reflected
+  have base : Meldable (sequenceHand s) := Sequential.meldable ⟨s, positive, rfl⟩
   constructor
   · intro result
-    obtain ⟨same, required⟩ := reflected.mp result
-    have original_same : rankClass i = rankClass j := by simpa using rankClass_rev_eq same
-    have congruent := (rankClass_eq_iff i j).mp original_same
-    refine ⟨original_same, ?_⟩
-    intro r lower upper residue
-    have bound_r := r.isLt
-    have at_r := required r.rev
-      (by simp only [Fin.val_rev]; omega)
-      (by simp only [Fin.val_rev]; omega)
-      (by simp only [Fin.val_rev]; omega)
-    simpa using at_r
+    have same := base.virtuallyMeldable.moveTile_rankClass result.meldable.virtuallyMeldable
+    refine ⟨same, ?_⟩
+    obtain ⟨t, ht, equal⟩ := result
+    have unique := sequenceHand_injective
+      (equal.trans (Moving.sequenceHand_shiftAlongLeft s i j order same).symm)
+    exact (Moving.shiftAlongLeft_nonnegative_iff positive i j).mp (unique ▸ ht)
   · rintro ⟨same, required⟩
-    have congruent := (rankClass_eq_iff i j).mp same
-    apply reflected.mpr
-    refine ⟨rankClass_rev_eq same, ?_⟩
-    intro r lower upper residue
-    have bound_r := r.isLt
-    have at_r := required r.rev
-      (by simp only [Fin.val_rev] at *; omega)
-      (by simp only [Fin.val_rev] at *; omega)
-      (by simp only [Fin.val_rev] at *; omega)
-    exact at_r
+    exact ⟨Moving.shiftAlongLeft s i j,
+      (Moving.shiftAlongLeft_nonnegative_iff positive i j).mpr required,
+      Moving.sequenceHand_shiftAlongLeft s i j order same⟩
 
 end Mahjong.VirtualHand

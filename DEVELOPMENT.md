@@ -68,6 +68,12 @@ both directions: starts `i,i+3,...,j-3` for a rightward move, and
 `j+1,j+4,...,i-2` for a leftward move. These are structural proofs for arbitrary
 order, with no enumeration of hands.
 
+Both movement directions expose their exact replacement sequence vectors.
+The leftward vector subtracts the signed rightward update from target to
+source, so the two placement formulas directly match the two rows of
+Proposition 3.8. Nonnegativity of each vector is exactly its required-sequence
+condition; uniqueness then proves both directions of the criterion.
+
 `Meldable/Triplets` proves that adding integer triplets preserves the canonical
 sequence part and translates the canonical triplet coefficients. A triplet can
 be removed exactly when its canonical coefficient is positive. `Preserve`
@@ -322,7 +328,7 @@ problems, and Conjecture 6.9. All propositions and the theorem are formalized;
 Examples 4.5 and 6.5 are formalized. Definitions identify the relevant model
 objects rather than being counted as new paper theorems. Example 6.6 is deferred,
 and the problems and conjecture remain explicitly open. The selected statements,
-including the five remarks and nine additional results, give 117 Comparator targets.
+including the five remarks and nine additional results, give 118 Comparator targets.
 
 `Standard/Graph` was added during this audit: it proves Example 4.5's exact
 draw-pair relation for `A_n` and its fixed class two for every positive order,
@@ -469,7 +475,7 @@ The audit covers the foundational results and the complete explicit example.
 Allowed axioms are `propext`, `Classical.choice`, and `Quot.sound`. There are no
 placeholder proofs or uses of `native_decide` in the library. `Audit.lean`
 and `scripts/check_axioms.py` enforce the standard axiom set in CI. The new
-`ComparatorChallenges` target checks 117 statements against a model importing
+`ComparatorChallenges` target checks 118 statements against a model importing
 only shared foundational project definitions. Derived model objects have their
 own namespace and definitions; only the solution imports the library and proves
 the required bridges. Run Comparator with its sandbox enabled. Its intentional

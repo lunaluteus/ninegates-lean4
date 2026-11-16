@@ -139,7 +139,7 @@ The challenge and solution list all **43 numbered items in published order**,
 including definitions, examples, open problems, and the conjecture. Split
 statements stay together under their paper number. The public version, links,
 source hashes, declaration mapping, and gaps are recorded in
-[`paper.json`](ComparatorChallenges/paper.json). There are **117 verified
+[`paper.json`](ComparatorChallenges/paper.json). There are **118 verified
 Comparator targets**, including additional unnumbered constructions and bounds.
 
 ```sh
