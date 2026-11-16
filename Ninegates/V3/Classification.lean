@@ -8,6 +8,7 @@ module
 public import Ninegates.V3.Standard.Necessity
 public import Ninegates.V3.Standard.WaitOne
 public import Ninegates.V3.Standard.WaitTwo
+public import Ninegates.V3.Minimal.Basic
 
 /-! Structural classification of full-sided `(n,n+1)` waits at order `n≥2`.
 No hand enumeration or computational decision procedure is used. -/
@@ -34,6 +35,10 @@ lemma Standard.EightFamily.full (order : 2 ≤ n) (h : Standard.EightFamily c) :
 lemma isFullWait_iff_eightFamily (order : 2 ≤ n) :
     IsFullWait (n + 1) c ↔ Standard.EightFamily c :=
   ⟨fun h ↦ h.eightFamily order, fun h ↦ h.full order⟩
+
+lemma isMinimalFullWait_iff_eightFamily (order : 2 ≤ n) :
+    IsMinimalFullWait (n + 1) c ↔ Standard.EightFamily c := by
+  rw [isMinimalFullWait_succ_iff, isFullWait_iff_eightFamily order]
 
 lemma Standard.A_live (order : 2 ≤ n) : IsLiveFullWait 4 (n + 1) (Standard.A n) := by
   apply isLiveFullWait_iff.mpr
