@@ -525,3 +525,13 @@ library modules are reachable from the root import, and the strict audit passed
 for 606 declarations. The normal sandboxed Comparator passed all 120 targets in
 the regular checkout, whose tracked sources matched the detached checkout.
 The deferred Example 6.6 and the open questions retain their explicit status.
+
+
+## Manual CI and documentation
+
+All workflows are triggered with `workflow_dispatch`; pushes and pull requests
+do not start them automatically. Run `Lean Action CI` with the selected branch
+to build the library, audit its axioms, check the paper correspondence and
+Comparator proofs, render the Lean API, and publish GitHub Pages. Documentation
+uses the upstream docgen tooling directly so rendering also runs on manual
+dispatches. Release tagging and dependency updates are separate manual workflows.
