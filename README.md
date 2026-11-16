@@ -175,7 +175,11 @@ Comparator exports and checks the proofs,
 compares their statements against the challenge, and permits only the three
 standard axioms above. This complements the larger axiom audit; it does not
 claim to certify unfinished results or replace review of the definitions.
-CI also checks the pinned inventory, order, signatures, and target list with
+The statements use ordinary function notation and explicit zero-based rank
+indices. Redundant generated coercions and function-type annotations have been
+removed; cast locations and the claims themselves are unchanged. CI also checks
+the pinned inventory, order, full source signatures (including named arguments),
+and target list with
 [`check_paper_coverage.py`](scripts/check_paper_coverage.py).
 
 See the [Lean proof-validation documentation](https://lean-lang.org/doc/reference/latest/ValidatingProofs/)

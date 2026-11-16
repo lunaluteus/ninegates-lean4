@@ -496,8 +496,21 @@ only shared foundational project definitions. Derived model objects have their
 own namespace and definitions; only the solution imports the library and proves
 the required bridges. Run Comparator with its sandbox enabled. Its intentional
 challenge holes are outside the default library. The correspondence check
-enforces the independently pinned public order, source version, equal source
-signatures, target inventory, all five ordered remark blocks, and explicit exclusions. It is an inventory
-check; kernel verification and mathematical review of the statements remain
-separate requirements.
+enforces the independently pinned public order, source version, equal full source
+signatures, target inventory, all five ordered remark blocks, and explicit
+exclusions. Named arguments such as `(n := n)` remain part of the signature;
+only the outer declaration assignment ends it. It is an inventory check; kernel
+verification and mathematical review of the statements remain separate
+requirements.
 `README.md` introduces the current API; this file records its detailed status.
+
+The Comparator readability cleanup was checked against commit
+`1078e6b275b0136f496353920b428112e54897ff`: all 121 challenge theorem types
+(including the deferred goal) are definitionally unchanged, as is the open
+conjecture's proposition. Lean accepted 122 equality checks using `rfl`; a
+control substituting a different proposition was rejected. The model,
+configuration, and proof bodies are unchanged. This preservation check does not
+certify the deferred goal or conjecture. The strict solution build and normal
+sandboxed Comparator were rerun for the cleaned statements. Seventeen temporary
+inventory mutations were rejected, including a changed tile-movement conclusion
+after a named argument that the previous signature splitter missed.

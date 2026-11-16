@@ -681,19 +681,20 @@
     }
   ],
   "validation": {
-    "paper_coverage": "passed:all43 numberedv1items andall5remarks inpublishedorder;120selectedtargets",
-    "solution_build": "passed:lake build --wfail Ninegates ComparatorChallenges.Solution (3252jobs)",
-    "comparator": "passed:sandboxenabled;Leandefaultkernel acceptsall120selectedtargets",
+    "paper_coverage": "passed: all 43 numbered v1 items and all 5 remarks in published order; 120 selected targets",
+    "solution_build": "passed: lake build --wfail ComparatorChallenges.Solution; rerun after statement cleanup",
+    "comparator": "passed: sandbox enabled; Lean default kernel accepts all 120 selected targets; rerun after statement cleanup",
     "permitted_axioms": [
       "propext",
       "Classical.choice",
       "Quot.sound"
     ],
     "external_kernels": false,
-    "library_build": "passed:strictdefaultbuild andfinalcombinedstrictbuild;all109librarymodulesreachable",
-    "axiom_audit": "passed:606declarations;standardaxiomsonly",
-    "coverage_negative_controls": "passed:16rejectedtemporarymutations,includingwrongorder-onecountandthreshold",
-    "scope": "The exact arbitrary-meld-count order-one criterion/count are further development consequences. Nat subtraction handles m<=1 as zero; for m>=2 the count is the usual binomial choose(3m-2,2), without a copy bound. The five remarks and all claimed numbered results except deferredExample6.6 remain covered. Problems6.1/6.4 andConjecture6.9 remain open in general. Inventory checks do not replace manual semantic source review."
+    "library_build": "passed before statement-only cleanup: strict default and combined builds; all 109 library modules reachable; library unchanged by cleanup",
+    "axiom_audit": "passed before statement-only cleanup: 606 declarations; standard axioms only; library and audit unchanged by cleanup",
+    "coverage_negative_controls": "passed: 17 rejected temporary mutations, including a changed conclusion after a named argument",
+    "scope": "The exact arbitrary-meld-count order-one criterion/count are further development consequences. Nat subtraction handles m<=1 as zero; for m>=2 the count is the usual binomial choose(3m-2,2), without a copy bound. The five remarks and all claimed numbered results except deferredExample6.6 remain covered. Problems6.1/6.4 andConjecture6.9 remain open in general. Inventory checks do not replace manual semantic source review.",
+    "statement_preservation": "passed: 122 Lean rfl checks against 1078e6b275b0136f496353920b428112e54897ff; all 121 theorem types and the open conjecture proposition definitionally unchanged; different-proposition control rejected; model, configuration and proof bodies unchanged"
   },
   "additional_declarations": [
     "ComparatorChallenges.alternating_even",

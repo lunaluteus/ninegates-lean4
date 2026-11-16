@@ -18,13 +18,56 @@ SHARED = {"Ninegates.Hand.Defs", "Ninegates.Meldable.Defs", "Ninegates.Wait.Defs
           "Ninegates.Minimal.Defs"}
 
 
+def declaration_header(body: str) -> str:
+    """Find the declaration assignment, keeping named arguments in its type."""
+    delimiters = {"(": ")", "[": "]", "{": "}", "«": "»"}
+    stack = []
+    i = 0
+    while i < len(body):
+        if body.startswith("--", i):
+            end = body.find("\n", i)
+            i = len(body) if end == -1 else end + 1
+            continue
+        if body.startswith("/-", i):
+            nesting = 1
+            i += 2
+            while nesting and i < len(body):
+                if body.startswith("/-", i):
+                    nesting += 1
+                    i += 2
+                elif body.startswith("-/", i):
+                    nesting -= 1
+                    i += 2
+                else:
+                    i += 1
+            if nesting:
+                raise ValueError("Unclosed comment in theorem header")
+            continue
+        char = body[i]
+        if char == '"':
+            i += 1
+            while i < len(body) and body[i] != '"':
+                i += 2 if body[i] == "\\" else 1
+            if i == len(body):
+                raise ValueError("Unclosed string in theorem header")
+        elif char in delimiters:
+            stack.append(delimiters[char])
+        elif char in delimiters.values():
+            if not stack or stack.pop() != char:
+                raise ValueError("Unbalanced delimiter in theorem header")
+        elif not stack and body.startswith(":=", i):
+            return body[:i]
+        i += 1
+    raise ValueError("Missing declaration assignment")
+
+
 def signatures(source: str) -> dict[str, str]:
     result = {}
     for match in DECL.finditer(source):
         name = "ComparatorChallenges." + match[1]
         if name in result:
             raise ValueError(f"Repeated theorem: {name}")
-        result[name] = " ".join(match[2].split(":=", 1)[0].split())
+        result[name] = " ".join(declaration_header(match[2]).split())
     return result
 
 

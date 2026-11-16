@@ -58,13 +58,11 @@ theorem theorem_1_1_isLiveFullWait_iff_eq_A :
   sorry
 
 theorem theorem_1_1_reverse_A :
-    ∀ (n : ℕ), (reverse : VirtualHand n → VirtualHand n) (Spec.Standard.A n) =
-    Spec.Standard.A n := by
+    ∀ n : ℕ, reverse (Spec.Standard.A n) = Spec.Standard.A n := by
   sorry
 
 theorem theorem_1_1_reverse_E :
-    ∀ {n : ℕ}, 2 ≤ n → (reverse : VirtualHand n → VirtualHand n) (Spec.Standard.E n) =
-    Spec.Standard.E n := by
+    ∀ {n : ℕ}, 2 ≤ n → reverse (Spec.Standard.E n) = Spec.Standard.E n := by
   sorry
 
 theorem theorem_1_1_valid_succ :
@@ -75,23 +73,18 @@ theorem theorem_1_1_valid_succ :
 https://arxiv.org/html/2611.06944v1#S2.Thmcounter1 -/
 
 theorem proposition_2_1_size_eq_classSizes :
-    ∀ {n : ℕ} (c : VirtualHand n), (size : VirtualHand n → ℤ) c =
-    (classSize 0 : VirtualHand n → ℤ) c + (classSize 1 : VirtualHand n → ℤ) c +
-    (classSize 2 : VirtualHand n → ℤ) c := by
+    ∀ {n : ℕ} (c : VirtualHand n), size c = classSize 0 c + classSize 1 c + classSize 2 c := by
   sorry
 
 theorem proposition_2_1_rankSum_cast_eq_classSizes :
-    ∀ {n : ℕ} (c : VirtualHand n), (↑((rankSum : VirtualHand n → ℤ) c) : ZMod 3) =
-    (↑((classSize 1 : VirtualHand n → ℤ) c) : ZMod 3) + 2 *
-    (↑((classSize 2 : VirtualHand n → ℤ) c) : ZMod 3) := by
+    ∀ {n : ℕ} (c : VirtualHand n), (rankSum c : ZMod 3) = (classSize 1 c : ZMod 3) + 2 *
+      (classSize 2 c : ZMod 3) := by
   sorry
 
 theorem proposition_2_1_classSizes_congruent_iff :
-    ∀ {n : ℕ} (c : VirtualHand n), (↑((classSize 0 : VirtualHand n → ℤ) c) : ZMod 3) =
-    (↑((classSize 1 : VirtualHand n → ℤ) c) : ZMod 3) ∧
-    (↑((classSize 1 : VirtualHand n → ℤ) c) : ZMod 3) =
-    (↑((classSize 2 : VirtualHand n → ℤ) c) : ZMod 3) ↔ (↑((size : VirtualHand n → ℤ) c) :
-    ZMod 3) = 0 ∧ (↑((rankSum : VirtualHand n → ℤ) c) : ZMod 3) = 0 := by
+    ∀ {n : ℕ} (c : VirtualHand n), (classSize 0 c : ZMod 3) = (classSize 1 c : ZMod 3) ∧
+      (classSize 1 c : ZMod 3) = (classSize 2 c : ZMod 3) ↔ (size c : ZMod 3) = 0 ∧
+      (rankSum c : ZMod 3) = 0 := by
   sorry
 
 theorem proposition_2_1_rank_sum_difference :
@@ -105,13 +98,13 @@ https://arxiv.org/html/2611.06944v1#S2.Thmcounter2 -/
 -- Model: IsFullWait, IsLiveFullWait.
 
 theorem definition_2_2_isFullWait_iff :
-    ∀ {n m : ℕ} {c : VirtualHand n}, IsFullWait m c ↔ Nonnegative c ∧
-    (size : VirtualHand n → ℤ) c = 3 * (↑m : ℤ) + 1 ∧ ∀ (i : Rank n), ∃ j, DrawPair c i j := by
+    ∀ {n m : ℕ} {c : VirtualHand n}, IsFullWait m c ↔
+      Nonnegative c ∧ size c = 3 * (m : ℤ) + 1 ∧ ∀ i : Rank n, ∃ j, DrawPair c i j := by
   sorry
 
 theorem definition_2_2_isLiveFullWait_iff :
-    ∀ {n m cap : ℕ} {c : VirtualHand n}, IsLiveFullWait cap m c ↔ IsFullWait m c ∧ ∀
-    (i : Rank n), c i + 1 ≤ (↑cap : ℤ) := by
+    ∀ {n m cap : ℕ} {c : VirtualHand n}, IsLiveFullWait cap m c ↔
+      IsFullWait m c ∧ ∀ i : Rank n, c i + 1 ≤ (cap : ℤ) := by
   sorry
 
 /-! Paper Definition 3.1
@@ -121,16 +114,16 @@ https://arxiv.org/html/2611.06944v1#S3.Thmcounter1 -/
 -- Model: Placement, Placement.Nonnegative, Placement.toHand; Spec.sequenceHand, Spec.Sequential.
 
 theorem definition_3_1_toHand_apply :
-    ∀ {n : ℕ} (p : Placement n) (i : Rank n), Placement.toHand p i = Spec.coefficient
-    (Placement.seqNum p) (↑(↑i : ℕ) : ℤ) + Spec.coefficient (Placement.seqNum p)
-    ((↑(↑i : ℕ) : ℤ) - 1) + Spec.coefficient (Placement.seqNum p) ((↑(↑i : ℕ) : ℤ) - 2) +
-    3 * Placement.tripNum p i := by
+    ∀ {n : ℕ} (p : Placement n) (i : Rank n),
+      p.toHand i = Spec.coefficient p.seqNum (i.val : ℤ) +
+        Spec.coefficient p.seqNum ((i.val : ℤ) - 1) +
+        Spec.coefficient p.seqNum ((i.val : ℤ) - 2) + 3 * p.tripNum i := by
   sorry
 
 theorem definition_3_1_sequenceHand_apply :
-    ∀ {n : ℕ} (s : Fin (3 * n - 2) → ℤ) (i : Rank n), (Spec.sequenceHand : (Fin (3 * n -
-    2) → ℤ) → VirtualHand n) s i = Spec.coefficient s (↑(↑i : ℕ) : ℤ) + Spec.coefficient s
-    ((↑(↑i : ℕ) : ℤ) - 1) + Spec.coefficient s ((↑(↑i : ℕ) : ℤ) - 2) := by
+    ∀ {n : ℕ} (s : Fin (3 * n - 2) → ℤ) (i : Rank n),
+      Spec.sequenceHand (n := n) s i = Spec.coefficient s (i.val : ℤ) +
+        Spec.coefficient s ((i.val : ℤ) - 1) + Spec.coefficient s ((i.val : ℤ) - 2) := by
   sorry
 
 /-! Paper Proposition 3.2
@@ -138,37 +131,34 @@ Proposition 3.2 (Characterization of virtual sequence placements).
 https://arxiv.org/html/2611.06944v1#S3.Thmcounter2 -/
 
 theorem proposition_3_2_sequenceScan_closed_form :
-    ∀ {n : ℕ} (c : VirtualHand n) (j : ℕ), Prod.fst (Spec.sequenceScan c j) = ∑ t ∈
-    Finset.range ((j + 2) / 3), (Spec.coefficient c ((↑j : ℤ) - 1 - 3 * (↑t : ℤ)) -
-    Spec.coefficient c ((↑j : ℤ) - 2 - 3 * (↑t : ℤ))) := by
+    ∀ {n : ℕ} (c : VirtualHand n) (j : ℕ),
+      (Spec.sequenceScan c j).1 = ∑ t ∈ Finset.range ((j + 2) / 3),
+        (Spec.coefficient c ((j : ℤ) - 1 - 3 * (t : ℤ)) -
+          Spec.coefficient c ((j : ℤ) - 2 - 3 * (t : ℤ))) := by
   sorry
 
 theorem proposition_3_2_sequenceScan_boundary :
     ∀ {n : ℕ} (c : VirtualHand n), Spec.sequenceScan c (3 * n) =
-    ((classSize 0 : VirtualHand n → ℤ) c - (classSize 2 : VirtualHand n → ℤ) c,
-    (classSize 2 : VirtualHand n → ℤ) c - (classSize 1 : VirtualHand n → ℤ) c) := by
+      (classSize 0 c - classSize 2 c, classSize 2 c - classSize 1 c) := by
   sorry
 
 theorem proposition_3_2_sequenceHand_injective :
-    ∀ {n : ℕ}, Function.Injective (⇑Spec.sequenceHand : (Fin (3 * n - 2) → ℤ) →
-    VirtualHand n) := by
+    ∀ {n : ℕ}, Function.Injective (Spec.sequenceHand (n := n)) := by
   sorry
 
 theorem proposition_3_2_virtuallySequential_iff_classSizes :
-    ∀ {n : ℕ} (c : VirtualHand n), Spec.VirtuallySequential c ↔
-    (classSize 0 : VirtualHand n → ℤ) c = (classSize 1 : VirtualHand n → ℤ) c ∧
-    (classSize 1 : VirtualHand n → ℤ) c = (classSize 2 : VirtualHand n → ℤ) c := by
+    ∀ {n : ℕ} (c : VirtualHand n), Spec.VirtuallySequential c ↔ classSize 0 c = classSize 1 c ∧
+      classSize 1 c = classSize 2 c := by
   sorry
 
 theorem proposition_3_2_sequential_iff_classSizes :
-    ∀ {n : ℕ} (c : VirtualHand n), Spec.Sequential c ↔ ((classSize 0 : VirtualHand n → ℤ)
-    c = (classSize 1 : VirtualHand n → ℤ) c ∧ (classSize 1 : VirtualHand n → ℤ) c =
-    (classSize 2 : VirtualHand n → ℤ) c) ∧ 0 ≤ Spec.recoveredSequences c := by
+    ∀ {n : ℕ} (c : VirtualHand n), Spec.Sequential c ↔ (classSize 0 c = classSize 1 c ∧
+      classSize 1 c = classSize 2 c) ∧ 0 ≤ Spec.recoveredSequences c := by
   sorry
 
 theorem proposition_3_2_unique :
-    ∀ {n : ℕ} {c : VirtualHand n}, Spec.VirtuallySequential c → ∃! s, (Spec.sequenceHand :
-    (Fin (3 * n - 2) → ℤ) → VirtualHand n) s = c := by
+    ∀ {n : ℕ} {c : VirtualHand n},
+      Spec.VirtuallySequential c → ∃! s, Spec.sequenceHand (n := n) s = c := by
   sorry
 
 theorem proposition_3_2_recurrence_uniqueness :
@@ -192,8 +182,7 @@ theorem proposition_3_4_canonic_canonicalize :
   sorry
 
 theorem proposition_3_4_toHand_canonicalize :
-    ∀ {n : ℕ} (p : Placement n), Placement.toHand (Spec.Placement.canonicalize p) =
-    Placement.toHand p := by
+    ∀ {n : ℕ} (p : Placement n), (Spec.Placement.canonicalize p).toHand = p.toHand := by
   sorry
 
 theorem proposition_3_4_nonnegative_canonicalize :
@@ -212,14 +201,16 @@ theorem definition_3_5_canonicalSequence_zero :
   sorry
 
 theorem definition_3_5_canonicalSequence_succ :
-    ∀ {n : ℕ} (c : VirtualHand n) (k : ℕ), Spec.canonicalSequence c (k + 1) =
-    (Spec.coefficient c (↑k : ℤ) - Spec.canonicalSequence c k - Spec.canonicalSequence c
-    (k - 1)) % 3 := by
+    ∀ {n : ℕ} (c : VirtualHand n) (k : ℕ),
+      Spec.canonicalSequence c (k + 1) =
+        (Spec.coefficient c (k : ℤ) - Spec.canonicalSequence c k -
+          Spec.canonicalSequence c (k - 1)) % 3 := by
   sorry
 
 theorem definition_3_5_canonicalTriplet_eq :
-    ∀ {n : ℕ} (c : VirtualHand n) (i : Rank n), Spec.canonicalTriplet c i = (c i -
-    Spec.canonicalSequence c (↑i : ℕ) - Spec.canonicalSequence c ((↑i : ℕ) - 1)) / 3 := by
+    ∀ {n : ℕ} (c : VirtualHand n) (i : Rank n),
+      Spec.canonicalTriplet c i =
+        (c i - Spec.canonicalSequence c i.val - Spec.canonicalSequence c (i.val - 1)) / 3 := by
   sorry
 
 theorem definition_3_5_canonicalSequence_bounds :
@@ -232,21 +223,20 @@ Proposition 3.6 (Criterion of (virtual) meldability).
 https://arxiv.org/html/2611.06944v1#S3.Thmcounter6 -/
 
 theorem proposition_3_6_canonicalSequence_weighted :
-    ∀ {n : ℕ} (c : VirtualHand n) (j : ℕ), Spec.canonicalSequence c j = (∑ k ∈
-    Finset.range j, (↑(j - k) : ℤ) * Spec.coefficient c (↑k : ℤ)) % 3 := by
+    ∀ {n : ℕ} (c : VirtualHand n) (j : ℕ),
+      Spec.canonicalSequence c j =
+        (∑ k ∈ Finset.range j, ((j - k : ℕ) : ℤ) * Spec.coefficient c (k : ℤ)) % 3 := by
   sorry
 
 theorem proposition_3_6_canonicalSequence_boundary :
-    ∀ {n : ℕ} (c : VirtualHand n), (Spec.canonicalSequence c (3 * n),
-    Spec.canonicalSequence c (3 * n - 1)) = (((classSize 0 : VirtualHand n → ℤ) c -
-    (classSize 2 : VirtualHand n → ℤ) c) % 3, ((classSize 2 : VirtualHand n → ℤ) c -
-    (classSize 1 : VirtualHand n → ℤ) c) % 3) := by
+    ∀ {n : ℕ} (c : VirtualHand n),
+      (Spec.canonicalSequence c (3 * n), Spec.canonicalSequence c (3 * n - 1)) =
+        ((classSize 0 c - classSize 2 c) % 3, (classSize 2 c - classSize 1 c) % 3) := by
   sorry
 
 theorem proposition_3_6_exists_unique_canonical_iff :
-    ∀ {n : ℕ} (c : VirtualHand n), (∃! p, Spec.Placement.Canonic p ∧ Placement.toHand p =
-    c) ↔ (↑((size : VirtualHand n → ℤ) c) : ZMod 3) = 0 ∧ (↑((rankSum : VirtualHand n → ℤ)
-    c) : ZMod 3) = 0 := by
+    ∀ {n : ℕ} (c : VirtualHand n), (∃! p, Spec.Placement.Canonic p ∧ p.toHand = c) ↔
+      (size c : ZMod 3) = 0 ∧ (rankSum c : ZMod 3) = 0 := by
   sorry
 
 theorem proposition_3_6_virtuallyMeldable_iff_canonicalSequence :
@@ -255,22 +245,19 @@ theorem proposition_3_6_virtuallyMeldable_iff_canonicalSequence :
   sorry
 
 theorem proposition_3_6_virtuallyMeldable_iff_classSizes :
-    ∀ {n : ℕ} (c : VirtualHand n), VirtuallyMeldable c ↔
-    (↑((classSize 0 : VirtualHand n → ℤ) c) : ZMod 3) =
-    (↑((classSize 1 : VirtualHand n → ℤ) c) : ZMod 3) ∧
-    (↑((classSize 1 : VirtualHand n → ℤ) c) : ZMod 3) =
-    (↑((classSize 2 : VirtualHand n → ℤ) c) : ZMod 3) := by
+    ∀ {n : ℕ} (c : VirtualHand n), VirtuallyMeldable c ↔ (classSize 0 c : ZMod 3) =
+      (classSize 1 c : ZMod 3) ∧ (classSize 1 c : ZMod 3) = (classSize 2 c : ZMod 3) := by
   sorry
 
 theorem proposition_3_6_virtuallyMeldable_iff_size_rankSum :
-    ∀ {n : ℕ} (c : VirtualHand n), VirtuallyMeldable c ↔ (↑((size : VirtualHand n → ℤ) c)
-    : ZMod 3) = 0 ∧ (↑((rankSum : VirtualHand n → ℤ) c) : ZMod 3) = 0 := by
+    ∀ {n : ℕ} (c : VirtualHand n), VirtuallyMeldable c ↔ (size c : ZMod 3) = 0 ∧
+      (rankSum c : ZMod 3) = 0 := by
   sorry
 
 theorem proposition_3_6_meldable_iff_tripletGreedy :
-    ∀ {n : ℕ} (c : VirtualHand n), Meldable c ↔ (Spec.canonicalSequence c (3 * n) = 0 ∧
-    Spec.canonicalSequence c (3 * n - 1) = 0) ∧ ∀ (i : Rank n), 0 ≤ Spec.canonicalTriplet
-    c i := by
+    ∀ {n : ℕ} (c : VirtualHand n), Meldable c ↔
+      (Spec.canonicalSequence c (3 * n) = 0 ∧ Spec.canonicalSequence c (3 * n - 1) = 0) ∧
+        ∀ i : Rank n, 0 ≤ Spec.canonicalTriplet c i := by
   sorry
 
 theorem proposition_3_6_scanPlacement_canonic :
@@ -278,32 +265,32 @@ theorem proposition_3_6_scanPlacement_canonic :
   sorry
 
 theorem proposition_3_6_scanPlacement_toHand :
-    ∀ {n : ℕ} {c : VirtualHand n}, VirtuallyMeldable c → Placement.toHand
-    (Spec.scanPlacement c) = c := by
+    ∀ {n : ℕ} {c : VirtualHand n},
+      VirtuallyMeldable c → (Spec.scanPlacement c).toHand = c := by
   sorry
 
 theorem proposition_3_6_scanPlacement_eq :
-    ∀ {n : ℕ} {p : Placement n}, Spec.Placement.Canonic p → Spec.scanPlacement
-    (Placement.toHand p) = p := by
+    ∀ {n : ℕ} {p : Placement n},
+      Spec.Placement.Canonic p → Spec.scanPlacement p.toHand = p := by
   sorry
 
 theorem proposition_3_6_VirtuallyMeldable_unique_canonical :
     ∀ {n : ℕ} {c : VirtualHand n}, VirtuallyMeldable c → ∃! p, Spec.Placement.Canonic p ∧
-    Placement.toHand p = c := by
+    p.toHand = c := by
   sorry
 
 theorem proposition_3_6_Meldable_unique_canonical :
     ∀ {n : ℕ} {c : VirtualHand n}, Meldable c → ∃! p, Placement.Nonnegative p ∧
-    Spec.Placement.Canonic p ∧ Placement.toHand p = c := by
+    Spec.Placement.Canonic p ∧ p.toHand = c := by
   sorry
 
 /-! Paper Proposition 3.7
 https://arxiv.org/html/2611.06944v1#S3.Thmcounter7 -/
 
 theorem proposition_3_7_canonicalSequence_prefix_iff :
-    ∀ {n : ℕ} (c d : VirtualHand n), ∀ k ≤ 3 * n, (∀ (i : Rank n), (↑i : ℕ) < k → (↑(c i)
-    : ZMod 3) = (↑(d i) : ZMod 3)) ↔ ∀ j ≤ k, Spec.canonicalSequence c j =
-    Spec.canonicalSequence d j := by
+    ∀ {n : ℕ} (c d : VirtualHand n), ∀ k ≤ 3 * n,
+      (∀ i : Rank n, i.val < k → (c i : ZMod 3) = (d i : ZMod 3)) ↔
+        ∀ j ≤ k, Spec.canonicalSequence c j = Spec.canonicalSequence d j := by
   sorry
 
 /-! Paper Proposition 3.8
@@ -311,24 +298,28 @@ Proposition 3.8 (Sequential tile moving).
 https://arxiv.org/html/2611.06944v1#S3.Thmcounter8 -/
 
 theorem proposition_3_8_sequential_moveTile_right_iff :
-    ∀ {n : ℕ} {s : Fin (3 * n - 2) → ℤ}, 0 ≤ s → ∀ (i j : Rank n), (↑i : ℕ) ≤ (↑j : ℕ) →
-    (Spec.Sequential (Spec.moveTile ((Spec.sequenceHand : (Fin (3 * n - 2) → ℤ) →
-    VirtualHand n) s) i j) ↔ rankClass i = rankClass j ∧ ∀ (r : Fin (3 * n - 2)), (↑i : ℕ)
-    ≤ (↑r : ℕ) → (↑r : ℕ) < (↑j : ℕ) → ((↑r : ℕ) - (↑i : ℕ)) % 3 = 0 → 1 ≤ s r) := by
+    ∀ {n : ℕ} {s : Fin (3 * n - 2) → ℤ}, 0 ≤ s →
+      ∀ i j : Rank n, i.val ≤ j.val →
+        (Spec.Sequential (Spec.moveTile (Spec.sequenceHand (n := n) s) i j) ↔
+          rankClass i = rankClass j ∧
+            ∀ r : Fin (3 * n - 2), i.val ≤ r.val → r.val < j.val →
+              (r.val - i.val) % 3 = 0 → 1 ≤ s r) := by
   sorry
 
 theorem proposition_3_8_sequential_moveTile_left_iff :
-    ∀ {n : ℕ} {s : Fin (3 * n - 2) → ℤ}, 0 ≤ s → ∀ (i j : Rank n), (↑j : ℕ) ≤ (↑i : ℕ) →
-    (Spec.Sequential (Spec.moveTile ((Spec.sequenceHand : (Fin (3 * n - 2) → ℤ) →
-    VirtualHand n) s) i j) ↔ rankClass i = rankClass j ∧ ∀ (r : Fin (3 * n - 2)), (↑j : ℕ)
-    ≤ (↑r : ℕ) → (↑r : ℕ) < (↑i : ℕ) → ((↑r : ℕ) - (↑j : ℕ)) % 3 = 1 → 1 ≤ s r) := by
+    ∀ {n : ℕ} {s : Fin (3 * n - 2) → ℤ}, 0 ≤ s →
+      ∀ i j : Rank n, j.val ≤ i.val →
+        (Spec.Sequential (Spec.moveTile (Spec.sequenceHand (n := n) s) i j) ↔
+          rankClass i = rankClass j ∧
+            ∀ r : Fin (3 * n - 2), j.val ≤ r.val → r.val < i.val →
+              (r.val - j.val) % 3 = 1 → 1 ≤ s r) := by
   sorry
 
 theorem proposition_3_8_sequenceHand_shiftAlong :
-    ∀ {n : ℕ} (s : Fin (3 * n - 2) → ℤ) (i j : Rank n), (↑i : ℕ) ≤ (↑j : ℕ) → rankClass i
-    = rankClass j → (Spec.sequenceHand : (Fin (3 * n - 2) → ℤ) → VirtualHand n)
-    (Spec.Moving.shiftAlong s i j) = Spec.moveTile ((Spec.sequenceHand : (Fin (3 * n - 2)
-    → ℤ) → VirtualHand n) s) i j := by
+    ∀ {n : ℕ} (s : Fin (3 * n - 2) → ℤ) (i j : Rank n),
+      i.val ≤ j.val → rankClass i = rankClass j →
+        Spec.sequenceHand (n := n) (Spec.Moving.shiftAlong s i j) =
+          Spec.moveTile (Spec.sequenceHand (n := n) s) i j := by
   sorry
 
 theorem proposition_3_8_sequenceHand_shiftAlongLeft :
@@ -343,43 +334,48 @@ Proposition 3.9 (Tile moving).
 https://arxiv.org/html/2611.06944v1#S3.Thmcounter9 -/
 
 theorem proposition_3_9_meldable_right_iff :
-    ∀ {n : ℕ} {p : Placement n}, Spec.Placement.Canonic p → Placement.Nonnegative p → ∀
-    (r : Spec.Moving.Start n), Meldable (Spec.Moving.right (Placement.toHand p) r) ↔ 1 ≤
-    Placement.seqNum p (Spec.Moving.sequenceAt r 0) ∧ Placement.seqNum p
-    (Spec.Moving.sequenceAt r 1) ≤ 1 ∨ 1 ≤ Placement.seqNum p (Spec.Moving.sequenceAt r 0)
-    ∧ Placement.seqNum p (Spec.Moving.sequenceAt r 1) = 2 ∨ Placement.seqNum p
-    (Spec.Moving.sequenceAt r 0) = 0 ∧ Placement.seqNum p (Spec.Moving.sequenceAt r 1) ≤ 1
-    ∧ 1 ≤ Placement.tripNum p (Spec.Moving.rankAt r 0) ∧ 1 ≤ Placement.tripNum p
-    (Spec.Moving.rankAt r 1) ∧ 1 ≤ Placement.tripNum p (Spec.Moving.rankAt r 2) ∨
-    Placement.seqNum p (Spec.Moving.sequenceAt r 0) = 0 ∧ Placement.seqNum p
-    (Spec.Moving.sequenceAt r 1) = 2 ∧ 1 ≤ Placement.tripNum p (Spec.Moving.rankAt r 0) := by
+    ∀ {n : ℕ} {p : Placement n}, Spec.Placement.Canonic p → Placement.Nonnegative p →
+      ∀ r : Spec.Moving.Start n, Meldable (Spec.Moving.right p.toHand r) ↔
+        1 ≤ p.seqNum (Spec.Moving.sequenceAt r 0) ∧
+          p.seqNum (Spec.Moving.sequenceAt r 1) ≤ 1 ∨
+        1 ≤ p.seqNum (Spec.Moving.sequenceAt r 0) ∧
+          p.seqNum (Spec.Moving.sequenceAt r 1) = 2 ∨
+        p.seqNum (Spec.Moving.sequenceAt r 0) = 0 ∧
+          p.seqNum (Spec.Moving.sequenceAt r 1) ≤ 1 ∧
+          1 ≤ p.tripNum (Spec.Moving.rankAt r 0) ∧
+          1 ≤ p.tripNum (Spec.Moving.rankAt r 1) ∧
+          1 ≤ p.tripNum (Spec.Moving.rankAt r 2) ∨
+        p.seqNum (Spec.Moving.sequenceAt r 0) = 0 ∧
+          p.seqNum (Spec.Moving.sequenceAt r 1) = 2 ∧
+          1 ≤ p.tripNum (Spec.Moving.rankAt r 0) := by
   sorry
 
 theorem proposition_3_9_canonical_step_seqNum :
-    ∀ {n : ℕ} {p : Placement n}, Spec.Placement.Canonic p → ∀ (r : Spec.Moving.Start n),
-    Placement.seqNum (Spec.Placement.canonicalize (Spec.Moving.step p r)) =
-    Spec.Moving.shift (Placement.seqNum p) r + (3 * Spec.Moving.borrow p r) • Pi.single
-    (Spec.Moving.sequenceAt r 0) 1 - (3 * Spec.Moving.carry p r) • Pi.single
-    (Spec.Moving.sequenceAt r 1) 1 := by
+    ∀ {n : ℕ} {p : Placement n}, Spec.Placement.Canonic p → ∀ r : Spec.Moving.Start n,
+      (Spec.Placement.canonicalize (Spec.Moving.step p r)).seqNum =
+        Spec.Moving.shift p.seqNum r +
+          (3 * Spec.Moving.borrow p r) • Pi.single (Spec.Moving.sequenceAt r 0) 1 -
+          (3 * Spec.Moving.carry p r) • Pi.single (Spec.Moving.sequenceAt r 1) 1 := by
   sorry
 
 theorem proposition_3_9_canonical_step_tripNum :
-    ∀ {n : ℕ} {p : Placement n}, Spec.Placement.Canonic p → ∀ (r : Spec.Moving.Start n),
-    Placement.tripNum (Spec.Placement.canonicalize (Spec.Moving.step p r)) =
-    Placement.tripNum p - Spec.Moving.borrow p r • sequence (Spec.Moving.sequenceAt r 0) +
-    Spec.Moving.carry p r • sequence (Spec.Moving.sequenceAt r 1) := by
+    ∀ {n : ℕ} {p : Placement n}, Spec.Placement.Canonic p → ∀ r : Spec.Moving.Start n,
+      (Spec.Placement.canonicalize (Spec.Moving.step p r)).tripNum =
+        p.tripNum - Spec.Moving.borrow p r • sequence (Spec.Moving.sequenceAt r 0) +
+          Spec.Moving.carry p r • sequence (Spec.Moving.sequenceAt r 1) := by
   sorry
 
 theorem proposition_3_9_meldable_right_of_long :
-    ∀ {n : ℕ} {c : VirtualHand n}, Meldable c → ∀ (r : Spec.Moving.Start n) (j : Rank n),
-    (↑r : ℕ) + 3 ≤ (↑j : ℕ) → Meldable (Spec.moveTile c (Spec.Moving.rankAt r 0) j) →
-    Meldable (Spec.Moving.right c r) := by
+    ∀ {n : ℕ} {c : VirtualHand n}, Meldable c →
+      ∀ (r : Spec.Moving.Start n) (j : Rank n), r.val + 3 ≤ j.val →
+        Meldable (Spec.moveTile c (Spec.Moving.rankAt r 0) j) →
+          Meldable (Spec.Moving.right c r) := by
   sorry
 
 theorem proposition_3_9_moveTile_right_steps :
-    ∀ {n : ℕ} {c : VirtualHand n}, Meldable c → ∀ (i j k : Rank n) (t : ℕ), (↑k : ℕ) =
-    (↑i : ℕ) + 3 * t → (↑k : ℕ) ≤ (↑j : ℕ) → Meldable (Spec.moveTile c i j) → Meldable
-    (Spec.moveTile c i k) := by
+    ∀ {n : ℕ} {c : VirtualHand n}, Meldable c →
+      ∀ (i j k : Rank n) (t : ℕ), k.val = i.val + 3 * t → k.val ≤ j.val →
+        Meldable (Spec.moveTile c i j) → Meldable (Spec.moveTile c i k) := by
   sorry
 
 /-! Paper Proposition 3.10
@@ -387,15 +383,17 @@ Proposition 3.10 (Interval property of tile moving).
 https://arxiv.org/html/2611.06944v1#S3.Thmcounter10 -/
 
 theorem proposition_3_10_moveTile_interval :
-    ∀ {n : ℕ} {c : VirtualHand n}, Meldable c → ∀ {i j k : Rank n}, Meldable
-    (Spec.moveTile c i j) → min (↑i : ℕ) (↑j : ℕ) ≤ (↑k : ℕ) ∧ (↑k : ℕ) ≤ max (↑i : ℕ)
-    (↑j : ℕ) → rankClass k = rankClass i → Meldable (Spec.moveTile c i k) := by
+    ∀ {n : ℕ} {c : VirtualHand n}, Meldable c →
+      ∀ {i j k : Rank n}, Meldable (Spec.moveTile c i j) →
+        min i.val j.val ≤ k.val ∧ k.val ≤ max i.val j.val →
+          rankClass k = rankClass i → Meldable (Spec.moveTile c i k) := by
   sorry
 
 theorem proposition_3_10_moveTile_interval_of_endpoints :
-    ∀ {n : ℕ} {c : VirtualHand n} {i a b k : Rank n}, Meldable (Spec.moveTile c i a) →
-    Meldable (Spec.moveTile c i b) → min (↑a : ℕ) (↑b : ℕ) ≤ (↑k : ℕ) ∧ (↑k : ℕ) ≤ max
-    (↑a : ℕ) (↑b : ℕ) → rankClass k = rankClass a → Meldable (Spec.moveTile c i k) := by
+    ∀ {n : ℕ} {c : VirtualHand n} {i a b k : Rank n},
+      Meldable (Spec.moveTile c i a) → Meldable (Spec.moveTile c i b) →
+        min a.val b.val ≤ k.val ∧ k.val ≤ max a.val b.val →
+          rankClass k = rankClass a → Meldable (Spec.moveTile c i k) := by
   sorry
 
 /-! Paper Definition 4.1
@@ -408,8 +406,8 @@ https://arxiv.org/html/2611.06944v1#S4.Thmcounter1 -/
 https://arxiv.org/html/2611.06944v1#S4.Thmcounter2 -/
 
 theorem proposition_4_2_congruence :
-    ∀ {n : ℕ} {c : VirtualHand n} {i j : Rank n}, DrawPair c i j → rankClass i + rankClass
-    j = -(↑((rankSum : VirtualHand n → ℤ) c) : ZMod 3) := by
+    ∀ {n : ℕ} {c : VirtualHand n} {i j : Rank n},
+      DrawPair c i j → rankClass i + rankClass j = -(rankSum c : ZMod 3) := by
   sorry
 
 /-! Paper Definition 4.3
@@ -436,9 +434,9 @@ theorem definition_4_3_pairedClass_eq_fixed_iff :
 https://arxiv.org/html/2611.06944v1#S4.Thmcounter4 -/
 
 theorem proposition_4_4_classSize_nonfixed_congruence :
-    ∀ {n : ℕ} {c : VirtualHand n}, (↑((size : VirtualHand n → ℤ) c) : ZMod 3) = 1 → ∀
-    (r : ZMod 3), r ≠ Spec.fixedClass c → (↑((classSize r : VirtualHand n → ℤ) c) : ZMod
-    3) + 1 = (↑((classSize (Spec.fixedClass c) : VirtualHand n → ℤ) c) : ZMod 3) := by
+    ∀ {n : ℕ} {c : VirtualHand n}, (size c : ZMod 3) = 1 →
+      ∀ r : ZMod 3, r ≠ Spec.fixedClass c →
+        (classSize r c : ZMod 3) + 1 = (classSize (Spec.fixedClass c) c : ZMod 3) := by
   sorry
 
 /-! Paper Example 4.5
@@ -456,9 +454,10 @@ Proposition 4.6 (Incoming interval property).
 https://arxiv.org/html/2611.06944v1#S4.Thmcounter6 -/
 
 theorem proposition_4_6_incoming_interval :
-    ∀ {n : ℕ} {c : VirtualHand n} {i p q : Rank n}, DrawPair c p q → DrawPair c i q → ∀
-    (k : Rank n), min (↑p : ℕ) (↑i : ℕ) ≤ (↑k : ℕ) ∧ (↑k : ℕ) ≤ max (↑p : ℕ) (↑i : ℕ) →
-    rankClass k = rankClass p → DrawPair c k q := by
+    ∀ {n : ℕ} {c : VirtualHand n} {i p q : Rank n},
+      DrawPair c p q → DrawPair c i q → ∀ k : Rank n,
+        min p.val i.val ≤ k.val ∧ k.val ≤ max p.val i.val →
+          rankClass k = rankClass p → DrawPair c k q := by
   sorry
 
 theorem proposition_4_6_same_draw_class :
@@ -500,9 +499,10 @@ theorem proposition_4_10_consecutive_class :
   sorry
 
 theorem proposition_4_10_consecutive :
-    ∀ {n : ℕ} {c : VirtualHand n} {i q j : Rank n}, DrawPair c i q → DrawPair c q j → ∃
-    (r : Rank n), (min (↑i : ℕ) (↑j : ℕ) ≤ (↑r : ℕ) ∧ (↑r : ℕ) ≤ max (↑i : ℕ) (↑j : ℕ)) ∧
-    rankClass r = rankClass i ∧ DrawPair c r q ∧ DrawPair c q r := by
+    ∀ {n : ℕ} {c : VirtualHand n} {i q j : Rank n},
+      DrawPair c i q → DrawPair c q j → ∃ r : Rank n,
+        (min i.val j.val ≤ r.val ∧ r.val ≤ max i.val j.val) ∧
+          rankClass r = rankClass i ∧ DrawPair c r q ∧ DrawPair c q r := by
   sorry
 
 /-! Paper Proposition 4.11
@@ -527,9 +527,9 @@ theorem proposition_4_11_exists_twoPair :
   sorry
 
 theorem proposition_4_11_remainder_meldableWith :
-    ∀ {n m : ℕ} {c : VirtualHand n} {p q : Rank n}, Spec.TwoPair c p q →
-    (size : VirtualHand n → ℤ) c = 3 * (↑m : ℤ) + 1 → MeldableWith (m - 1) (c - pair p -
-    pair q) := by
+    ∀ {n m : ℕ} {c : VirtualHand n} {p q : Rank n},
+      Spec.TwoPair c p q → size c = 3 * (m : ℤ) + 1 →
+        MeldableWith (m - 1) (c - pair p - pair q) := by
   sorry
 
 -- Unnumbered remark after 4.11: formalized.
@@ -557,38 +557,31 @@ Proposition 5.1 (Split at a missing rank).
 https://arxiv.org/html/2611.06944v1#S5.Thmcounter1 -/
 
 theorem proposition_5_1_meldable_split :
-    ∀ {n : ℕ} {c : VirtualHand n} (k : Rank n), c k = 0 → (Meldable c ↔ Meldable
-    ((Spec.leftOf k : VirtualHand n → VirtualHand n) c) ∧ Meldable
-    ((Spec.rightOf k : VirtualHand n → VirtualHand n) c)) := by
+    ∀ {n : ℕ} {c : VirtualHand n} (k : Rank n), c k = 0 →
+      (Meldable c ↔ Meldable (Spec.leftOf k c) ∧ Meldable (Spec.rightOf k c)) := by
   sorry
 
 /-! Paper Proposition 5.2
 https://arxiv.org/html/2611.06944v1#S5.Thmcounter2 -/
 
 theorem proposition_5_2_missing_side_sizes :
-    ∀ {n : ℕ} {c : VirtualHand n} {k a b p q : Rank n}, c k = 0 → DrawPair c a p →
-    DrawPair c b q → (↑a : ℕ) < (↑k : ℕ) → (↑k : ℕ) < (↑b : ℕ) →
-    (size : VirtualHand n → ℤ) ((Spec.leftOf k : VirtualHand n → VirtualHand n) c) % 3 = 2
-    ∧ (size : VirtualHand n → ℤ) ((Spec.rightOf k : VirtualHand n → VirtualHand n) c) % 3
-    = 2 := by
+    ∀ {n : ℕ} {c : VirtualHand n} {k a b p q : Rank n},
+      c k = 0 → DrawPair c a p → DrawPair c b q → a.val < k.val → k.val < b.val →
+        size (Spec.leftOf k c) % 3 = 2 ∧ size (Spec.rightOf k c) % 3 = 2 := by
   sorry
 
 theorem proposition_5_2_across_missing_left :
-    ∀ {n : ℕ} {c : VirtualHand n} {i j k : Rank n}, DrawPair c i j → c k = 0 →
-    (size : VirtualHand n → ℤ) ((Spec.leftOf k : VirtualHand n → VirtualHand n) c) % 3 = 2
-    → (↑i : ℕ) < (↑k : ℕ) → (↑k : ℕ) < (↑j : ℕ) ∧ Meldable
-    ((Spec.leftOf k : VirtualHand n → VirtualHand n) c + single i) ∧ rankClass i =
-    -(↑((rankSum : VirtualHand n → ℤ) ((Spec.leftOf k : VirtualHand n → VirtualHand n) c))
-    : ZMod 3) := by
+    ∀ {n : ℕ} {c : VirtualHand n} {i j k : Rank n},
+      DrawPair c i j → c k = 0 → size (Spec.leftOf k c) % 3 = 2 → i.val < k.val →
+        k.val < j.val ∧ Meldable (Spec.leftOf k c + single i) ∧
+          rankClass i = -(rankSum (Spec.leftOf k c) : ZMod 3) := by
   sorry
 
 theorem proposition_5_2_across_missing_right :
-    ∀ {n : ℕ} {c : VirtualHand n} {i j k : Rank n}, DrawPair c i j → c k = 0 →
-    (size : VirtualHand n → ℤ) ((Spec.rightOf k : VirtualHand n → VirtualHand n) c) % 3 =
-    2 → (↑k : ℕ) < (↑i : ℕ) → (↑j : ℕ) < (↑k : ℕ) ∧ Meldable
-    ((Spec.rightOf k : VirtualHand n → VirtualHand n) c + single i) ∧ rankClass i =
-    -(↑((rankSum : VirtualHand n → ℤ) ((Spec.rightOf k : VirtualHand n → VirtualHand n)
-    c)) : ZMod 3) := by
+    ∀ {n : ℕ} {c : VirtualHand n} {i j k : Rank n},
+      DrawPair c i j → c k = 0 → size (Spec.rightOf k c) % 3 = 2 → k.val < i.val →
+        j.val < k.val ∧ Meldable (Spec.rightOf k c + single i) ∧
+          rankClass i = -(rankSum (Spec.rightOf k c) : ZMod 3) := by
   sorry
 
 /-! Paper Proposition 5.3
@@ -596,8 +589,8 @@ Proposition 5.3 (Interior positivity).
 https://arxiv.org/html/2611.06944v1#S5.Thmcounter3 -/
 
 theorem proposition_5_3_interior_positive :
-    ∀ {n m : ℕ} {c : VirtualHand n}, IsFullWait m c → ∀ (k : Rank n), 0 < (↑k : ℕ) →
-    (↑k : ℕ) + 1 < 3 * n → 1 ≤ c k := by
+    ∀ {n m : ℕ} {c : VirtualHand n}, IsFullWait m c →
+      ∀ k : Rank n, 0 < k.val → k.val + 1 < 3 * n → 1 ≤ c k := by
   sorry
 
 /-! Paper Definition 5.4
@@ -606,21 +599,20 @@ https://arxiv.org/html/2611.06944v1#S5.Thmcounter4 -/
 -- Model: Rank; Spec.interiorOnes; boundary rank indices 0 and 3*n-1.
 
 theorem definition_5_4_classSize_const :
-    ∀ {n : ℕ} (r : ZMod 3) (z : ℤ), ((classSize r : VirtualHand n → ℤ) fun _ => z) =
-    (↑n : ℤ) * z := by
+    ∀ {n : ℕ} (r : ZMod 3) (z : ℤ), classSize r (fun _ : Rank n => z) = (n : ℤ) * z := by
   sorry
 
 theorem definition_5_4_classSize_interiorOnes :
-    ∀ {n : ℕ}, 0 < n → ∀ (r : ZMod 3), (classSize r : VirtualHand n → ℤ) Spec.interiorOnes
-    = ((↑n : ℤ) - if r = 1 then 1 else 0) - if r = 0 then 1 else 0 := by
+    ∀ {n : ℕ}, 0 < n → ∀ r : ZMod 3, classSize r (Spec.interiorOnes (n := n)) =
+      ((n : ℤ) - if r = 1 then 1 else 0) - if r = 0 then 1 else 0 := by
   sorry
 
 /-! Paper Proposition 5.5
 https://arxiv.org/html/2611.06944v1#S5.Thmcounter5 -/
 
 theorem proposition_5_5_incoming_both_sides :
-    ∀ {n : ℕ} {c : VirtualHand n} {j a b : Rank n}, DrawPair c a j → DrawPair c b j →
-    (↑a : ℕ) < (↑j : ℕ) → (↑j : ℕ) < (↑b : ℕ) → 3 ≤ c j := by
+    ∀ {n : ℕ} {c : VirtualHand n} {j a b : Rank n},
+      DrawPair c a j → DrawPair c b j → a.val < j.val → j.val < b.val → 3 ≤ c j := by
   sorry
 
 /-! Paper Proposition 5.6
@@ -628,13 +620,13 @@ Proposition 5.6 (Lower bounds on congruence class sizes).
 https://arxiv.org/html/2611.06944v1#S5.Thmcounter6 -/
 
 theorem proposition_5_6_fixed_class_size :
-    ∀ {n m : ℕ} {c : VirtualHand n}, IsFullWait m c → (↑n : ℤ) ≤ (classSize
-    (Spec.fixedClass c) : VirtualHand n → ℤ) c := by
+    ∀ {n m : ℕ} {c : VirtualHand n},
+      IsFullWait m c → (n : ℤ) ≤ classSize (Spec.fixedClass c) c := by
   sorry
 
 theorem proposition_5_6_nonfixed_class_size :
-    ∀ {n m : ℕ} {c : VirtualHand n}, IsFullWait m c → ∀ (r : ZMod 3), r ≠ Spec.fixedClass
-    c → (↑n : ℤ) + 1 ≤ (classSize r : VirtualHand n → ℤ) c := by
+    ∀ {n m : ℕ} {c : VirtualHand n}, IsFullWait m c → ∀ r : ZMod 3, r ≠ Spec.fixedClass c →
+      (n : ℤ) + 1 ≤ classSize r c := by
   sorry
 
 -- Unnumbered remark after 5.6: formalized.
@@ -688,13 +680,13 @@ Proposition 5.8 (Sizes of congruence classes).
 https://arxiv.org/html/2611.06944v1#S5.Thmcounter8 -/
 
 theorem proposition_5_8_fixed_class_size_succ :
-    ∀ {n : ℕ} {c : VirtualHand n}, 2 ≤ n → IsFullWait (n + 1) c → (classSize
-    (Spec.fixedClass c) : VirtualHand n → ℤ) c = (↑n : ℤ) := by
+    ∀ {n : ℕ} {c : VirtualHand n}, 2 ≤ n → IsFullWait (n + 1) c →
+      classSize (Spec.fixedClass c) c = (n : ℤ) := by
   sorry
 
 theorem proposition_5_8_nonfixed_class_size_succ :
-    ∀ {n : ℕ} {c : VirtualHand n}, 2 ≤ n → IsFullWait (n + 1) c → ∀ (r : ZMod 3), r ≠
-    Spec.fixedClass c → (classSize r : VirtualHand n → ℤ) c = (↑n : ℤ) + 2 := by
+    ∀ {n : ℕ} {c : VirtualHand n}, 2 ≤ n → IsFullWait (n + 1) c →
+      ∀ r : ZMod 3, r ≠ Spec.fixedClass c → classSize r c = (n : ℤ) + 2 := by
   sorry
 
 -- Unnumbered remark after 5.8: formalized.
@@ -729,12 +721,12 @@ theorem proposition_5_9_fixed_pair_unique_succ :
   sorry
 
 theorem proposition_5_9_fixed_draw_placement_succ :
-    ∀ {n : ℕ} {c : VirtualHand n}, 2 ≤ n → IsFullWait (n + 1) c → ∀ (p q : Rank n),
-    Spec.Pillar c p → Spec.Pillar c q → rankClass p ≠ Spec.fixedClass c → rankClass q =
-    Spec.pairedClass c (rankClass p) → ∀ {i j : Rank n}, DrawPair c i j → rankClass i =
-    Spec.fixedClass c → ∀ {t : Placement n}, Placement.Nonnegative t → Placement.toHand t
-    = c + single i - pair j → Spec.Placement.sequenceCount t = (↑n : ℤ) - 1 ∧
-    Placement.tripNum t = single p + single q := by
+    ∀ {n : ℕ} {c : VirtualHand n}, 2 ≤ n → IsFullWait (n + 1) c →
+      ∀ p q : Rank n, Spec.Pillar c p → Spec.Pillar c q →
+        rankClass p ≠ Spec.fixedClass c → rankClass q = Spec.pairedClass c (rankClass p) →
+          ∀ {i j : Rank n}, DrawPair c i j → rankClass i = Spec.fixedClass c →
+            ∀ {t : Placement n}, Placement.Nonnegative t → t.toHand = c + single i - pair j →
+              Spec.Placement.sequenceCount t = (n : ℤ) - 1 ∧ t.tripNum = single p + single q := by
   sorry
 
 -- Unnumbered remark after 5.9: formalized.
@@ -789,14 +781,13 @@ Proposition 6.2 (Abundance of full-sided waits).
 https://arxiv.org/html/2611.06944v1#S6.Thmcounter2 -/
 
 theorem proposition_6_2_drawPair_of_abundant :
-    ∀ {n : ℕ} {c : VirtualHand n}, (↑((size : VirtualHand n → ℤ) c) : ZMod 3) = 1 →
-    Spec.abundanceThreshold ≤ c → ∀ (i j : Rank n), rankClass i + rankClass j =
-    -(↑((rankSum : VirtualHand n → ℤ) c) : ZMod 3) → DrawPair c i j := by
+    ∀ {n : ℕ} {c : VirtualHand n}, (size c : ZMod 3) = 1 → Spec.abundanceThreshold ≤ c →
+      ∀ i j : Rank n, rankClass i + rankClass j = -(rankSum c : ZMod 3) → DrawPair c i j := by
   sorry
 
 theorem proposition_6_2_isFullWait_of_abundant :
     ∀ {n m : ℕ} {c : VirtualHand n}, 0 < n → Spec.abundanceThreshold ≤ c →
-    (size : VirtualHand n → ℤ) c = 3 * (↑m : ℤ) + 1 → IsFullWait m c := by
+      size c = 3 * (m : ℤ) + 1 → IsFullWait m c := by
   sorry
 
 theorem proposition_6_2_exists_full :
