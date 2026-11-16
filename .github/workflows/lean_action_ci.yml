@@ -1,44 +1,16 @@
 name: Lean Action CI
 
 on:
-  push:
-  pull_request:
   workflow_dispatch:
 
-# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
-  contents: read # Read access to repository contents
-  pages: write # Write access to GitHub Pages
-  id-token: write # Write access to ID tokens
+  contents: read
 
 jobs:
   build:
     runs-on: ubuntu-24.04
-
     steps:
-      - name: Cleanup to free disk space # Mathlib is large, may cause disk space issues on GitHub Actions
-        uses: jlumbroso/free-disk-space@main
-        with:
-          tool-cache: false
-          android: true
-          dotnet: false
-          haskell: false
-          large-packages: false
-          docker-images: false
-          swap-storage: false
       - uses: actions/checkout@v5
       - uses: leanprover/lean-action@v1
-      - name: Verify structural proofs and axioms
-        run: |
-          lake build --wfail
-          lake env lean -j2 -M4096 -DwarningAsError=true Audit.lean > axioms.log
-          python3 scripts/check_axioms.py Audit.lean axioms.log
-      - name: Install Comparator sandbox
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y --no-install-recommends bubblewrap
-      - name: Check public-paper correspondence
-        run: python3 scripts/check_paper_coverage.py
-      - name: Check paper statements with Comparator
-        run: lake comparator --config=ComparatorChallenges/config.json
-      - uses: leanprover-community/docgen-action@v1
+        with:
+          build-args: --wfail

@@ -491,7 +491,7 @@ lake comparator --config=ComparatorChallenges/config.json
 The audit covers the foundational results and the complete explicit example.
 Allowed axioms are `propext`, `Classical.choice`, and `Quot.sound`. There are no
 placeholder proofs or uses of `native_decide` in the library. `Audit.lean`
-and `scripts/check_axioms.py` enforce the standard axiom set in CI. The new
+and `scripts/check_axioms.py` provide the local standard-axiom audit. The new
 `ComparatorChallenges` target checks 120 statements against a model importing
 only shared foundational project definitions. Derived model objects have their
 own namespace and definitions; only the solution imports the library and proves
@@ -525,3 +525,9 @@ library modules are reachable from the root import, and the strict audit passed
 for 606 declarations. The normal sandboxed Comparator passed all 120 targets in
 the regular checkout, whose tracked sources matched the detached checkout.
 The deferred Example 6.6 and the open questions retain their explicit status.
+
+
+The hosted `Lean Action CI` workflow is manual (`workflow_dispatch`) and runs
+only checkout plus `lean-action` with `--wfail`. Dispatch it at a work milestone.
+Docgen is disabled in this workflow. The axiom audit, paper correspondence and
+sandboxed Comparator commands above remain local validation checks.
