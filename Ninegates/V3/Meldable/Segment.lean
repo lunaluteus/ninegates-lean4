@@ -70,6 +70,13 @@ lemma Sequential.add {c d : VirtualHand n} (hc : Sequential c) (hd : Sequential 
   obtain ⟨t, positive_t, rfl⟩ := hd
   exact ⟨s + t, add_nonneg positive_s positive_t, map_add _ _ _⟩
 
+lemma Sequential.smul {c : VirtualHand n} (h : Sequential c) {z : ℤ} (positive : 0 ≤ z) :
+    Sequential (z • c) := by
+  obtain ⟨s, coefficients, rfl⟩ := h
+  refine ⟨z • s, ?_, map_smul _ _ _⟩
+  intro j
+  exact mul_nonneg positive (coefficients j)
+
 lemma sequential_segment_sub_single {a b : ℕ} (bound : b ≤ 3 * n) (i : Rank n)
     (lower : a ≤ i.val) (upper : i.val < b) (left : (i.val - a) % 3 = 0)
     (right : (b - (i.val + 1)) % 3 = 0) : Sequential (segment a b - single i) := by

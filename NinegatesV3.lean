@@ -21,6 +21,7 @@ public import Ninegates.V3.Standard.Valid
 public import Ninegates.V3.Wait.Abundance
 public import Ninegates.V3.Wait.Add
 public import Ninegates.V3.Minimal.Maximum
+public import Ninegates.V3.Minimal.Double.Minimal
 public import Ninegates.V3.Examples
 public import Ninegates.V3.MovingExamples
 public import Ninegates.V3.GraphExamples
