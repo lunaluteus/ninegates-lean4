@@ -69,8 +69,13 @@ six full-sided, minimal, and live waits at order one and meld count two.
 There are no full-sided waits for `m<=n`, and no other minimal waits at order one.
 The eight named families are proved distinct at every `n>=2`.
 
-The Taiwanese counts `149/11/27` remain to be formalized. The paper's exact
-general formula for `M(n)` is a conjecture;
+[`Minimal/Next`](Ninegates/Minimal/Next.lean) characterizes every nonminimal
+full-sided `(n,n+2)` wait for `n>=2` as a standard hand plus one elementary meld.
+[`Numerical/Taiwanese`](Ninegates/Numerical/Taiwanese.lean) consequently proves
+that exactly 122 Taiwanese `(3,5)` waits are nonminimal. The paper's total,
+live, and minimal counts `149/11/27` remain to be formalized.
+
+The exact general formula for `M(n)` is a conjecture;
 it is neither assumed nor presented as proved. See [DEVELOPMENT.md](DEVELOPMENT.md)
 for the detailed correspondence with the paper.
 
@@ -119,7 +124,7 @@ states use `decide +kernel`; no proof uses native evaluation.
 The new challenge checks the actual classification, including live uniqueness,
 order one, minimal classification, attained coarse and improved bounds, and
 both full-sidedness and minimality of the alternating constructions, and the
-exact standard-family cardinalities:
+exact standard-family cardinalities, and the Taiwanese nonminimal count:
 
 ```sh
 lake comparator --config=ComparatorChallenges/config.json
@@ -152,6 +157,7 @@ for the meaning and trust assumptions of these checks.
 | `Standard/` | Eight named families and the six order-one hands |
 | `Classification.lean` | Classification and live uniqueness |
 | `Minimal/` | Arbitrary removals, maximal meld counts, lower-bound families |
+| `Numerical/` | Finite counts following structural reductions |
 | `*Examples.lean` | Explicit examples checking boundaries and hypotheses |
 
 We aim for readable structural arguments and reusable local lemmas. Follow the

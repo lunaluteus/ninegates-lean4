@@ -548,3 +548,8 @@ import Ninegates
 #print axioms Mahjong.VirtualHand.fullWait_card_zero
 #print axioms Mahjong.VirtualHand.minimalFullWait_card_zero
 #print axioms Mahjong.VirtualHand.orderOne_allMinimalFullWait_card
+#print axioms Mahjong.VirtualHand.next_full_not_minimal_iff
+#print axioms Mahjong.VirtualHand.Standard.mem_nextNonminimal
+#print axioms Mahjong.VirtualHand.next_nonminimal_iff_mem
+#print axioms Mahjong.VirtualHand.Standard.nextNonminimal_three_card
+#print axioms Mahjong.VirtualHand.taiwanese_nonminimal_card

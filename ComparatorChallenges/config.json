@@ -16,7 +16,8 @@
     "ComparatorChallenges.maximal_minimal_wait_strong",
     "ComparatorChallenges.standard_cardinalities",
     "ComparatorChallenges.order_one_cardinalities",
-    "ComparatorChallenges.below_order_cardinalities"
+    "ComparatorChallenges.below_order_cardinalities",
+    "ComparatorChallenges.taiwanese_nonminimal_cardinality"
   ],
   "permitted_axioms": [
     "propext",

@@ -92,4 +92,8 @@ theorem below_order_cardinalities (n m : ℕ) (bound : m ≤ n) :
       Nat.card {c : VirtualHand n // IsMinimalFullWait m c} = 0 :=
   by sorry
 
+theorem taiwanese_nonminimal_cardinality :
+    Nat.card {c : VirtualHand 3 // IsFullWait 5 c ∧ ¬IsMinimalFullWait 5 c} = 122 :=
+  by sorry
+
 end ComparatorChallenges

@@ -349,7 +349,8 @@ checks the order-one exception that the later `m=n+1` classification must retain
 | Full-sidedness of the stronger even/odd constructions | Proved |
 | Minimality of the stronger constructions and improved lower bound | Proved |
 | Distinct families and exact standard cardinalities 0/8/6, live 1/6 | Proved |
-| Taiwanese counts 149/11/27 | Pending |
+| Nonminimal `(n,n+2)` characterization, Taiwanese nonminimal count 122 | Proved |
+| Taiwanese total/live/minimal counts 149/11/27 | Pending |
 
 `Standard/Distinct` proves the eight named families are pairwise distinct at
 every order at least two. Their two endpoints and second coordinate distinguish
@@ -360,6 +361,15 @@ counts for full and minimal waits. It also proves live cardinalities one and
 six, zero cardinalities for `m<=n`, and six minimal order-one waits across all
 meld counts. These are consequences of the structural classification, not an
 enumeration of candidate hands.
+
+`Minimal/Next` characterizes all nonminimal full-sided `(n,n+2)` waits at
+`n>=2`: each is one of the eight standard hands plus one triplet or sequence.
+This follows from elementary removal and the structural classification at
+`m=n+1`. `Numerical/Taiwanese` proves there are exactly 122 such hands at
+`n=3`, by kernel evaluation of the finite set of 128 standard-hand/meld
+combinations with duplicates removed. The paper's total/live/minimal Taiwanese
+counts 149/11/27 remain unformalized; independent discovery computations are
+not used as Lean proofs.
 
 The exact general `M(n)` formula remains a conjecture in the paper. It is not
 assumed as an axiom or used to prove any part of this development. Existing
@@ -380,9 +390,10 @@ The audit covers the foundational results and the complete explicit example.
 Allowed axioms are `propext`, `Classical.choice`, and `Quot.sound`. There are no
 placeholder proofs or uses of `native_decide` in the library. `Audit.lean`
 and `scripts/check_axioms.py` enforce the standard axiom set in CI. The new
-`ComparatorChallenges` target checks fifteen key statements against a
+`ComparatorChallenges` target checks sixteen key statements against a
 definition-only challenge boundary, including the classification itself,
-alternating minimality, the improved bound and the standard cardinalities. Run
+alternating minimality, the improved bound, standard cardinalities, and the
+Taiwanese nonminimal count. Run
 `lake comparator --config=ComparatorChallenges/config.json` with its sandbox
 enabled. Its intentional challenge holes are outside the default library.
 `README.md` introduces the current API; this file records its detailed status.
