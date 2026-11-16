@@ -11,9 +11,11 @@ public import Ninegates.V3.Meldable.SequentialMoving
 public import Ninegates.V3.Wait.Basic
 public import Ninegates.V3.Wait.TwoPair
 public import Ninegates.V3.Wait.Classes
+public import Ninegates.V3.Wait.Positive
 public import Ninegates.V3.Examples
 public import Ninegates.V3.MovingExamples
 public import Ninegates.V3.GraphExamples
+public import Ninegates.V3.SplitExamples
 
 /-!
 # Version 3: formalization of the rewritten paper

@@ -50,7 +50,21 @@ lemma coefficient_map {S : Type*} [Zero S] (s : Fin N → R) (f : R → S)
   unfold coefficient
   split <;> simp_all
 
+lemma coefficient_restrict_lt (s : Fin N → R) (cut : ℕ) (k : ℤ) :
+    coefficient (fun j ↦ if j.val < cut then s j else 0) k =
+      if k < cut then coefficient s k else 0 := by
+  unfold coefficient
+  dsimp only
+  split_ifs <;> first | rfl | omega
+
 end Coefficient
+
+lemma coefficient_nonnegative {s : Fin N → ℤ} (h : 0 ≤ s) (k : ℤ) :
+    0 ≤ coefficient s k := by
+  unfold coefficient
+  split
+  · exact h _
+  · norm_num
 
 @[simp]
 lemma coefficient_intCast {R : Type*} [AddGroupWithOne R] (s : Fin N → ℤ) (k : ℤ) :
