@@ -1,7 +1,7 @@
 # Development status
 
-Experimental work on Luna's `v3` branch. An upstream pull request is authorized
-once v3 is stable; it has not yet been opened.
+The `v3` structural rewrite is prepared for upstream review after a clean
+project build, axiom audit, and sandboxed Comparator check.
 `README.md` has been rewritten for v3 with sun123zxy's explicit authorization.
 `AGENTS.md` remains unchanged.
 
@@ -515,3 +515,13 @@ certify the deferred goal or conjecture. The strict solution build and normal
 sandboxed Comparator were rerun for the cleaned statements. Seventeen temporary
 inventory mutations were rejected, including a changed tile-movement conclusion
 after a named argument that the previous signature splitter missed.
+
+
+The 16 November 2026 stability review rebuilt the project from tracked sources
+in a detached checkout of `7b6149793573a8a60c4c916aa06da9268e172e6a`, with an
+empty project build directory and the pinned dependency cache. Both `Ninegates`
+and `ComparatorChallenges.Solution` passed `--wfail` (3,252 jobs). All 109
+library modules are reachable from the root import, and the strict audit passed
+for 606 declarations. The normal sandboxed Comparator passed all 120 targets in
+the regular checkout, whose tracked sources matched the detached checkout.
+The deferred Example 6.6 and the open questions retain their explicit status.
