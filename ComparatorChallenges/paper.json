@@ -679,19 +679,19 @@
     }
   ],
   "validation": {
-    "paper_coverage": "passed: all 43 numbered v1 items in published order, 104 selected targets",
+    "paper_coverage": "passed: all 43 numbered v1 items and all five unnumbered remarks in published order; 114 selected targets",
     "solution_build": "passed: lake build --wfail ComparatorChallenges.Solution",
-    "comparator": "passed: sandbox enabled, Lean default kernel accepts all 104 selected targets",
+    "comparator": "passed: sandbox enabled; Lean default kernel accepts all 114 selected targets",
     "permitted_axioms": [
       "propext",
       "Classical.choice",
       "Quot.sound"
     ],
     "external_kernels": false,
-    "library_build": "passed: lake build --wfail; all 104 library modules reachable",
-    "axiom_audit": "passed: 556 declarations, standard axioms only",
-    "coverage_negative_controls": "passed: 8 rejected mutations in temporary copies",
-    "scope": "Excludes Example 6.6, Problems 6.1/6.4, Conjecture 6.9, and the unnumbered remark gaps listed below. Source correspondence is reviewed manually; the inventory script does not prove semantic equivalence to prose."
+    "library_build": "passed: lake build --wfail Ninegates; all 106 library modules reachable",
+    "axiom_audit": "passed: 580 declarations; standard axioms only",
+    "coverage_negative_controls": "passed: 12 rejected mutations in temporary copies",
+    "scope": "Excludes Example 6.6, Problems 6.1/6.4, and Conjecture 6.9. The five explicit unnumbered remarks are formalized. Source correspondence is reviewed manually; the inventory script does not prove semantic equivalence to prose."
   },
   "additional_declarations": [
     "ComparatorChallenges.alternating_even",
@@ -699,49 +699,103 @@
     "ComparatorChallenges.alternating_even_minimal",
     "ComparatorChallenges.alternating_odd_minimal",
     "ComparatorChallenges.maximal_minimal_wait_strong",
-    "ComparatorChallenges.taiwanese_nonminimal_cardinality"
+    "ComparatorChallenges.taiwanese_nonminimal_cardinality",
+    "ComparatorChallenges.remark_4_11_nonunique_twoPair",
+    "ComparatorChallenges.remark_4_11_fixed_no_loop",
+    "ComparatorChallenges.remark_5_6_A_classSizes",
+    "ComparatorChallenges.remark_5_6_sharpness_coordinates",
+    "ComparatorChallenges.remark_5_6_sharpness",
+    "ComparatorChallenges.remark_5_6_orderOne",
+    "ComparatorChallenges.remark_5_8_orderOne_exception",
+    "ComparatorChallenges.remark_5_9_D_attainment",
+    "ComparatorChallenges.remark_5_10_difference",
+    "ComparatorChallenges.remark_5_10_partition"
   ],
   "unnumbered_remarks": [
     {
       "after": "4.11",
       "anchor": "Thmremarkx1",
-      "status": "formalized_examples",
+      "status": "formalized",
       "library_declarations": [
         "Mahjong.Examples.largeHand_twoPair_left",
         "Mahjong.Examples.largeHand_twoPair_right",
         "Mahjong.Examples.fixedNoLoop_isFullWait",
-        "Mahjong.Examples.fixedNoLoop_incoming"
+        "Mahjong.Examples.fixedNoLoop_incoming",
+        "Mahjong.Examples.largeHand_isFullWait",
+        "Mahjong.Examples.fixedNoLoop_fixedClass",
+        "Mahjong.Examples.fixedNoLoop_no_self"
       ],
-      "note": "Nonunique two-pair decomposition and incoming fixed-class pair without self-loop."
+      "note": "Two explicit decompositions and all six specified winning pairs of (0,2,2,4,2,3), and the fixed-class incoming interval without a self-loop.",
+      "declarations": [
+        "ComparatorChallenges.remark_4_11_nonunique_twoPair",
+        "ComparatorChallenges.remark_4_11_fixed_no_loop"
+      ]
     },
     {
       "after": "5.6",
       "anchor": "Thmremarkx2",
-      "status": "partially_formalized",
-      "note": "Class-size inequalities are proved. The order-one witness is verified. The general sharpness family (0,3,3,3,1^(3n-5),3) has not yet been packaged/proved as a family."
+      "status": "formalized",
+      "note": "Sharpness at every positive order: A_n fixed-class counts; order-one (2,3,2); general family (0,3,3,3,1^(3n-5),3), all asserted edges, fixed class, class-one size, and the reversed witness for class zero.",
+      "declarations": [
+        "ComparatorChallenges.remark_5_6_A_classSizes",
+        "ComparatorChallenges.remark_5_6_sharpness_coordinates",
+        "ComparatorChallenges.remark_5_6_sharpness",
+        "ComparatorChallenges.remark_5_6_orderOne"
+      ],
+      "library_declarations": [
+        "Mahjong.VirtualHand.Standard.A_classSizes",
+        "Mahjong.VirtualHand.ClassBoundSharpness.hand_apply",
+        "Mahjong.VirtualHand.ClassBoundSharpness.full",
+        "Mahjong.VirtualHand.ClassBoundSharpness.fixedClass_hand",
+        "Mahjong.VirtualHand.ClassBoundSharpness.classSize_one",
+        "Mahjong.VirtualHand.ClassBoundSharpness.drawPair_fourth",
+        "Mahjong.VirtualHand.ClassBoundSharpness.drawPair_last",
+        "Mahjong.VirtualHand.ClassBoundSharpness.drawPair_self",
+        "Mahjong.VirtualHand.ClassBoundSharpness.reverse_sharp",
+        "Mahjong.Examples.orderOneMiddleTriple_isFullWait",
+        "Mahjong.Examples.orderOneMiddleTriple_fixedClass",
+        "Mahjong.Examples.orderOneMiddleTriple_classSizes"
+      ]
     },
     {
       "after": "5.8",
       "anchor": "Thmremarkx3",
-      "status": "formalized_examples",
+      "status": "formalized",
       "library_declarations": [
         "Mahjong.Examples.orderOneMiddleTriple_isFullWait",
         "Mahjong.Examples.orderOneMiddleTriple_fixedClass",
         "Mahjong.Examples.orderOneMiddleTriple_classSizes"
       ],
-      "note": "The order-one counterexample to the n>=2 class-size conclusion."
+      "note": "Order-one (2,3,2) is a full wait with fixed class two and class sizes (2,2,3), exhibiting the n>=2 hypothesis.",
+      "declarations": [
+        "ComparatorChallenges.remark_5_8_orderOne_exception"
+      ]
     },
     {
       "after": "5.9",
       "anchor": "Thmremarkx4",
-      "status": "not_separately_packaged",
-      "note": "D_n attaining the fixed-class multiplicity-two bound still needs its explicit fixed-class corollary; its coordinate value follows from D_apply."
+      "status": "formalized",
+      "note": "D_n has fixed class one and multiplicity two at paper rank four.",
+      "declarations": [
+        "ComparatorChallenges.remark_5_9_D_attainment"
+      ],
+      "library_declarations": [
+        "Mahjong.VirtualHand.Standard.D_fixed_bound_sharp"
+      ]
     },
     {
       "after": "5.10",
       "anchor": "Thmremarkx5",
-      "status": "not_separately_packaged",
-      "note": "Virtual meldability of differences iff equal fixed classes, and the explicit three-way partition of the standard families, have no dedicated combined theorem yet."
+      "status": "formalized",
+      "note": "Virtually meldable difference iff same fixed class, strengthened to arbitrary meld counts; explicit three-way partition of the standard eight families.",
+      "declarations": [
+        "ComparatorChallenges.remark_5_10_difference",
+        "ComparatorChallenges.remark_5_10_partition"
+      ],
+      "library_declarations": [
+        "Mahjong.VirtualHand.IsFullWait.virtuallyMeldable_sub_iff",
+        "Mahjong.VirtualHand.Standard.fixedClass_partition"
+      ]
     }
   ]
 }

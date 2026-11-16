@@ -78,9 +78,11 @@ live, and minimal counts `149/11/27` remain to be formalized.
 
 All 27 numbered propositions and Theorem 1.1 have proofs, as do Examples 4.5
 and 6.5. Example 6.6 (`149/11/27`) is deferred because the direct kernel
-computation was too expensive in the current prototype. Problems 6.1 and 6.4
-and Conjecture 6.9 remain open. Three unnumbered remarks also have statements
-not yet separately formalized; see [DEVELOPMENT.md](DEVELOPMENT.md#remaining-paper-statements).
+computation was too expensive in the current prototype. All five unnumbered
+remarks now have proofs as well, including the general class-bound sharpness
+family and the fixed-class partition of the eight families. Problems 6.1 and 6.4
+and Conjecture 6.9 remain open; see
+[DEVELOPMENT.md](DEVELOPMENT.md#remaining-paper-statements).
 The exact general formula for `M(n)` is neither assumed nor presented as proved.
 
 ## Proof structure
@@ -129,7 +131,7 @@ The challenge and solution list all **43 numbered items in published order**,
 including definitions, examples, open problems, and the conjecture. Split
 statements stay together under their paper number. The public version, links,
 source hashes, declaration mapping, and gaps are recorded in
-[`paper.json`](ComparatorChallenges/paper.json). There are **104 verified
+[`paper.json`](ComparatorChallenges/paper.json). There are **114 verified
 Comparator targets**, including additional unnumbered constructions and bounds.
 
 ```sh

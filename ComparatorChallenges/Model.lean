@@ -222,4 +222,21 @@ def meldCount (n : ℕ) : ℕ := 9 * n / 2 - 3
 
 end AlternatingWait
 
+namespace ClassBoundSharpness
+
+def hand (n : ℕ) : VirtualHand n :=
+  interiorOnes + (2 : ℤ) • segment 1 4 + (3 : ℤ) • singleAt (3 * n - 1)
+
+end ClassBoundSharpness
+
+namespace Examples
+
+def largeHand : VirtualHand 2 := ![0, 2, 2, 4, 2, 3]
+
+def fixedNoLoop : VirtualHand 3 := ![2, 2, 2, 3, 3, 2, 4, 1, 3]
+
+def orderOneMiddleTriple : VirtualHand 1 := ![2, 3, 2]
+
+end Examples
+
 end ComparatorChallenges.Spec

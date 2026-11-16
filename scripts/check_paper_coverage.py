@@ -100,6 +100,29 @@ def verify() -> tuple[int, int]:
         raise ValueError("Comparator targets do not match the ordered proved inventory")
     if set(solution_types) != set(selected):
         raise ValueError("Solution theorems and configured targets differ")
+    remarks = paper["unnumbered_remarks"]
+    if [(remark["after"], remark["anchor"]) for remark in remarks] != [
+        ("4.11", "Thmremarkx1"), ("5.6", "Thmremarkx2"), ("5.8", "Thmremarkx3"),
+        ("5.9", "Thmremarkx4"), ("5.10", "Thmremarkx5")
+    ]:
+        raise ValueError("The five public v1 remarks must remain in published order")
+    remark_names = []
+    for remark in remarks:
+        after, names = remark["after"], remark["declarations"]
+        if remark["status"] != "formalized" or not names:
+            raise ValueError(f"Unverified remark after {after}")
+        remark_names.extend(names)
+        for label, source in [("challenge", challenge), ("solution", solution)]:
+            markers = list(MARKER.finditer(source))
+            parent = next(i for i, marker in enumerate(markers) if marker[2] == after)
+            block = source[markers[parent].end():markers[parent + 1].start()]
+            if f"-- Unnumbered remark after {after}: formalized." not in block:
+                raise ValueError(f"Missing remark marker after {after} in {label}")
+            for name in names:
+                if f"theorem {name.removeprefix('ComparatorChallenges.')} :" not in block:
+                    raise ValueError(f"Misplaced remark declaration in {label}: {name}")
+    if len(remark_names) != len(set(remark_names)) or not set(remark_names) <= set(selected):
+        raise ValueError("Remark declarations must be distinct verified targets")
     for name in selected:
         if challenge_types.get(name) != solution_types[name]:
             raise ValueError(f"Challenge and solution source signatures differ: {name}")
@@ -131,4 +154,5 @@ if __name__ == "__main__":
     except (ValueError, KeyError) as error:
         raise SystemExit(str(error)) from error
     print(f"Verified {count} ordered public-paper entries and {targets} Comparator targets.")
+    print("All five unnumbered remarks have ordered, selected proof targets.")
     print("Example 6.6 is deferred; Problems 6.1/6.4 and Conjecture 6.9 remain open.")

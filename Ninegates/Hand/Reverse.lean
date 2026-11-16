@@ -43,6 +43,23 @@ lemma rankClass_rev (i : Rank n) : rankClass i.rev = 1 - rankClass i := by
   rw [show (3 : ZMod 3) = 0 from ZMod.natCast_self 3, zero_mul, zero_add]
   rfl
 
+@[simp]
+lemma classSize_reverse (c : VirtualHand n) (r : ZMod 3) :
+    classSize r (reverse c) = classSize (1 - r) c := by
+  simp only [classSize, LinearMap.coe_mk, AddHom.coe_mk, Finset.sum_filter]
+  calc
+    _ = ∑ i : Rank n, if rankClass i.rev = r then c i else 0 := by
+      simpa only [Fin.revPerm_apply, Fin.rev_rev, reverse_apply] using
+        (Equiv.sum_comp (Fin.revPerm (n := 3 * n))
+          (fun i ↦ if rankClass i = r then c i.rev else 0)).symm
+    _ = _ := by
+      apply Finset.sum_congr rfl
+      intro i _
+      have equal : rankClass i.rev = r ↔ rankClass i = 1 - r := by
+        rw [rankClass_rev]
+        constructor <;> intro same <;> linear_combination -same
+      simp only [equal]
+
 lemma rankSum_reverse (c : VirtualHand n) :
     rankSum (reverse c) = (3 * (n : ℤ) + 1) * size c - rankSum c := by
   calc

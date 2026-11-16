@@ -13,12 +13,14 @@ public import Ninegates.Wait.TwoPair
 public import Ninegates.Wait.Classes
 public import Ninegates.Wait.Positive
 public import Ninegates.Wait.Bounds
+public import Ninegates.Wait.Sharpness
 public import Ninegates.Wait.ClassSizes
 public import Ninegates.Wait.PillarRemainder
 public import Ninegates.Wait.RequiredOne
 public import Ninegates.Wait.Reverse
 public import Ninegates.Standard.Valid
 public import Ninegates.Standard.Graph
+public import Ninegates.Standard.Classes
 public import Ninegates.Cardinality
 public import Ninegates.Numerical.Taiwanese
 public import Ninegates.Wait.Abundance

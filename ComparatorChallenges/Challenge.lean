@@ -525,8 +525,25 @@ theorem proposition_4_11_remainder_meldableWith :
     pair q) := by
   sorry
 
--- Unnumbered remark after 4.11: formalized_examples.
--- See paper.json for its precise scope and remaining statements.
+-- Unnumbered remark after 4.11: formalized.
+-- See paper.json for the public source and declaration correspondence.
+
+theorem remark_4_11_nonunique_twoPair :
+    IsFullWait 4 Spec.Examples.largeHand ∧
+      Spec.TwoPair Spec.Examples.largeHand (1 : Rank 2) 3 ∧
+      Spec.TwoPair Spec.Examples.largeHand (3 : Rank 2) 4 ∧
+      Spec.Examples.largeHand = pair (1 : Rank 2) + pair 3 +
+        (2 : ℤ) • VirtualHand.sequence (2 : Fin 4) + triplet 5 ∧
+      Spec.Examples.largeHand = pair (3 : Rank 2) + pair 4 +
+        (2 : ℤ) • VirtualHand.sequence (1 : Fin 4) + triplet 5 ∧
+      ∀ i : Rank 2, DrawPair Spec.Examples.largeHand i (![4, 3, 5, 1, 3, 5] i) := by
+  sorry
+
+theorem remark_4_11_fixed_no_loop :
+    IsFullWait 7 Spec.Examples.fixedNoLoop ∧ Spec.fixedClass Spec.Examples.fixedNoLoop = 0 ∧
+      (∀ i : Rank 3, DrawPair Spec.Examples.fixedNoLoop i 8 ↔ i = 2 ∨ i = 5) ∧
+      ¬DrawPair Spec.Examples.fixedNoLoop (8 : Rank 3) 8 := by
+  sorry
 
 /-! Paper Proposition 5.1
 Proposition 5.1 (Split at a missing rank).
@@ -613,8 +630,44 @@ theorem proposition_5_6_nonfixed_class_size :
     c → (↑n : ℤ) + 1 ≤ (classSize r : VirtualHand n → ℤ) c := by
   sorry
 
--- Unnumbered remark after 5.6: partially_formalized.
--- See paper.json for its precise scope and remaining statements.
+-- Unnumbered remark after 5.6: formalized.
+-- See paper.json for the public source and declaration correspondence.
+
+theorem remark_5_6_A_classSizes :
+    ∀ {n : ℕ}, 0 < n → Spec.fixedClass (Spec.Standard.A n) = 2 ∧
+      classSize 0 (Spec.Standard.A n) = (n : ℤ) + 2 ∧
+      classSize 1 (Spec.Standard.A n) = (n : ℤ) + 2 ∧
+      classSize 2 (Spec.Standard.A n) = (n : ℤ) := by
+  sorry
+
+theorem remark_5_6_sharpness_coordinates :
+    ∀ {n : ℕ}, 2 ≤ n → ∀ i : Rank n,
+      Spec.ClassBoundSharpness.hand n i = if i.val = 0 then 0 else
+        if i.val ≤ 3 ∨ i.val + 1 = 3 * n then 3 else 1 := by
+  sorry
+
+theorem remark_5_6_sharpness :
+    ∀ {n : ℕ}, 2 ≤ n →
+      IsFullWait (n + 2) (Spec.ClassBoundSharpness.hand n) ∧
+      Spec.fixedClass (Spec.ClassBoundSharpness.hand n) = 2 ∧
+      classSize 1 (Spec.ClassBoundSharpness.hand n) = (n : ℤ) + 1 ∧
+      (∀ i fourth : Rank n, rankClass i = 0 → fourth.val = 3 →
+        DrawPair (Spec.ClassBoundSharpness.hand n) i fourth) ∧
+      (∀ i last : Rank n, rankClass i = 1 → last.val + 1 = 3 * n →
+        DrawPair (Spec.ClassBoundSharpness.hand n) i last) ∧
+      (∀ i : Rank n, rankClass i = 2 → DrawPair (Spec.ClassBoundSharpness.hand n) i i) ∧
+      IsFullWait (n + 2) (reverse (Spec.ClassBoundSharpness.hand n)) ∧
+      Spec.fixedClass (reverse (Spec.ClassBoundSharpness.hand n)) = 2 ∧
+      classSize 0 (reverse (Spec.ClassBoundSharpness.hand n)) = (n : ℤ) + 1 := by
+  sorry
+
+theorem remark_5_6_orderOne :
+    IsFullWait 2 Spec.Examples.orderOneMiddleTriple ∧
+      Spec.fixedClass Spec.Examples.orderOneMiddleTriple = 2 ∧
+      classSize 0 Spec.Examples.orderOneMiddleTriple = 2 ∧
+      classSize 1 Spec.Examples.orderOneMiddleTriple = 2 ∧
+      classSize 2 Spec.Examples.orderOneMiddleTriple = 3 := by
+  sorry
 
 /-! Paper Proposition 5.7
 https://arxiv.org/html/2611.06944v1#S5.Thmcounter7 -/
@@ -637,8 +690,16 @@ theorem proposition_5_8_nonfixed_class_size_succ :
     Spec.fixedClass c → (classSize r : VirtualHand n → ℤ) c = (↑n : ℤ) + 2 := by
   sorry
 
--- Unnumbered remark after 5.8: formalized_examples.
--- See paper.json for its precise scope and remaining statements.
+-- Unnumbered remark after 5.8: formalized.
+-- See paper.json for the public source and declaration correspondence.
+
+theorem remark_5_8_orderOne_exception :
+    IsFullWait 2 Spec.Examples.orderOneMiddleTriple ∧
+      Spec.fixedClass Spec.Examples.orderOneMiddleTriple = 2 ∧
+      classSize 0 Spec.Examples.orderOneMiddleTriple = 2 ∧
+      classSize 1 Spec.Examples.orderOneMiddleTriple = 2 ∧
+      classSize 2 Spec.Examples.orderOneMiddleTriple = 3 := by
+  sorry
 
 /-! Paper Proposition 5.9
 Proposition 5.9 (Two pillars).
@@ -669,8 +730,14 @@ theorem proposition_5_9_fixed_draw_placement_succ :
     Placement.tripNum t = single p + single q := by
   sorry
 
--- Unnumbered remark after 5.9: not_separately_packaged.
--- See paper.json for its precise scope and remaining statements.
+-- Unnumbered remark after 5.9: formalized.
+-- See paper.json for the public source and declaration correspondence.
+
+theorem remark_5_9_D_attainment :
+    ∀ {n : ℕ}, 2 ≤ n → Spec.fixedClass (Spec.Standard.D n) = 1 ∧
+      ∃ i : Rank n, i.val = 3 ∧ rankClass i = Spec.fixedClass (Spec.Standard.D n) ∧
+        Spec.Standard.D n i = 2 := by
+  sorry
 
 /-! Paper Proposition 5.10
 Proposition 5.10 (Draw-pair relation and two-pair decomposition).
@@ -686,6 +753,22 @@ theorem proposition_5_10 :
     pair q) = 3 * (n : ℤ) ∧ (∀ i : Rank n, rankClass i = rankClass p → Spec.Sequential
     (Spec.moveTile (c - pair p - pair q) p i)) ∧ (∀ i : Rank n, rankClass i = rankClass q
     → Spec.Sequential (Spec.moveTile (c - pair p - pair q) q i)) := by
+  sorry
+
+-- Unnumbered remark after 5.10: formalized.
+-- See paper.json for the public source and declaration correspondence.
+
+theorem remark_5_10_difference :
+    ∀ {n m k : ℕ} {c d : VirtualHand n}, IsFullWait m c → IsFullWait k d →
+      (VirtuallyMeldable (c - d) ↔ Spec.fixedClass c = Spec.fixedClass d) := by
+  sorry
+
+theorem remark_5_10_partition :
+    ∀ {n : ℕ}, 2 ≤ n → ∀ {c : VirtualHand n}, Spec.Standard.EightFamily c →
+      (Spec.fixedClass c = 2 ↔ c = Spec.Standard.A n ∨ c = Spec.Standard.B n ∨
+        c = Spec.Standard.B' n ∨ c = Spec.Standard.E n) ∧
+      (Spec.fixedClass c = 1 ↔ c = Spec.Standard.C n ∨ c = Spec.Standard.D n) ∧
+      (Spec.fixedClass c = 0 ↔ c = Spec.Standard.C' n ∨ c = Spec.Standard.D' n) := by
   sorry
 
 /-! Paper Problem 6.1

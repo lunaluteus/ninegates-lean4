@@ -15,6 +15,20 @@ namespace Mahjong.VirtualHand
 
 variable {n : ℕ}
 
+/-- Equal size residues leave the fixed class as the only obstruction to
+virtual meldability of a difference. -/
+lemma virtuallyMeldable_sub_iff_fixedClass_eq {c d : VirtualHand n}
+    (count : (size c : ZMod 3) = (size d : ZMod 3)) :
+    VirtuallyMeldable (c - d) ↔ fixedClass c = fixedClass d := by
+  simp [virtuallyMeldable_iff_size_rankSum, fixedClass, count, sub_eq_zero]
+
+/-- The remark after Proposition 5.10, strengthened to any two meld counts. -/
+lemma IsFullWait.virtuallyMeldable_sub_iff {m k : ℕ} {c d : VirtualHand n}
+    (hc : IsFullWait m c) (hd : IsFullWait k d) :
+    VirtuallyMeldable (c - d) ↔ fixedClass c = fixedClass d := by
+  apply virtuallyMeldable_sub_iff_fixedClass_eq
+  simp [hc.2.1, hd.2.1, show (3 : ZMod 3) = 0 from ZMod.natCast_self 3]
+
 /-- `prp-class-size-congruence`: every nonfixed class has one fewer tile modulo
 three than the fixed class. This needs only the size congruence, not waiting. -/
 lemma classSize_nonfixed_congruence {c : VirtualHand n} (count : (size c : ZMod 3) = 1)

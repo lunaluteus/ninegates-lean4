@@ -322,7 +322,7 @@ problems, and Conjecture 6.9. All propositions and the theorem are formalized;
 Examples 4.5 and 6.5 are formalized. Definitions identify the relevant model
 objects rather than being counted as new paper theorems. Example 6.6 is deferred,
 and the problems and conjecture remain explicitly open. The selected statements,
-including six extra results, give 104 Comparator targets.
+including the five remarks and six additional results, give 114 Comparator targets.
 
 `Standard/Graph` was added during this audit: it proves Example 4.5's exact
 draw-pair relation for `A_n` and its fixed class two for every positive order,
@@ -401,24 +401,29 @@ This is a limitation of that prototype, not a claim that an improved kernel
 certificate would necessarily be expensive. The structural proof of the
 nonminimal count 122 is complete.
 
-The audit also checked all five unnumbered remarks. The examples after
-Propositions 4.11 and 5.8 already have proofs. Three remarks retain gaps:
+All five unnumbered remarks are now formalized, with their proof targets next
+to the corresponding paper proposition in both Comparator files:
 
-- After **5.6**, the general sharpness family
-  `(0,3,3,3,1^(3n-5),3)` for `n>=2`, including its asserted draw-pair edges,
-  fixed class two, and class-one size `n+1`, has not been formalized as a
-  family. The lower bounds and the order-one witness are proved.
-- After **5.9**, the explicit corollary that `D_n` has fixed class one and
-  attains multiplicity two at paper rank four has not been separately packaged;
-  its coordinate value is available from `D_apply`.
-- After **5.10**, there is no dedicated combined theorem stating that the
-  difference of two full-sided `(n,n+1)` waits is virtually meldable exactly
-  when their fixed classes agree, together with the partition
-  `{A,B,B',E}`, `{C,D}`, `{C',D'}` into fixed classes two, one, and zero.
+| Remark after | Formalized statements |
+| --- | --- |
+| 4.11 | The two explicit decompositions and all six specified winning pairs of `(0,2,2,4,2,3)`; the fixed-class vertex with incoming interval `{3,6}` and no self-loop in the nine-rank example |
+| 5.6 | `A_n` attains the fixed-class lower bound at every positive order; `(2,3,2)` attains both interchanging bounds at order one; `(0,3,3,3,1^(3n-5),3)` is full for all `n>=2`, with all three asserted edge families, fixed class two, and class-one size `n+1`; reversal attains the class-zero bound |
+| 5.8 | The order-one counterexample to the `n>=2` class-size conclusion |
+| 5.9 | `D_n` has fixed class one and multiplicity two at paper rank four |
+| 5.10 | A difference is virtually meldable exactly when fixed classes agree, and the partition `{A,B,B',E}`, `{C,D}`, `{C',D'}` into fixed classes two, one, and zero |
 
-These gaps are recorded in `paper.json` and are not counted as verified
-Comparator targets. Thus the coverage claim concerns the specified numbered
-results, not every assertion in the paper's prose.
+`Wait/Sharpness` proves the general family by explicit sequence intervals and
+triplets. The useful interval identity is in `Meldable/Segment`: moving the
+first tile rightward to a congruent rank splits the remaining vector into two
+sequence intervals, including a target at the interval's right endpoint.
+`Hand/Reverse` supplies the class-size reflection formula. No candidate hands
+are enumerated. `Standard/Classes` packages the eight fixed classes and the
+attainment example. The difference criterion in `Wait/Classes` actually holds
+for any two full-sided waits on the same ranks, even with different meld counts.
+
+These statements and the numbered-result inventory account for the paper's
+five explicit remarks. They do not turn open problems or numerical discovery
+computations into proved results.
 
 **Problems 6.1 and 6.4** ask for general classifications and counts beyond the
 proved regimes; they are open questions in the paper, not missing proofs of
@@ -446,13 +451,13 @@ The audit covers the foundational results and the complete explicit example.
 Allowed axioms are `propext`, `Classical.choice`, and `Quot.sound`. There are no
 placeholder proofs or uses of `native_decide` in the library. `Audit.lean`
 and `scripts/check_axioms.py` enforce the standard axiom set in CI. The new
-`ComparatorChallenges` target checks 104 statements against a model importing
+`ComparatorChallenges` target checks 114 statements against a model importing
 only shared foundational project definitions. Derived model objects have their
 own namespace and definitions; only the solution imports the library and proves
 the required bridges. Run Comparator with its sandbox enabled. Its intentional
 challenge holes are outside the default library. The correspondence check
 enforces the independently pinned public order, source version, equal source
-signatures, target inventory, and explicit exclusions. It is an inventory
+signatures, target inventory, all five ordered remark blocks, and explicit exclusions. It is an inventory
 check; kernel verification and mathematical review of the statements remain
 separate requirements.
 `README.md` introduces the current API; this file records its detailed status.

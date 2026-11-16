@@ -105,7 +105,17 @@
     "ComparatorChallenges.alternating_even_minimal",
     "ComparatorChallenges.alternating_odd_minimal",
     "ComparatorChallenges.maximal_minimal_wait_strong",
-    "ComparatorChallenges.taiwanese_nonminimal_cardinality"
+    "ComparatorChallenges.taiwanese_nonminimal_cardinality",
+    "ComparatorChallenges.remark_4_11_nonunique_twoPair",
+    "ComparatorChallenges.remark_4_11_fixed_no_loop",
+    "ComparatorChallenges.remark_5_6_A_classSizes",
+    "ComparatorChallenges.remark_5_6_sharpness_coordinates",
+    "ComparatorChallenges.remark_5_6_sharpness",
+    "ComparatorChallenges.remark_5_6_orderOne",
+    "ComparatorChallenges.remark_5_8_orderOne_exception",
+    "ComparatorChallenges.remark_5_9_D_attainment",
+    "ComparatorChallenges.remark_5_10_difference",
+    "ComparatorChallenges.remark_5_10_partition"
   ],
   "permitted_axioms": [
     "propext",
