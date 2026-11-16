@@ -36,6 +36,16 @@ lemma pairedClass_eq_self_iff (c : VirtualHand n) (r : ZMod 3) :
   · rw [equal]
     linear_combination -three_s
 
+@[simp]
+lemma pairedClass_eq_fixed_iff (c : VirtualHand n) (r : ZMod 3) :
+    pairedClass c r = fixedClass c ↔ r = fixedClass c := by
+  have fixed := (pairedClass_eq_self_iff c (fixedClass c)).mpr rfl
+  constructor
+  · intro equal
+    simpa only [pairedClass_pairedClass, fixed] using congrArg (pairedClass c) equal
+  · intro equal
+    rw [equal, fixed]
+
 lemma DrawPair.class_eq (h : DrawPair c i j) : rankClass j = pairedClass c (rankClass i) := by
   have same := h.congruence
   unfold pairedClass fixedClass

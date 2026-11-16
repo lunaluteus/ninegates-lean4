@@ -101,4 +101,14 @@ lemma Nonnegative.add_le_classSize {c : VirtualHand n} (h : Nonnegative c)
     (fun k : Rank n ↦ rankClass k = rankClass i), c k
   simpa [different] using bound
 
+lemma size_eq_three_classSizes (c : VirtualHand n) (s x y : ZMod 3)
+    (sx : s ≠ x) (sy : s ≠ y) (xy : x ≠ y) :
+    size c = classSize s c + classSize x c + classSize y c := by
+  have cover : (Finset.univ : Finset (ZMod 3)) = {s, x, y} := by
+    symm
+    apply Finset.eq_of_subset_of_card_le (Finset.subset_univ _)
+    simp [sx, sy, xy]
+  rw [size_eq_sum_classSize, cover]
+  simp [sx, sy, xy, add_assoc]
+
 end Mahjong.V3.VirtualHand

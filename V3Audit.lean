@@ -249,3 +249,15 @@ import NinegatesV3
 #print axioms Mahjong.V3.Examples.orderOneMiddleTriple_isFullWait
 #print axioms Mahjong.V3.Examples.orderOneMiddleTriple_fixedClass
 #print axioms Mahjong.V3.Examples.orderOneMiddleTriple_classSizes
+#print axioms Mahjong.V3.VirtualHand.classSize_pair
+#print axioms Mahjong.V3.VirtualHand.size_eq_three_classSizes
+#print axioms Mahjong.V3.VirtualHand.pairedClass_eq_fixed_iff
+#print axioms Mahjong.V3.VirtualHand.classSize_sequence
+#print axioms Mahjong.V3.VirtualHand.Placement.classSize_toHand
+#print axioms Mahjong.V3.VirtualHand.Placement.Nonnegative.sequenceCount_nonnegative
+#print axioms Mahjong.V3.VirtualHand.Placement.Nonnegative.sequenceCount_le_classSize
+#print axioms Mahjong.V3.VirtualHand.Placement.Nonnegative.triplet_le_hand
+#print axioms Mahjong.V3.VirtualHand.Meldable.exists_triplet_of_classSize_lt
+#print axioms Mahjong.V3.VirtualHand.IsFullWait.class_sizes_alternatives
+#print axioms Mahjong.V3.VirtualHand.IsFullWait.fixed_class_size_succ
+#print axioms Mahjong.V3.VirtualHand.IsFullWait.nonfixed_class_size_succ

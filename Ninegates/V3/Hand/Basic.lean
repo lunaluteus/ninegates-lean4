@@ -107,6 +107,10 @@ lemma classSize_single (r : ZMod 3) (i : Rank n) :
     classSize r (single i) = if rankClass i = r then 1 else 0 := by
   simp [classSize, single]
 
+@[simp]
+lemma classSize_pair (r : ZMod 3) (i : Rank n) :
+    classSize r (pair i) = 2 * classSize r (single i) := by rw [pair, map_smul]; rfl
+
 /-- Proposition `prp-class-size-sum-congruence`, the class-size partition. -/
 lemma size_eq_sum_classSize (c : VirtualHand n) : size c = ∑ r : ZMod 3, classSize r c := by
   simp only [classSize, LinearMap.coe_mk, AddHom.coe_mk, Finset.sum_filter]
