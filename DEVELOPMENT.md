@@ -1,12 +1,13 @@
 # Development status
 
 Experimental work on Luna's `v3` branch. No pull request is planned at present.
-`README.md` and `AGENTS.md` are maintained by humans and are unchanged.
+`README.md` has been rewritten for v3 with sun123zxy's explicit authorization.
+`AGENTS.md` remains unchanged.
 
 The target is the rewritten paper: independent order `n`, meld count `m`, and
 copy bound, with a structural, non-enumerative proof of the classification.
-The default and only library target is `Ninegates`. The previous API, finite
-enumeration and Comparator reduction challenge have been removed from this
+The default library target is `Ninegates`. The previous API, finite
+enumeration and old Comparator reduction challenge have been removed from this
 branch; the complete previous implementation is archived on `v2` at
 `e45fd512ebb2cd0bac7d69690f3163647bdc3bc8`.
 
@@ -263,7 +264,11 @@ and transferred across orders using `Meldable/Prefix`.
 coefficient after any draw and pair removal. It combines the base sequence
 recurrence with two single-tile impulses. The formula is valid for arbitrary
 orders and indices; it does not rely on checking finitely many family members.
-Their minimality and the stronger lower bound are still pending.
+`Alternating/Critical` now proves the critical-draw obstructions in the
+alternating middle: the selected draw forces a zero triplet coefficient, or a
+zero sequence coefficient together with a zero covered triplet coefficient.
+These identities hold at arbitrary order. Prefix obstructions and assembly of
+minimality, and hence the stronger lower bound, are still pending.
 
 The example `(0,2,2,4,2,3)` is verified by six explicit meld placements as a
 full-sided `(2,4)`-wait. It is live for copy bound five and not live for four.
@@ -358,6 +363,8 @@ python3 scripts/check_axioms.py Audit.lean axioms.log
 The audit covers the foundational results and the complete explicit example.
 Allowed axioms are `propext`, `Classical.choice`, and `Quot.sound`. There are no
 placeholder proofs or uses of `native_decide` in the library. `Audit.lean`
-and `scripts/check_axioms.py` enforce the standard axiom set in CI. The human
-maintained `README.md` still describes the archived implementation; this file
-records the current API and verification status.
+and `scripts/check_axioms.py` enforce the standard axiom set in CI. The new `ComparatorChallenges` target checks nine key statements against a
+definition-only challenge boundary, including the classification itself. Run
+`lake comparator --config=ComparatorChallenges/config.json` with its sandbox
+enabled. Its intentional challenge holes are outside the default library.
+`README.md` introduces the current API; this file records its detailed status.

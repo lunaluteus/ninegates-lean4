@@ -33,4 +33,10 @@ jobs:
           lake build --wfail
           lake env lean -j2 -M4096 -DwarningAsError=true Audit.lean > axioms.log
           python3 scripts/check_axioms.py Audit.lean axioms.log
+      - name: Install Comparator sandbox
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends bubblewrap
+      - name: Check main statements with Comparator
+        run: lake comparator --config=ComparatorChallenges/config.json
       - uses: leanprover-community/docgen-action@v1

@@ -5,6 +5,7 @@ Authors: Luna Luteus
 -/
 module
 
+public import Ninegates.Standard.OneDefs
 public import Ninegates.Wait.ClassSizes
 
 /-! The six order-one hands. Necessity follows from the two class-size
@@ -15,11 +16,6 @@ alternatives, since every congruence class has just one rank. -/
 namespace Mahjong.VirtualHand
 
 namespace Standard
-
-def One : Fin 6 → VirtualHand 1 :=
-  ![![3, 1, 3], ![2, 3, 2], ![3, 3, 1], ![1, 3, 3], ![3, 2, 2], ![2, 2, 3]]
-
-def OrderOneFamily (c : VirtualHand 1) : Prop := ∃ k, c = One k
 
 private def onePairs : Fin 6 → Rank 1 → Rank 1 :=
   ![![2, 1, 0], ![2, 1, 0], ![1, 0, 2], ![0, 2, 1], ![0, 2, 1], ![1, 0, 2]]

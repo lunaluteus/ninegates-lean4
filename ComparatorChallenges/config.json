@@ -1,0 +1,20 @@
+{
+  "challenge_module": "ComparatorChallenges.Challenge",
+  "solution_module": "ComparatorChallenges.Solution",
+  "theorem_names": [
+    "ComparatorChallenges.virtual_criterion",
+    "ComparatorChallenges.eight_family",
+    "ComparatorChallenges.live_uniqueness",
+    "ComparatorChallenges.order_one",
+    "ComparatorChallenges.minimal_eight_family",
+    "ComparatorChallenges.minimal_order_one",
+    "ComparatorChallenges.maximal_minimal_wait",
+    "ComparatorChallenges.alternating_even",
+    "ComparatorChallenges.alternating_odd"
+  ],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ]
+}
