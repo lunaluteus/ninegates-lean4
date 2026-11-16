@@ -19,6 +19,20 @@ variable {n : ℕ} {c : VirtualHand n} {p q : Rank n}
 
 namespace Pillars
 
+lemma fixed_draw_sequential_succ (pillars : Pillars c p q) (order : 2 ≤ n)
+    (full : IsFullWait (n + 1) c) {i j : Rank n} (edge : DrawPair c i j)
+    (fixed_i : rankClass i = fixedClass c) :
+    Sequential (c + single i - pair j - triplet p - triplet q) := by
+  obtain ⟨t, positive, equal⟩ := edge
+  have shape := full.fixed_draw_placement_succ order p q pillars.pillar_p pillars.pillar_q
+    pillars.nonfixed_p pillars.class_q ⟨t, positive, equal⟩ fixed_i positive equal
+  have representation := t.toHand_eq
+  rw [shape.2, equal, smul_add] at representation
+  change c + single i - pair j = sequenceHand t.seqNum + (triplet p + triplet q) at representation
+  refine ⟨t.seqNum, positive.1, ?_⟩
+  rw [representation]
+  abel
+
 lemma nonfixed_draw_placement_succ (pillars : Pillars c p q) (order : 2 ≤ n)
     (full : IsFullWait (n + 1) c) {i : Rank n} (class_i : rankClass i = rankClass p)
     {t : Placement n} (positive : t.Nonnegative) (equal : t.toHand = c + single i - pair q) :

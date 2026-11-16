@@ -26,6 +26,18 @@ lemma interiorOnes_bounds (i : Rank n) : 0 ≤ interiorOnes i ∧ interiorOnes i
   unfold interiorOnes
   split_ifs <;> norm_num
 
+lemma rankClass_eq_one_iff (i : Rank n) : rankClass i = 1 ↔ i.val % 3 = 0 := by
+  simp only [rankClass, rank, Int.cast_add, Int.cast_natCast, Int.cast_one]
+  change (i.val : ZMod 3) + 1 = (0 : ZMod 3) + 1 ↔ i.val % 3 = 0
+  simp only [add_left_inj]
+  exact ZMod.natCast_eq_natCast_iff' i.val 0 3
+
+lemma rankClass_eq_zero_iff (i : Rank n) : rankClass i = 0 ↔ i.val % 3 = 2 := by
+  simp only [rankClass, rank, Int.cast_add, Int.cast_natCast, Int.cast_one]
+  change (i.val : ZMod 3) + 1 = (2 : ZMod 3) + 1 ↔ i.val % 3 = 2
+  simp only [add_left_inj]
+  exact ZMod.natCast_eq_natCast_iff' i.val 2 3
+
 lemma rankClass_eq_two_iff (i : Rank n) : rankClass i = 2 ↔ i.val % 3 = 1 := by
   have two : (2 : ZMod 3) = 1 + 1 := by decide +kernel
   simp only [rankClass, rank, Int.cast_add, Int.cast_natCast, Int.cast_one, two,

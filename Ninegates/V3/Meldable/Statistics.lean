@@ -16,6 +16,12 @@ namespace Mahjong.V3.VirtualHand
 
 variable {n : ℕ}
 
+lemma size_sequenceHand (s : Fin (3 * n - 2) → ℤ) :
+    size (sequenceHand s) = 3 * ∑ j, s j := by
+  simp only [sequenceHand, LinearMap.coe_mk, AddHom.coe_mk, map_sum, map_smul,
+    size_sequence, smul_eq_mul]
+  simp [Finset.mul_sum, mul_comm]
+
 @[simp]
 lemma classSize_sequence (r : ZMod 3) (j : Fin (3 * n - 2)) : classSize r (sequence j) = 1 := by
   have virtual : VirtuallySequential (sequence j) := ⟨Pi.single j 1, by simp⟩
