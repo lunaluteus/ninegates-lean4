@@ -31,6 +31,12 @@ def canonicalize (p : Placement n) : Placement n where
     coefficient (fun j ↦ p.seqNum j / 3) ((i.val : ℤ) - 1) +
     coefficient (fun j ↦ p.seqNum j / 3) ((i.val : ℤ) - 2)
 
+lemma canonicalize_tripNum (p : Placement n) :
+    p.canonicalize.tripNum = p.tripNum + sequenceHand (fun j ↦ p.seqNum j / 3) := by
+  ext i
+  simp only [canonicalize, Pi.add_apply, sequenceHand_apply]
+  ring
+
 lemma canonic_canonicalize (p : Placement n) : p.canonicalize.Canonic := by
   intro j
   exact ⟨Int.emod_nonneg _ (by decide), Int.emod_lt_of_pos _ (by decide)⟩

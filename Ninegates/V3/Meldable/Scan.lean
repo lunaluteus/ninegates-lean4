@@ -226,4 +226,18 @@ lemma canonicalSequence_prefix_iff (c d : VirtualHand n) (k : ℕ) (bound : k �
     norm_num only [Nat.cast_ofNat]
     omega
 
+/-- Exact agreement of a hand prefix determines its triplet quotients as well
+as its sequence residues. No meldability assumption is needed. -/
+lemma canonicalTriplet_prefix_eq {c d : VirtualHand n} {k : ℕ} (bound : k ≤ 3 * n)
+    (same : ∀ i : Rank n, i.val < k → c i = d i) :
+    ∀ i : Rank n, i.val < k → canonicalTriplet c i = canonicalTriplet d i := by
+  have sequences := (canonicalSequence_prefix_iff c d k bound).mp
+    (fun i inside ↦ congrArg (fun z : ℤ ↦ (z : ZMod 3)) (same i inside))
+  intro i inside
+  simp only [canonicalTriplet, same i inside, sequences (i.val + 1) (by omega),
+    sequences i.val (by omega), sequences (i.val - 1) (by omega)]
+
+lemma Meldable.canonicalTriplet_nonnegative {c : VirtualHand n} (h : Meldable c) :
+    ∀ i, 0 ≤ canonicalTriplet c i := ((meldable_iff_scan c).mp h).2
+
 end Mahjong.V3.VirtualHand

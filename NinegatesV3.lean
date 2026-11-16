@@ -7,8 +7,10 @@ module
 
 public import Ninegates.V3.Hand.Basic
 public import Ninegates.V3.Meldable.ClosedForm
+public import Ninegates.V3.Meldable.SequentialMoving
 public import Ninegates.V3.Wait.Basic
 public import Ninegates.V3.Examples
+public import Ninegates.V3.MovingExamples
 
 /-!
 # Version 3: formalization of the rewritten paper

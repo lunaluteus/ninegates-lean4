@@ -15,6 +15,18 @@ namespace Mahjong.V3.VirtualHand
 
 variable {n : ℕ}
 
+lemma rankClass_eq_iff (i j : Rank n) : rankClass i = rankClass j ↔ i.val % 3 = j.val % 3 := by
+  simp only [rankClass, rank, Int.cast_add, Int.cast_natCast, Int.cast_one,
+    add_left_inj, ZMod.natCast_eq_natCast_iff']
+
+lemma rankClass_rev_eq {i j : Rank n} (h : rankClass i = rankClass j) :
+    rankClass i.rev = rankClass j.rev := by
+  rw [rankClass_eq_iff] at h ⊢
+  simp only [Fin.val_rev]
+  have := i.isLt
+  have := j.isLt
+  omega
+
 @[simp, grind =]
 lemma nonnegative_iff (c : VirtualHand n) : Nonnegative c ↔ ∀ i, 0 ≤ c i := Iff.rfl
 

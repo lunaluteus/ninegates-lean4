@@ -25,6 +25,11 @@ def VirtuallySequential (c : VirtualHand n) : Prop := ∃ s, sequenceHand s = c
 def Sequential (c : VirtualHand n) : Prop := ∃ s, 0 ≤ s ∧ sequenceHand s = c
 
 @[simp]
+lemma sequenceHand_single (j : Fin (3 * n - 2)) (z : ℤ) :
+    sequenceHand (Pi.single j z) = z • sequence j := by
+  simp [sequenceHand, Pi.single_apply]
+
+@[simp]
 lemma Placement.toHand_no_triplets (s : Fin (3 * n - 2) → ℤ) :
     (⟨s, 0⟩ : Placement n).toHand = sequenceHand s := by
   simp [Placement.toHand, sequenceHand]
