@@ -76,6 +76,14 @@ full-sided `(n,n+2)` wait for `n>=2` as a standard hand plus one elementary meld
 that exactly 122 Taiwanese `(3,5)` waits are nonminimal. The paper's total,
 live, and minimal counts `149/11/27` remain to be formalized.
 
+[`Minimal/LiveNext`](Ninegates/Minimal/LiveNext.lean) sharpens the nonminimal
+classification under copy bound four: for `n>=2`, the live nonminimal
+`(n,n+2)` waits are exactly `A_n` plus one sequence avoiding both boundary
+ranks. There are exactly `3*n-4` of them, hence five in the Taiwanese case.
+Every live `(n,n+2)` wait missing a boundary rank is minimal. In particular,
+the class-bound sharpness family `(0,3,3,3,1^(3n-5),3)` is both minimal and live.
+These are structural consequences beyond the paper's numbered results.
+
 All 27 numbered propositions and Theorem 1.1 have proofs, as do Examples 4.5
 and 6.5. Example 6.6 (`149/11/27`) is deferred because the direct kernel
 computation was too expensive in the current prototype. All five unnumbered
@@ -131,7 +139,7 @@ The challenge and solution list all **43 numbered items in published order**,
 including definitions, examples, open problems, and the conjecture. Split
 statements stay together under their paper number. The public version, links,
 source hashes, declaration mapping, and gaps are recorded in
-[`paper.json`](ComparatorChallenges/paper.json). There are **114 verified
+[`paper.json`](ComparatorChallenges/paper.json). There are **117 verified
 Comparator targets**, including additional unnumbered constructions and bounds.
 
 ```sh

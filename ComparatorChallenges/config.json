@@ -115,7 +115,10 @@
     "ComparatorChallenges.remark_5_8_orderOne_exception",
     "ComparatorChallenges.remark_5_9_D_attainment",
     "ComparatorChallenges.remark_5_10_difference",
-    "ComparatorChallenges.remark_5_10_partition"
+    "ComparatorChallenges.remark_5_10_partition",
+    "ComparatorChallenges.next_live_nonminimal_classification",
+    "ComparatorChallenges.next_live_nonminimal_cardinality",
+    "ComparatorChallenges.sharpness_minimal_live"
   ],
   "permitted_axioms": [
     "propext",

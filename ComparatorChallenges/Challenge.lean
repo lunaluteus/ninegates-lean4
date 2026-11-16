@@ -897,4 +897,25 @@ theorem taiwanese_nonminimal_cardinality :
     Nat.card {c : VirtualHand 3 // IsFullWait 5 c ∧ ¬IsMinimalFullWait 5 c} = 122 :=
   by sorry
 
+/-! Further consequences in this development, beyond the numbered public v1 results. -/
+
+theorem next_live_nonminimal_classification :
+    ∀ {n : ℕ}, 2 ≤ n → ∀ c : VirtualHand n,
+      (IsLiveFullWait 4 (n + 2) c ∧ ¬IsMinimalFullWait (n + 2) c) ↔
+        ∃ r : Fin (3 * n - 2), 0 < r.val ∧ r.val + 3 < 3 * n ∧
+          c = Spec.Standard.A n + VirtualHand.sequence r := by
+  sorry
+
+theorem next_live_nonminimal_cardinality :
+    ∀ {n : ℕ}, 2 ≤ n →
+      Nat.card {c : VirtualHand n // IsLiveFullWait 4 (n + 2) c ∧
+        ¬IsMinimalFullWait (n + 2) c} = 3 * n - 4 := by
+  sorry
+
+theorem sharpness_minimal_live :
+    ∀ {n : ℕ}, 2 ≤ n →
+      IsMinimalFullWait (n + 2) (Spec.ClassBoundSharpness.hand n) ∧
+        IsLiveFullWait 4 (n + 2) (Spec.ClassBoundSharpness.hand n) := by
+  sorry
+
 end ComparatorChallenges

@@ -955,4 +955,26 @@ theorem taiwanese_nonminimal_cardinality :
     Nat.card {c : VirtualHand 3 // IsFullWait 5 c ∧ ¬IsMinimalFullWait 5 c} = 122 :=
   taiwanese_nonminimal_card
 
+/-! Further consequences in this development, beyond the numbered public v1 results. -/
+
+theorem next_live_nonminimal_classification :
+    ∀ {n : ℕ}, 2 ≤ n → ∀ c : VirtualHand n,
+      (IsLiveFullWait 4 (n + 2) c ∧ ¬IsMinimalFullWait (n + 2) c) ↔
+        ∃ r : Fin (3 * n - 2), 0 < r.val ∧ r.val + 3 < 3 * n ∧
+          c = Spec.Standard.A n + VirtualHand.sequence r := by
+  exact @Mahjong.VirtualHand.next_live_not_minimal_iff
+
+theorem next_live_nonminimal_cardinality :
+    ∀ {n : ℕ}, 2 ≤ n →
+      Nat.card {c : VirtualHand n // IsLiveFullWait 4 (n + 2) c ∧
+        ¬IsMinimalFullWait (n + 2) c} = 3 * n - 4 := by
+  exact @Mahjong.VirtualHand.next_live_nonminimal_card
+
+theorem sharpness_minimal_live :
+    ∀ {n : ℕ}, 2 ≤ n →
+      IsMinimalFullWait (n + 2) (Spec.ClassBoundSharpness.hand n) ∧
+        IsLiveFullWait 4 (n + 2) (Spec.ClassBoundSharpness.hand n) := by
+  intro n order
+  exact ⟨ClassBoundSharpness.minimal order, ClassBoundSharpness.live order⟩
+
 end ComparatorChallenges

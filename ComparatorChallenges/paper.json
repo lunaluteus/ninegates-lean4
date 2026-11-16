@@ -679,19 +679,19 @@
     }
   ],
   "validation": {
-    "paper_coverage": "passed: all 43 numbered v1 items and all five unnumbered remarks in published order; 114 selected targets",
-    "solution_build": "passed: lake build --wfail ComparatorChallenges.Solution",
-    "comparator": "passed: sandbox enabled; Lean default kernel accepts all 114 selected targets",
+    "paper_coverage": "passed: all 43 numbered v1 items and all five unnumbered remarks in published order; 117 selected targets",
+    "solution_build": "passed: lake build --wfail ComparatorChallenges.Solution (3247 jobs)",
+    "comparator": "passed: sandbox enabled; Lean default kernel accepts all 117 selected targets",
     "permitted_axioms": [
       "propext",
       "Classical.choice",
       "Quot.sound"
     ],
     "external_kernels": false,
-    "library_build": "passed: lake build --wfail Ninegates; all 106 library modules reachable",
-    "axiom_audit": "passed: 580 declarations; standard axioms only",
-    "coverage_negative_controls": "passed: 12 rejected mutations in temporary copies",
-    "scope": "Excludes Example 6.6, Problems 6.1/6.4, and Conjecture 6.9. The five explicit unnumbered remarks are formalized. Source correspondence is reviewed manually; the inventory script does not prove semantic equivalence to prose."
+    "library_build": "passed: lake build --wfail (3245 jobs); all 107 library modules reachable",
+    "axiom_audit": "passed: 588 declarations; standard axioms only",
+    "coverage_negative_controls": "passed: 13 rejected mutations in temporary copies, including an altered new cardinality statement",
+    "scope": "Excludes Example 6.6, Problems 6.1/6.4, and Conjecture 6.9. The five explicit unnumbered remarks are formalized. New live-next-order results are additional consequences and do not certify 149/11/27. Source correspondence is reviewed manually; the inventory script does not prove semantic equivalence to prose."
   },
   "additional_declarations": [
     "ComparatorChallenges.alternating_even",
@@ -709,7 +709,10 @@
     "ComparatorChallenges.remark_5_8_orderOne_exception",
     "ComparatorChallenges.remark_5_9_D_attainment",
     "ComparatorChallenges.remark_5_10_difference",
-    "ComparatorChallenges.remark_5_10_partition"
+    "ComparatorChallenges.remark_5_10_partition",
+    "ComparatorChallenges.next_live_nonminimal_classification",
+    "ComparatorChallenges.next_live_nonminimal_cardinality",
+    "ComparatorChallenges.sharpness_minimal_live"
   ],
   "unnumbered_remarks": [
     {
@@ -797,5 +800,10 @@
         "Mahjong.VirtualHand.Standard.fixedClass_partition"
       ]
     }
-  ]
+  ],
+  "additional_declaration_notes": {
+    "ComparatorChallenges.next_live_nonminimal_classification": "Further consequence, not a numbered paper result: live nonminimal (n,n+2) waits are exactly A_n plus one sequence avoiding both boundary ranks, for n>=2.",
+    "ComparatorChallenges.next_live_nonminimal_cardinality": "Structural cardinality 3*n-4; specializes to five Taiwanese live nonminimal waits. Does not certify the deferred 149/11/27 counts.",
+    "ComparatorChallenges.sharpness_minimal_live": "The class-bound sharpness family is both minimal and live for every n>=2, beyond the full-sidedness asserted in the public remark."
+  }
 }

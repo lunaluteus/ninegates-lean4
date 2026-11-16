@@ -580,3 +580,11 @@ import Ninegates
 #print axioms Mahjong.VirtualHand.ClassBoundSharpness.fixedClass_hand
 #print axioms Mahjong.VirtualHand.ClassBoundSharpness.classSize_one
 #print axioms Mahjong.VirtualHand.ClassBoundSharpness.reverse_sharp
+#print axioms Mahjong.VirtualHand.Standard.A_add_sequence_live_iff
+#print axioms Mahjong.VirtualHand.next_live_not_minimal_iff
+#print axioms Mahjong.VirtualHand.IsLiveFullWait.minimal_next_of_missing_boundary
+#print axioms Mahjong.VirtualHand.Standard.nextLiveNonminimal_injective
+#print axioms Mahjong.VirtualHand.next_live_nonminimal_card
+#print axioms Mahjong.VirtualHand.taiwanese_live_nonminimal_card
+#print axioms Mahjong.VirtualHand.ClassBoundSharpness.live
+#print axioms Mahjong.VirtualHand.ClassBoundSharpness.minimal

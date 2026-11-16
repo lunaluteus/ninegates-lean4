@@ -322,7 +322,7 @@ problems, and Conjecture 6.9. All propositions and the theorem are formalized;
 Examples 4.5 and 6.5 are formalized. Definitions identify the relevant model
 objects rather than being counted as new paper theorems. Example 6.6 is deferred,
 and the problems and conjecture remain explicitly open. The selected statements,
-including the five remarks and six additional results, give 114 Comparator targets.
+including the five remarks and nine additional results, give 117 Comparator targets.
 
 `Standard/Graph` was added during this audit: it proves Example 4.5's exact
 draw-pair relation for `A_n` and its fixed class two for every positive order,
@@ -391,6 +391,24 @@ combinations with duplicates removed. The paper's total/live/minimal Taiwanese
 counts 149/11/27 remain unformalized; independent discovery computations are
 not used as Lean proofs.
 
+`Minimal/LiveNext` sharpens this for live draws under copy bound four. A
+nonnegative elementary meld added to a standard family can only preserve
+liveness if the standard family was live already, so that family must be `A_n`.
+Adding a triplet to `A_n` violates liveness, while adding a sequence is live
+exactly when the sequence avoids both boundary ranks. Thus for every `n>=2`,
+the live nonminimal `(n,n+2)` waits are precisely `A_n + sequence r` with
+zero-based start `1 <= r <= 3*n-4`. The sequence starts give an explicit
+bijection, proving the exact count `3*n-4` without enumerating candidate hands.
+At `n=3` this gives exactly five live nonminimal Taiwanese waits; it does not
+establish the deferred total of eleven live Taiwanese waits.
+
+Consequently, any live `(n,n+2)` wait missing either boundary rank is minimal
+in the original arbitrary-removal sense. The class-bound sharpness witness
+from the remark after Proposition 5.6 is therefore minimal and live at every
+`n>=2`. These are additional consequences of the formalized theory, not new
+numbered results attributed to arXiv v1. Three additional Comparator targets
+certify the classification, count, and minimal/live witness.
+
 ### Remaining paper statements
 
 The numbered results have one unfinished example: **Example 6.6**, the
@@ -451,7 +469,7 @@ The audit covers the foundational results and the complete explicit example.
 Allowed axioms are `propext`, `Classical.choice`, and `Quot.sound`. There are no
 placeholder proofs or uses of `native_decide` in the library. `Audit.lean`
 and `scripts/check_axioms.py` enforce the standard axiom set in CI. The new
-`ComparatorChallenges` target checks 114 statements against a model importing
+`ComparatorChallenges` target checks 117 statements against a model importing
 only shared foundational project definitions. Derived model objects have their
 own namespace and definitions; only the solution imports the library and proves
 the required bridges. Run Comparator with its sandbox enabled. Its intentional
