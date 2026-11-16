@@ -35,6 +35,9 @@ def B' (n : ℕ) : VirtualHand n := reverse (B n)
 def C' (n : ℕ) : VirtualHand n := reverse (C n)
 def D' (n : ℕ) : VirtualHand n := reverse (D n)
 
+def Eight (n : ℕ) : Fin 8 → VirtualHand n :=
+  ![A n, B n, B' n, C n, C' n, D n, D' n, E n]
+
 def EightFamily {n : ℕ} (c : VirtualHand n) : Prop :=
   c = A n ∨ c = B n ∨ c = B' n ∨ c = C n ∨ c = C' n ∨ c = D n ∨ c = D' n ∨ c = E n
 

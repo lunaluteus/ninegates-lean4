@@ -13,7 +13,10 @@
     "ComparatorChallenges.alternating_odd",
     "ComparatorChallenges.alternating_even_minimal",
     "ComparatorChallenges.alternating_odd_minimal",
-    "ComparatorChallenges.maximal_minimal_wait_strong"
+    "ComparatorChallenges.maximal_minimal_wait_strong",
+    "ComparatorChallenges.standard_cardinalities",
+    "ComparatorChallenges.order_one_cardinalities",
+    "ComparatorChallenges.below_order_cardinalities"
   ],
   "permitted_axioms": [
     "propext",

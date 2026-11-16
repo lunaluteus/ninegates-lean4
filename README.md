@@ -63,8 +63,14 @@ The main declarations are in the `Mahjong.VirtualHand` namespace:
   an exact formula for arbitrary order, draw, and pair. Critical draws rule out
   each elementary removal and hence every nonzero meldable removal.
 
-Some cardinality and numerical examples remain to be formalized. The paper's
-exact general formula for `M(n)` is a conjecture;
+[`Cardinality`](Ninegates/Cardinality.lean) proves the exact counts: eight
+full-sided and minimal waits at `m=n+1` for `n>=2`, exactly one of them live;
+six full-sided, minimal, and live waits at order one and meld count two.
+There are no full-sided waits for `m<=n`, and no other minimal waits at order one.
+The eight named families are proved distinct at every `n>=2`.
+
+The Taiwanese counts `149/11/27` remain to be formalized. The paper's exact
+general formula for `M(n)` is a conjecture;
 it is neither assumed nor presented as proved. See [DEVELOPMENT.md](DEVELOPMENT.md)
 for the detailed correspondence with the paper.
 
@@ -112,7 +118,8 @@ states use `decide +kernel`; no proof uses native evaluation.
 
 The new challenge checks the actual classification, including live uniqueness,
 order one, minimal classification, attained coarse and improved bounds, and
-both full-sidedness and minimality of the alternating constructions:
+both full-sidedness and minimality of the alternating constructions, and the
+exact standard-family cardinalities:
 
 ```sh
 lake comparator --config=ComparatorChallenges/config.json

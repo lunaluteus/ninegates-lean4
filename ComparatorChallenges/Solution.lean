@@ -70,4 +70,24 @@ theorem maximal_minimal_wait_strong (n : ℕ) (positive : 0 < n) :
   ⟨maxMinimalMeldCount n, exists_minimal_at_max positive, fun _ _ h ↦ h.le_max,
     maxMinimalMeldCount_strong_bounds positive⟩
 
+theorem standard_cardinalities (n : ℕ) (order : 2 ≤ n) :
+    Nat.card {c : VirtualHand n // IsFullWait (n + 1) c} = 8 ∧
+      Nat.card {c : VirtualHand n // IsMinimalFullWait (n + 1) c} = 8 ∧
+        Nat.card {c : VirtualHand n // IsLiveFullWait 4 (n + 1) c} = 1 :=
+  ⟨fullWait_card_eight order, minimalFullWait_card_eight order, liveFullWait_card_one order⟩
+
+theorem order_one_cardinalities :
+    Nat.card {c : VirtualHand 1 // IsFullWait 2 c} = 6 ∧
+      Nat.card {c : VirtualHand 1 // IsLiveFullWait 4 2 c} = 6 ∧
+        Nat.card {c : VirtualHand 1 // ∃ m, IsMinimalFullWait m c} = 6 ∧
+          ∀ m : ℕ, Nat.card {c : VirtualHand 1 // IsMinimalFullWait m c} =
+            if m = 2 then 6 else 0 :=
+  ⟨fullWait_card_six, orderOne_liveFullWait_card, orderOne_allMinimalFullWait_card,
+    orderOne_minimalFullWait_card⟩
+
+theorem below_order_cardinalities (n m : ℕ) (bound : m ≤ n) :
+    Nat.card {c : VirtualHand n // IsFullWait m c} = 0 ∧
+      Nat.card {c : VirtualHand n // IsMinimalFullWait m c} = 0 :=
+  ⟨fullWait_card_zero bound, minimalFullWait_card_zero bound⟩
+
 end ComparatorChallenges

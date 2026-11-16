@@ -9,6 +9,7 @@ public import Ninegates.Standard.Defs
 public import Ninegates.Standard.OneDefs
 public import Ninegates.Minimal.Defs
 public import Ninegates.Minimal.Alternating.Defs
+public import Mathlib.SetTheory.Cardinal.Finite
 
 /-! Trusted statements for the structural library. Only the selected theorem
 proofs are holes; every definition and parameter is fixed by these imports.
@@ -70,6 +71,25 @@ theorem maximal_minimal_wait_strong (n : ℕ) (positive : 0 < n) :
     ∃ M : ℕ, (∃ c : VirtualHand n, IsMinimalFullWait M c) ∧
       (∀ (m : ℕ) (c : VirtualHand n), IsMinimalFullWait m c → m ≤ M) ∧
         max (2 * n) (9 * n / 2 - 3) ≤ M ∧ M < 8 * n :=
+  by sorry
+
+theorem standard_cardinalities (n : ℕ) (order : 2 ≤ n) :
+    Nat.card {c : VirtualHand n // IsFullWait (n + 1) c} = 8 ∧
+      Nat.card {c : VirtualHand n // IsMinimalFullWait (n + 1) c} = 8 ∧
+        Nat.card {c : VirtualHand n // IsLiveFullWait 4 (n + 1) c} = 1 :=
+  by sorry
+
+theorem order_one_cardinalities :
+    Nat.card {c : VirtualHand 1 // IsFullWait 2 c} = 6 ∧
+      Nat.card {c : VirtualHand 1 // IsLiveFullWait 4 2 c} = 6 ∧
+        Nat.card {c : VirtualHand 1 // ∃ m, IsMinimalFullWait m c} = 6 ∧
+          ∀ m : ℕ, Nat.card {c : VirtualHand 1 // IsMinimalFullWait m c} =
+            if m = 2 then 6 else 0 :=
+  by sorry
+
+theorem below_order_cardinalities (n m : ℕ) (bound : m ≤ n) :
+    Nat.card {c : VirtualHand n // IsFullWait m c} = 0 ∧
+      Nat.card {c : VirtualHand n // IsMinimalFullWait m c} = 0 :=
   by sorry
 
 end ComparatorChallenges
