@@ -10,7 +10,7 @@ Structural formalization in Lean 4
 
 </div>
 
-This is the experimental rewrite on the `v3` branch, aligned with the public paper
+This is the structural rewrite on the `v3` branch, aligned with the public paper
 [arXiv:2611.06944v1](https://arxiv.org/abs/2611.06944v1), submitted 2 November 2026.
 The previous implementation is archived on [`v2`](https://github.com/lunaluteus/ninegates-lean4/tree/v2).
 The new library replaces its API completely and proves the classification
@@ -224,21 +224,23 @@ The `v3` branch was developed by **Luna**, an autonomous agent designed by
 [sun123zxy](https://github.com/sun123zxy), running on **Codex + GPT 6.1 Sol**,
 based on the work in the `v2` branch.
 
-As of November 2026, initial development and validation took approximately
-**9 hours 54 minutes**, followed by approximately **56 minutes of cleanup and
-follow-up proofs**. These are elapsed phase durations. Together they used roughly
+The recorded elapsed time from the `v3` task request to the commit containing
+the non-enumerative eight-family classification proof was **4 hours 47 minutes
+41 seconds**, rounded to the nearest second.
+
+| Milestone | Commit | Library Lean LOC | Total Lean LOC |
+| --- | --- | ---: | ---: |
+| `v2` baseline | [e45fd51](https://github.com/lunaluteus/ninegates-lean4/commit/e45fd512ebb2cd0bac7d69690f3163647bdc3bc8) | 5,426 | 5,466 |
+| Eight-family structural classification | [486a557](https://github.com/lunaluteus/ninegates-lean4/commit/486a55762bf812ae0ac44d98bc422d038e68c251) | 6,781 | 7,183 |
+| First stable `v3` snapshot | [a001009](https://github.com/lunaluteus/ninegates-lean4/commit/a001009c34b9e8c35fab82c18ffeb67d2f490141) | 10,594 | 13,436 |
+
+Counts are physical lines in tracked `.lean` sources, including comments and
+blank lines, and excluding dependencies. Library LOC covers the implementation;
+total LOC also includes its Comparator and audit sources. At the eight-family
+milestone, the new implementation was under `Ninegates/V3/` with root
+`NinegatesV3.lean` and audit `V3Audit.lean`; the unchanged `v2` sources that still
+coexisted in that commit are excluded from its counts.
+
+As of November 2026, development through the first stable snapshot used roughly
 **10% of the weekly usage limit of a US$100 ChatGPT subscription**, according to
 the account holder's estimate.
-
-| Branch / stage | Library Lean LOC | Total Lean LOC |
-| --- | ---: | ---: |
-| `v2` | 5,426 | 5,466 |
-| `v3` before cleanup ([8dd002d](https://github.com/lunaluteus/ninegates-lean4/commit/8dd002d)) | 10,405 | 13,220 |
-| `v3` after cleanup ([a001009](https://github.com/lunaluteus/ninegates-lean4/commit/a001009)) | 10,594 | 13,436 |
-
-Counts are physical lines in tracked `.lean` files, including comments and blank
-lines, and excluding dependencies. The library column covers `Ninegates.lean`
-and `Ninegates/`; the total also includes Comparator and audit sources.
-The cleanup phase added the general order-one criterion, bijection and count,
-and extra audit coverage. The later statement-only cleanup reduced the total
-from 13,454 to 13,436 lines.
