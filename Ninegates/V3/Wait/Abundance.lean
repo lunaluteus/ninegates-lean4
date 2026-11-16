@@ -7,6 +7,7 @@ module
 
 public import Ninegates.V3.Meldable.Coverage
 public import Ninegates.V3.Meldable.Virtual
+public import Ninegates.V3.Meldable.OrderOne
 public import Ninegates.V3.Wait.Basic
 public import Ninegates.V3.Hand.Classes
 
@@ -65,5 +66,35 @@ lemma isFullWait_of_abundant (order : 0 < n) (large : abundanceThreshold ≤ c)
   · intro i
     obtain ⟨j, class_j⟩ := exists_rankClass order (-(rankSum c : ZMod 3) - rankClass i)
     exact ⟨j, drawPair_of_abundant residue large i j (by rw [class_j]; ring)⟩
+
+/-- At order one, two copies at each rank suffice for every permitted edge. -/
+lemma drawPair_orderOne_of_two {c : VirtualHand 1} (count : (size c : ZMod 3) = 1)
+    (large : ∀ i, 2 ≤ c i) (i j : Rank 1)
+    (congruent : rankClass i + rankClass j = -(rankSum c : ZMod 3)) : DrawPair c i j := by
+  apply ((virtuallyMeldable_draw_iff count i j).mpr congruent).meldable_orderOne
+  intro k
+  change 0 ≤ c k + single i k - pair j k
+  have lower := large k
+  have single_positive : 0 ≤ single i k := nonnegative_single i k
+  have pair_bound : pair j k ≤ 2 := by
+    simp only [pair_apply, single_apply]
+    split_ifs <;> norm_num
+  linarith
+
+lemma isFullWait_orderOne_of_two {c : VirtualHand 1} (large : ∀ i, 2 ≤ c i)
+    (count : size c = 3 * (m : ℤ) + 1) : IsFullWait m c := by
+  have residue : (size c : ZMod 3) = 1 := by
+    rw [count]
+    push_cast
+    rw [show (3 : ZMod 3) = 0 from ZMod.natCast_self 3, zero_mul, zero_add]
+  apply isFullWait_iff.mpr
+  refine ⟨?_, count, ?_⟩
+  · intro i
+    change 0 ≤ c i
+    exact le_trans (by norm_num) (large i)
+  · intro i
+    obtain ⟨j, class_j⟩ := exists_rankClass (n := 1) (by decide)
+      (-(rankSum c : ZMod 3) - rankClass i)
+    exact ⟨j, drawPair_orderOne_of_two residue large i j (by rw [class_j]; ring)⟩
 
 end Mahjong.V3.VirtualHand
