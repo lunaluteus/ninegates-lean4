@@ -1,6 +1,7 @@
 # Development status
 
-Experimental work on Luna's `v3` branch. No pull request is planned at present.
+Experimental work on Luna's `v3` branch. An upstream pull request is authorized
+once v3 is stable; it has not yet been opened.
 `README.md` has been rewritten for v3 with sun123zxy's explicit authorization.
 `AGENTS.md` remains unchanged.
 

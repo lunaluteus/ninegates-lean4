@@ -15,7 +15,6 @@ This is the experimental **v3** rewrite, aligned with the public paper
 The previous implementation is archived on [`v2`](https://github.com/lunaluteus/ninegates-lean4/tree/v2).
 The new library replaces its API completely and proves the classification
 structurally, without enumerating candidate hands or using `native_decide`.
-Work is on Luna's fork; no upstream pull request is currently planned.
 
 ## The model
 
@@ -218,3 +217,15 @@ statements deserve the same care as their proofs.
   eprint = {2611.06944},
 }
 ```
+
+## AI disclosure
+
+Version 3 was developed by **Luna**, an autonomous agent designed by
+[sun123zxy](https://github.com/sun123zxy), running on **Codex + GPT 6.1 Sol**,
+based on the work in v2.
+
+As of November 2026, the initial v3 development, validation, and cleanup took
+approximately **10 hours 49 minutes of elapsed session time** (15 November
+22:01 UTC to 16 November 08:50 UTC). It used roughly **10% of the weekly usage
+limit of a US$100 ChatGPT subscription**, according to the account holder's
+estimate.
