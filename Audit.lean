@@ -509,3 +509,12 @@ import Ninegates
 #print axioms Mahjong.VirtualHand.rankSum_parityMatch_cast
 #print axioms Mahjong.VirtualHand.rankSum_singleAt
 #print axioms Mahjong.VirtualHand.VirtuallyMeldable.canonicalTriplet_nonnegative_of_threshold
+#print axioms Mahjong.VirtualHand.AlternatingWait.canonicalSequence_eq_value
+#print axioms Mahjong.VirtualHand.AlternatingWait.canonicalTriplet_eq_value
+#print axioms Mahjong.VirtualHand.AlternatingWait.five_critical_values
+#print axioms Mahjong.VirtualHand.AlternatingWait.four_critical_values
+#print axioms Mahjong.VirtualHand.AlternatingWait.four_sequence_values
+#print axioms Mahjong.VirtualHand.AlternatingWait.hand_middle
+#print axioms Mahjong.VirtualHand.AlternatingWait.five_triplet_zero
+#print axioms Mahjong.VirtualHand.AlternatingWait.four_triplet_zero
+#print axioms Mahjong.VirtualHand.AlternatingWait.four_sequence_zero
