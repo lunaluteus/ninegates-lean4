@@ -4,8 +4,13 @@ Experimental work on Luna's `v3` branch. No pull request is planned at present.
 `README.md` has been rewritten for v3 with sun123zxy's explicit authorization.
 `AGENTS.md` remains unchanged.
 
-The target is the rewritten paper: independent order `n`, meld count `m`, and
-copy bound, with a structural, non-enumerative proof of the classification.
+The target is the public paper
+[arXiv:2611.06944v1](https://arxiv.org/abs/2611.06944v1), submitted
+2026-11-02 at 06:23:21 UTC: independent order `n`, meld count `m`, and copy
+bound, with a structural, non-enumerative proof of the classification.
+The correspondence was checked against the public PDF, HTML, and TeX source,
+not just the local manuscript. Versioned URLs and downloaded source hashes are
+in [`ComparatorChallenges/paper.json`](ComparatorChallenges/paper.json).
 The default library target is `Ninegates`. The previous API, finite
 enumeration and old Comparator reduction challenge have been removed from this
 branch; the complete previous implementation is archived on `v2` at
@@ -311,7 +316,21 @@ checks the order-one exception that the later `m=n+1` classification must retain
 
 ## Paper alignment
 
-| Part of the rewritten paper | Current status |
+The challenge and solution each list all 43 numbered public v1 items in paper
+order: Theorem 1.1, 27 propositions, nine definitions, three examples, two open
+problems, and Conjecture 6.9. All propositions and the theorem are formalized;
+Examples 4.5 and 6.5 are formalized. Definitions identify the relevant model
+objects rather than being counted as new paper theorems. Example 6.6 is deferred,
+and the problems and conjecture remain explicitly open. The selected statements,
+including six extra results, give 104 Comparator targets.
+
+`Standard/Graph` was added during this audit: it proves Example 4.5's exact
+draw-pair relation for `A_n` and its fixed class two for every positive order,
+including order one. The correspondence also exposes the literal sequence
+recurrence uniqueness, all three parts of Proposition 5.10, and the existential
+full-wait conclusion of Proposition 6.2.
+
+| Part of the public v1 paper | Current status |
 | --- | --- |
 | Virtual hands, independent parameters, elementary tile patterns | Implemented |
 | Class-size partition and rank-sum congruence | Proved as sums over `ZMod 3` |
@@ -328,6 +347,7 @@ checks the order-one exception that the later `m=n+1` classification must retain
 | Canonical scan, weighted closed form, boundary formulas, and full criterion | Proved |
 | Sequential tile moving, four-case general moving, interval property | Proved |
 | Fixed/interchanging classes and class-size congruence | Proved |
+| Exact draw-pair graph and fixed class of `A_n` (Example 4.5) | Proved |
 | Incoming intervals, bidirectional edges, consecutive edges, two-pair theorem | Proved |
 | Missing-rank split, waits across a missing rank, interior positivity | Proved |
 | Incoming edges from both sides force three copies | Proved |
@@ -350,7 +370,7 @@ checks the order-one exception that the later `m=n+1` classification must retain
 | Minimality of the stronger constructions and improved lower bound | Proved |
 | Distinct families and exact standard cardinalities 0/8/6, live 1/6 | Proved |
 | Nonminimal `(n,n+2)` characterization, Taiwanese nonminimal count 122 | Proved |
-| Taiwanese total/live/minimal counts 149/11/27 | Pending |
+| Taiwanese total/live/minimal counts 149/11/27 (Example 6.6) | Deferred |
 
 `Standard/Distinct` proves the eight named families are pairwise distinct at
 every order at least two. Their two endpoints and second coordinate distinguish
@@ -371,6 +391,39 @@ combinations with duplicates removed. The paper's total/live/minimal Taiwanese
 counts 149/11/27 remain unformalized; independent discovery computations are
 not used as Lean proofs.
 
+### Remaining paper statements
+
+The numbered results have one unfinished example: **Example 6.6**, the
+Taiwanese `149/11/27` counts. At sun123zxy's request, expensive computation is
+parked. A direct 100-case kernel-check prototype reached the 4 GB memory limit
+and a 30-second timeout; the full 24,310-candidate batch was not started.
+This is a limitation of that prototype, not a claim that an improved kernel
+certificate would necessarily be expensive. The structural proof of the
+nonminimal count 122 is complete.
+
+The audit also checked all five unnumbered remarks. The examples after
+Propositions 4.11 and 5.8 already have proofs. Three remarks retain gaps:
+
+- After **5.6**, the general sharpness family
+  `(0,3,3,3,1^(3n-5),3)` for `n>=2`, including its asserted draw-pair edges,
+  fixed class two, and class-one size `n+1`, has not been formalized as a
+  family. The lower bounds and the order-one witness are proved.
+- After **5.9**, the explicit corollary that `D_n` has fixed class one and
+  attains multiplicity two at paper rank four has not been separately packaged;
+  its coordinate value is available from `D_apply`.
+- After **5.10**, there is no dedicated combined theorem stating that the
+  difference of two full-sided `(n,n+1)` waits is virtually meldable exactly
+  when their fixed classes agree, together with the partition
+  `{A,B,B',E}`, `{C,D}`, `{C',D'}` into fixed classes two, one, and zero.
+
+These gaps are recorded in `paper.json` and are not counted as verified
+Comparator targets. Thus the coverage claim concerns the specified numbered
+results, not every assertion in the paper's prose.
+
+**Problems 6.1 and 6.4** ask for general classifications and counts beyond the
+proved regimes; they are open questions in the paper, not missing proofs of
+claimed results. `Minimal/Next` only settles the nonminimal part at `m=n+2`.
+
 The exact general `M(n)` formula remains a conjecture in the paper. It is not
 assumed as an axiom or used to prove any part of this development. Existing
 computer-assisted upper-bound experiments are separate from this structural
@@ -384,16 +437,22 @@ Use the pinned Lean 4.35.0 and dependencies:
 lake build --wfail Ninegates
 lake env lean -j2 -M4096 -DwarningAsError=true Audit.lean > axioms.log
 python3 scripts/check_axioms.py Audit.lean axioms.log
+python3 scripts/check_paper_coverage.py
+lake build --wfail ComparatorChallenges.Solution
+lake comparator --config=ComparatorChallenges/config.json
 ```
 
 The audit covers the foundational results and the complete explicit example.
 Allowed axioms are `propext`, `Classical.choice`, and `Quot.sound`. There are no
 placeholder proofs or uses of `native_decide` in the library. `Audit.lean`
 and `scripts/check_axioms.py` enforce the standard axiom set in CI. The new
-`ComparatorChallenges` target checks sixteen key statements against a
-definition-only challenge boundary, including the classification itself,
-alternating minimality, the improved bound, standard cardinalities, and the
-Taiwanese nonminimal count. Run
-`lake comparator --config=ComparatorChallenges/config.json` with its sandbox
-enabled. Its intentional challenge holes are outside the default library.
+`ComparatorChallenges` target checks 104 statements against a model importing
+only shared foundational project definitions. Derived model objects have their
+own namespace and definitions; only the solution imports the library and proves
+the required bridges. Run Comparator with its sandbox enabled. Its intentional
+challenge holes are outside the default library. The correspondence check
+enforces the independently pinned public order, source version, equal source
+signatures, target inventory, and explicit exclusions. It is an inventory
+check; kernel verification and mathematical review of the statements remain
+separate requirements.
 `README.md` introduces the current API; this file records its detailed status.

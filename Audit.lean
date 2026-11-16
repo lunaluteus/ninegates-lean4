@@ -553,3 +553,6 @@ import Ninegates
 #print axioms Mahjong.VirtualHand.next_nonminimal_iff_mem
 #print axioms Mahjong.VirtualHand.Standard.nextNonminimal_three_card
 #print axioms Mahjong.VirtualHand.taiwanese_nonminimal_card
+#print axioms Mahjong.VirtualHand.Standard.A_full_positive
+#print axioms Mahjong.VirtualHand.Standard.fixedClass_A
+#print axioms Mahjong.VirtualHand.Standard.A_drawPair_iff

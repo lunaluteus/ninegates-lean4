@@ -10,7 +10,8 @@ Structural formalization in Lean 4
 
 </div>
 
-This is the experimental **v3** rewrite, aligned with the rewritten paper.
+This is the experimental **v3** rewrite, aligned with the public paper
+[arXiv:2611.06944v1](https://arxiv.org/abs/2611.06944v1), submitted 2 November 2026.
 The previous implementation is archived on [`v2`](https://github.com/lunaluteus/ninegates-lean4/tree/v2).
 The new library replaces its API completely and proves the classification
 structurally, without enumerating candidate hands or using `native_decide`.
@@ -75,9 +76,12 @@ full-sided `(n,n+2)` wait for `n>=2` as a standard hand plus one elementary meld
 that exactly 122 Taiwanese `(3,5)` waits are nonminimal. The paper's total,
 live, and minimal counts `149/11/27` remain to be formalized.
 
-The exact general formula for `M(n)` is a conjecture;
-it is neither assumed nor presented as proved. See [DEVELOPMENT.md](DEVELOPMENT.md)
-for the detailed correspondence with the paper.
+All 27 numbered propositions and Theorem 1.1 have proofs, as do Examples 4.5
+and 6.5. Example 6.6 (`149/11/27`) is deferred because the direct kernel
+computation was too expensive in the current prototype. Problems 6.1 and 6.4
+and Conjecture 6.9 remain open. Three unnumbered remarks also have statements
+not yet separately formalized; see [DEVELOPMENT.md](DEVELOPMENT.md#remaining-paper-statements).
+The exact general formula for `M(n)` is neither assumed nor presented as proved.
 
 ## Proof structure
 
@@ -121,12 +125,16 @@ states use `decide +kernel`; no proof uses native evaluation.
 
 ### Comparator
 
-The new challenge checks the actual classification, including live uniqueness,
-order one, minimal classification, attained coarse and improved bounds, and
-both full-sidedness and minimality of the alternating constructions, and the
-exact standard-family cardinalities, and the Taiwanese nonminimal count:
+The challenge and solution list all **43 numbered items in published order**,
+including definitions, examples, open problems, and the conjecture. Split
+statements stay together under their paper number. The public version, links,
+source hashes, declaration mapping, and gaps are recorded in
+[`paper.json`](ComparatorChallenges/paper.json). There are **104 verified
+Comparator targets**, including additional unnumbered constructions and bounds.
 
 ```sh
+python3 scripts/check_paper_coverage.py
+lake build --wfail ComparatorChallenges.Solution
 lake comparator --config=ComparatorChallenges/config.json
 ```
 
@@ -135,14 +143,22 @@ This uses the Comparator bundled with the pinned Lean toolchain and requires
 the sandbox enabled. No external checker is enabled by this configuration.
 
 [`Challenge.lean`](ComparatorChallenges/Challenge.lean) fixes the theorem
-statements and imports the definitions they refer to, without importing the
-classification or its solution. Its intentional theorem holes are confined to
-the challenge and excluded from the default library build.
+statements and imports [`Model.lean`](ComparatorChallenges/Model.lean). The model
+shares only the foundational hand, placement, wait, and minimality definitions
+with the library; it defines derived objects independently and imports no
+project proof modules. Intentional theorem holes are confined to the challenge
+and excluded from the default library build.
 [`Solution.lean`](ComparatorChallenges/Solution.lean) supplies the library's
-proofs of those same statements. Comparator exports and checks the proofs,
+proofs, using [`Bridges.lean`](ComparatorChallenges/Bridges.lean) to connect the
+derived definitions. Example 6.6 has a visible challenge goal and an explicit
+deferred entry in the solution, and is excluded from the verified targets.
+The open problems and conjecture are not proof assumptions.
+Comparator exports and checks the proofs,
 compares their statements against the challenge, and permits only the three
 standard axioms above. This complements the larger axiom audit; it does not
 claim to certify unfinished results or replace review of the definitions.
+CI also checks the pinned inventory, order, signatures, and target list with
+[`check_paper_coverage.py`](scripts/check_paper_coverage.py).
 
 See the [Lean proof-validation documentation](https://lean-lang.org/doc/reference/latest/ValidatingProofs/)
 for the meaning and trust assumptions of these checks.

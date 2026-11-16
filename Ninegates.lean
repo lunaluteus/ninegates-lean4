@@ -18,6 +18,7 @@ public import Ninegates.Wait.PillarRemainder
 public import Ninegates.Wait.RequiredOne
 public import Ninegates.Wait.Reverse
 public import Ninegates.Standard.Valid
+public import Ninegates.Standard.Graph
 public import Ninegates.Cardinality
 public import Ninegates.Numerical.Taiwanese
 public import Ninegates.Wait.Abundance

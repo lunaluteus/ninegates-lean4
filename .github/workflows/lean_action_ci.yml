@@ -37,6 +37,8 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends bubblewrap
-      - name: Check main statements with Comparator
+      - name: Check public-paper correspondence
+        run: python3 scripts/check_paper_coverage.py
+      - name: Check paper statements with Comparator
         run: lake comparator --config=ComparatorChallenges/config.json
       - uses: leanprover-community/docgen-action@v1
