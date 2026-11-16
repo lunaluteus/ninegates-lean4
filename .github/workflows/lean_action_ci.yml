@@ -31,16 +31,19 @@ jobs:
           docker-images: false
           swap-storage: false
       - uses: actions/checkout@v5
+      - name: Prepare Comparator sandbox
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends bubblewrap
+          # Permit uid mapping inside bubblewrap on this ephemeral Ubuntu runner.
+          sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0
+          bwrap --unshare-user --ro-bind / / true
       - uses: leanprover/lean-action@v1
       - name: Verify structural proofs and axioms
         run: |
           lake build --wfail
           lake env lean -j2 -M4096 -DwarningAsError=true Audit.lean > axioms.log
           python3 scripts/check_axioms.py Audit.lean axioms.log
-      - name: Install Comparator sandbox
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y --no-install-recommends bubblewrap
       - name: Check public-paper correspondence
         run: python3 scripts/check_paper_coverage.py
       - name: Check paper statements with Comparator
