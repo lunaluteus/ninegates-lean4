@@ -101,14 +101,36 @@ lemma Nonnegative.add_le_classSize {c : VirtualHand n} (h : Nonnegative c)
     (fun k : Rank n ↦ rankClass k = rankClass i), c k
   simpa [different] using bound
 
+private lemma univ_eq_three_classes (s x y : ZMod 3) (sx : s ≠ x) (sy : s ≠ y) (xy : x ≠ y) :
+    (Finset.univ : Finset (ZMod 3)) = {s, x, y} := by
+  symm
+  apply Finset.eq_of_subset_of_card_le (Finset.subset_univ _)
+  simp [sx, sy, xy]
+
+lemma three_classes_exhaust (s x y : ZMod 3) (sx : s ≠ x) (sy : s ≠ y) (xy : x ≠ y)
+    (r : ZMod 3) : r = s ∨ r = x ∨ r = y := by
+  have member : r ∈ (Finset.univ : Finset (ZMod 3)) := Finset.mem_univ r
+  rw [univ_eq_three_classes s x y sx sy xy] at member
+  simpa only [Finset.mem_insert, Finset.mem_singleton] using member
+
 lemma size_eq_three_classSizes (c : VirtualHand n) (s x y : ZMod 3)
     (sx : s ≠ x) (sy : s ≠ y) (xy : x ≠ y) :
     size c = classSize s c + classSize x c + classSize y c := by
-  have cover : (Finset.univ : Finset (ZMod 3)) = {s, x, y} := by
-    symm
-    apply Finset.eq_of_subset_of_card_le (Finset.subset_univ _)
-    simp [sx, sy, xy]
-  rw [size_eq_sum_classSize, cover]
+  rw [size_eq_sum_classSize, univ_eq_three_classes s x y sx sy xy]
   simp [sx, sy, xy, add_assoc]
+
+lemma classSize_eq_zero {c : VirtualHand n} (r : ZMod 3)
+    (zero : ∀ i, rankClass i = r → c i = 0) : classSize r c = 0 := by
+  change (∑ i ∈ Finset.univ.filter (fun i : Rank n ↦ rankClass i = r), c i) = 0
+  exact Finset.sum_eq_zero fun i member ↦ zero i (Finset.mem_filter.mp member).2
+
+lemma classSize_eq_single {c : VirtualHand n} (p : Rank n)
+    (others : ∀ i, rankClass i = rankClass p → i ≠ p → c i = 0) :
+    classSize (rankClass p) c = c p := by
+  change (∑ i ∈ Finset.univ.filter (fun i : Rank n ↦ rankClass i = rankClass p), c i) = c p
+  apply Finset.sum_eq_single p
+  · intro i member different
+    exact others i (Finset.mem_filter.mp member).2 different
+  · simp
 
 end Mahjong.V3.VirtualHand
