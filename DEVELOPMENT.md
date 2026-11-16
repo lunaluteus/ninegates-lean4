@@ -217,6 +217,21 @@ At order one this threshold can be improved to `(2,2,2)`:
 statement using nonnegative virtual meldability. The paper's stated threshold
 remains sufficient.
 
+`Wait/OrderOne` gives the exact criterion at arbitrary meld count: the hand
+has size `3m+1`, its fixed rank has at least one tile, and its other two ranks
+have at least two each. The class-dependent threshold has size five and rank
+sum congruent to minus its specified class. Adding the threshold for the
+negative fixed class, or subtracting the threshold for the fixed class, are
+inverse translations on integer hands. This gives an explicit bijection from
+nonnegative triples of sum `3m-4` to full order-one waits for `m>=2`.
+`Numerical/OrderOne` applies stars and bars to prove the exact count
+`choose(3m-2,2)`; the count is zero for `m<=1`. These counts have no copy bound.
+
+The order-one abundance and minimality proofs reuse this shared threshold
+criterion. The virtual draw congruence criterion now lives in `Wait/Classes`,
+independently of abundance, and the size residue is packaged once in
+`Wait/Basic` for use by the abundance, minimality, and reversal arguments.
+
 `Wait/Add` preserves all draw-pair edges and full-sidedness under adding an
 arbitrary actual meldable hand. `Minimal/Defs` defines minimal full waits by
 excluding every nonzero meldable removal leaving a full wait of any meld count.
@@ -328,7 +343,7 @@ problems, and Conjecture 6.9. All propositions and the theorem are formalized;
 Examples 4.5 and 6.5 are formalized. Definitions identify the relevant model
 objects rather than being counted as new paper theorems. Example 6.6 is deferred,
 and the problems and conjecture remain explicitly open. The selected statements,
-including the five remarks and nine additional results, give 118 Comparator targets.
+including the five remarks and eleven additional results, give 120 Comparator targets.
 
 `Standard/Graph` was added during this audit: it proves Example 4.5's exact
 draw-pair relation for `A_n` and its fixed class two for every positive order,
@@ -451,7 +466,8 @@ computations into proved results.
 
 **Problems 6.1 and 6.4** ask for general classifications and counts beyond the
 proved regimes; they are open questions in the paper, not missing proofs of
-claimed results. `Minimal/Next` only settles the nonminimal part at `m=n+2`.
+claimed results. The arbitrary-meld-count case at order one has the explicit
+criterion and count above. `Minimal/Next` settles the nonminimal part at `m=n+2`.
 
 The exact general `M(n)` formula remains a conjecture in the paper. It is not
 assumed as an axiom or used to prove any part of this development. Existing
@@ -475,7 +491,7 @@ The audit covers the foundational results and the complete explicit example.
 Allowed axioms are `propext`, `Classical.choice`, and `Quot.sound`. There are no
 placeholder proofs or uses of `native_decide` in the library. `Audit.lean`
 and `scripts/check_axioms.py` enforce the standard axiom set in CI. The new
-`ComparatorChallenges` target checks 118 statements against a model importing
+`ComparatorChallenges` target checks 120 statements against a model importing
 only shared foundational project definitions. Derived model objects have their
 own namespace and definitions; only the solution imports the library and proves
 the required bridges. Run Comparator with its sandbox enabled. Its intentional

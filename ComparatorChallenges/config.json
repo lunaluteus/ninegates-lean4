@@ -119,7 +119,9 @@
     "ComparatorChallenges.remark_5_10_partition",
     "ComparatorChallenges.next_live_nonminimal_classification",
     "ComparatorChallenges.next_live_nonminimal_cardinality",
-    "ComparatorChallenges.sharpness_minimal_live"
+    "ComparatorChallenges.sharpness_minimal_live",
+    "ComparatorChallenges.orderOne_full_criterion",
+    "ComparatorChallenges.orderOne_full_cardinality"
   ],
   "permitted_axioms": [
     "propext",

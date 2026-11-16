@@ -36,11 +36,8 @@ lemma fixedClass_reverse_of_size (count : (size c : ZMod 3) = 1) :
   rw [show (3 : ZMod 3) = 0 from ZMod.natCast_self 3, zero_mul, zero_add, count, one_mul]
 
 lemma IsFullWait.fixedClass_reverse (h : IsFullWait m c) :
-    fixedClass (VirtualHand.reverse c) = 1 - fixedClass c := by
-  apply fixedClass_reverse_of_size
-  rw [h.2.1]
-  push_cast
-  rw [show (3 : ZMod 3) = 0 from ZMod.natCast_self 3, zero_mul, zero_add]
+    fixedClass (VirtualHand.reverse c) = 1 - fixedClass c :=
+  fixedClass_reverse_of_size h.size_cast
 
 lemma IsLiveFullWait.reverse {cap : ℕ} (h : IsLiveFullWait cap m c) :
     IsLiveFullWait cap m (VirtualHand.reverse c) := by

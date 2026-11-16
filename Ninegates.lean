@@ -23,6 +23,7 @@ public import Ninegates.Standard.Graph
 public import Ninegates.Standard.Classes
 public import Ninegates.Cardinality
 public import Ninegates.Numerical.Taiwanese
+public import Ninegates.Numerical.OrderOne
 public import Ninegates.Minimal.LiveNext
 public import Ninegates.Wait.Abundance
 public import Ninegates.Wait.Add

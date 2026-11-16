@@ -15,6 +15,25 @@ namespace Mahjong.VirtualHand
 
 variable {n : ℕ}
 
+lemma virtuallyMeldable_draw_iff {c : VirtualHand n}
+    (count : (size c : ZMod 3) = 1) (i j : Rank n) :
+    VirtuallyMeldable (c + single i - pair j) ↔
+      rankClass i + rankClass j = -(rankSum c : ZMod 3) := by
+  rw [virtuallyMeldable_iff_size_rankSum]
+  simp only [map_sub, map_add, size_single, size_pair, rankSum_single, rankSum_pair]
+  push_cast
+  rw [count]
+  change (1 + 1 - 2 = (0 : ZMod 3) ∧
+    (rankSum c : ZMod 3) + rankClass i - 2 * rankClass j = 0) ↔ _
+  · have three : (3 : ZMod 3) * rankClass j = 0 := by
+      rw [show (3 : ZMod 3) = 0 from ZMod.natCast_self 3, zero_mul]
+    constructor
+    · rintro ⟨_, weighted⟩
+      linear_combination weighted + three
+    · intro congruent
+      refine ⟨by norm_num, ?_⟩
+      linear_combination congruent - three
+
 /-- Equal size residues leave the fixed class as the only obstruction to
 virtual meldability of a difference. -/
 lemma virtuallyMeldable_sub_iff_fixedClass_eq {c d : VirtualHand n}

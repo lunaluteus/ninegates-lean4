@@ -9,6 +9,7 @@ public import Ninegates.Hand.Defs
 public import Ninegates.Meldable.Defs
 public import Ninegates.Wait.Defs
 public import Ninegates.Minimal.Defs
+public import Mathlib.Data.Nat.Choose.Basic
 public import Mathlib.Order.Lattice.Nat
 public import Mathlib.SetTheory.Cardinal.Finite
 

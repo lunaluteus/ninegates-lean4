@@ -10,6 +10,7 @@ public import Ninegates.Hand.OrderOne
 public import Ninegates.Meldable.OrderOne
 public import Ninegates.Meldable.Virtual
 public import Ninegates.Standard.One
+public import Ninegates.Wait.OrderOne
 
 /-! Every order-one full wait contains one of the six smallest full waits,
 with a meldable difference. Hence these are exactly the minimal ones. -/
@@ -50,22 +51,17 @@ private lemma base_class (i : Rank 1) (high : Bool) : fixedClass (base i high) =
 lemma exists_standard_le {m : ℕ} {c : VirtualHand 1} (full : IsFullWait m c) :
     ∃ k : Fin 6, Standard.One k ≤ c ∧ fixedClass (Standard.One k) = fixedClass c := by
   obtain ⟨i, fixed_i⟩ := exists_rankClass (n := 1) (by decide) (fixedClass c)
+  have threshold := ((full_iff c).mp full).2
   have fixed_lower : 1 ≤ c i := by
-    have lower := full.fixed_class_size
-    rw [← fixed_i, classSize_orderOne] at lower
-    exact lower
-  have count : (size c : ZMod 3) = 1 := by
-    rw [full.2.1]
-    push_cast
-    rw [show (3 : ZMod 3) = 0 from ZMod.natCast_self 3, zero_mul, zero_add]
+    simpa only [pairThreshold, fixed_i, ite_true] using threshold i
+  have count := full.size_cast
   have other {j : Rank 1} (different : j ≠ i) : 2 ≤ c j ∧ ((c j : ZMod 3) + 1 = c i) := by
     have nonfixed : rankClass j ≠ fixedClass c := by
       intro same
-      rw [← fixed_i, rankClass_eq_iff] at same
-      exact different (Fin.ext (by have := j.isLt; have := i.isLt; omega))
-    have lower := full.nonfixed_class_size (rankClass j) nonfixed
+      exact different (rankClass_orderOne_injective (same.trans fixed_i.symm))
+    have lower : 2 ≤ c j := by
+      simpa only [pairThreshold, ite_eq_right nonfixed] using threshold j
     have residue := classSize_nonfixed_congruence count (rankClass j) nonfixed
-    rw [classSize_orderOne] at lower
     rw [classSize_orderOne, ← fixed_i, classSize_orderOne] at residue
     exact ⟨lower, residue⟩
   let high : Bool := decide (c i % 3 = 0)

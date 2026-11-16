@@ -925,4 +925,18 @@ theorem sharpness_minimal_live :
         IsLiveFullWait 4 (n + 2) (Spec.ClassBoundSharpness.hand n) := by
   sorry
 
+/-! Order-one full waits for arbitrary meld count: a further structural consequence.
+The subtraction in the cardinality formula is natural subtraction; the count
+is zero for m<=1 and the usual binomial coefficient for m>=2. -/
+
+theorem orderOne_full_criterion :
+    ∀ {m : ℕ} (c : VirtualHand 1), IsFullWait m c ↔
+      size c = 3 * (m : ℤ) + 1 ∧
+        ∀ i : Rank 1, (if rankClass i = Spec.fixedClass c then (1 : ℤ) else 2) ≤ c i := by
+  sorry
+
+theorem orderOne_full_cardinality :
+    ∀ m : ℕ, Nat.card {c : VirtualHand 1 // IsFullWait m c} = Nat.choose (3 * m - 2) 2 := by
+  sorry
+
 end ComparatorChallenges

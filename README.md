@@ -70,6 +70,14 @@ six full-sided, minimal, and live waits at order one and meld count two.
 There are no full-sided waits for `m<=n`, and no other minimal waits at order one.
 The eight named families are proved distinct at every `n>=2`.
 
+[`Wait/OrderOne`](Ninegates/Wait/OrderOne.lean) also characterizes order-one
+full waits for every meld count: the required size together with at least
+one tile at the fixed rank and two at each other rank is sufficient and
+necessary. [`Numerical/OrderOne`](Ninegates/Numerical/OrderOne.lean) gives the
+exact count `choose(3*m-2,2)` for `m>=2`, and zero for `m<=1`, with unrestricted
+multiplicities. A class-dependent five-tile translation gives a bijection
+with the nonnegative triples summing to `3*m-4`; stars and bars supplies the count.
+
 [`Minimal/Next`](Ninegates/Minimal/Next.lean) characterizes every nonminimal
 full-sided `(n,n+2)` wait for `n>=2` as a standard hand plus one elementary meld.
 [`Numerical/Taiwanese`](Ninegates/Numerical/Taiwanese.lean) consequently proves
@@ -139,7 +147,7 @@ The challenge and solution list all **43 numbered items in published order**,
 including definitions, examples, open problems, and the conjecture. Split
 statements stay together under their paper number. The public version, links,
 source hashes, declaration mapping, and gaps are recorded in
-[`paper.json`](ComparatorChallenges/paper.json). There are **118 verified
+[`paper.json`](ComparatorChallenges/paper.json). There are **120 verified
 Comparator targets**, including additional unnumbered constructions and bounds.
 
 ```sh
@@ -183,7 +191,7 @@ for the meaning and trust assumptions of these checks.
 | `Standard/` | Eight named families and the six order-one hands |
 | `Classification.lean` | Classification and live uniqueness |
 | `Minimal/` | Arbitrary removals, maximal meld counts, lower-bound families |
-| `Numerical/` | Finite counts following structural reductions |
+| `Numerical/` | Exact counts from structural bijections or finite reductions |
 | `*Examples.lean` | Explicit examples checking boundaries and hypotheses |
 
 We aim for readable structural arguments and reusable local lemmas. Follow the

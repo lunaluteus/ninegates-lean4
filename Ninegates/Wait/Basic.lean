@@ -16,6 +16,15 @@ namespace Mahjong.VirtualHand
 
 variable {n m cap : ℕ} {c : VirtualHand n} {i j : Rank n}
 
+lemma size_cast_of_wait_size (count : size c = 3 * (m : ℤ) + 1) :
+    (size c : ZMod 3) = 1 := by
+  rw [count]
+  push_cast
+  rw [show (3 : ZMod 3) = 0 from ZMod.natCast_self 3, zero_mul, zero_add]
+
+lemma IsFullWait.size_cast (full : IsFullWait m c) : (size c : ZMod 3) = 1 :=
+  size_cast_of_wait_size full.2.1
+
 lemma Winning.nonnegative (h : Winning m c) : Nonnegative c := by
   obtain ⟨j, remainder⟩ := h.2
   exact (nonnegative_pair j).trans (sub_nonneg.mp remainder.nonnegative)
