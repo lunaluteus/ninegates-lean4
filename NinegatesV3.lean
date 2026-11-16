@@ -17,6 +17,7 @@ public import Ninegates.V3.Wait.ClassSizes
 public import Ninegates.V3.Wait.PillarRemainder
 public import Ninegates.V3.Wait.RequiredOne
 public import Ninegates.V3.Wait.Reverse
+public import Ninegates.V3.Standard.Valid
 public import Ninegates.V3.Examples
 public import Ninegates.V3.MovingExamples
 public import Ninegates.V3.GraphExamples

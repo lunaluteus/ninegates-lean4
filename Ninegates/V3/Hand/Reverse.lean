@@ -20,6 +20,12 @@ variable {n : ℕ}
 lemma Nonnegative.reverse {c : VirtualHand n} (h : Nonnegative c) : Nonnegative (reverse c) :=
   fun i ↦ h i.rev
 
+lemma Bounded.reverse {cap : ℕ} {c : VirtualHand n} (h : Bounded cap c) :
+    Bounded cap (VirtualHand.reverse c) := ⟨h.1.reverse, fun i ↦ h.2 i.rev⟩
+
+lemma Valid.reverse {c : VirtualHand n} (h : Valid c) : Valid (VirtualHand.reverse c) :=
+  Bounded.reverse h
+
 @[simp]
 lemma size_reverse (c : VirtualHand n) : size (reverse c) = size c := by
   change (∑ i : Rank n, c i.rev) = ∑ i, c i

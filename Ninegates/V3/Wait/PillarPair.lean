@@ -88,15 +88,19 @@ lemma twoPair_iff (pillars : Pillars c p q) (order : 2 ≤ n) (full : IsFullWait
 
 end Pillars
 
-lemma IsFullWait.exists_pillars (order : 2 ≤ n) (h : IsFullWait (n + 1) c) :
-    ∃ p q : Rank n, Pillars c p q := by
-  let r := fixedClass c + 1
-  have nonfixed : r ≠ fixedClass c := by dsimp [r]; simp
+lemma IsFullWait.exists_pillars_class (order : 2 ≤ n) (h : IsFullWait (n + 1) c)
+    (r : ZMod 3) (nonfixed : r ≠ fixedClass c) :
+    ∃ p q : Rank n, Pillars c p q ∧ rankClass p = r := by
   obtain ⟨p, class_p, pillar_p, _⟩ := h.exists_pillar order r nonfixed
   have other_nonfixed : pairedClass c r ≠ fixedClass c := by simpa using nonfixed
   obtain ⟨q, class_q, pillar_q, _⟩ := h.exists_pillar order _ other_nonfixed
-  refine ⟨p, q, ⟨by rwa [class_p], ?_, pillar_p, pillar_q⟩⟩
+  refine ⟨p, q, ⟨by rwa [class_p], ?_, pillar_p, pillar_q⟩, class_p⟩
   simpa only [class_p] using class_q
+
+lemma IsFullWait.exists_pillars (order : 2 ≤ n) (h : IsFullWait (n + 1) c) :
+    ∃ p q : Rank n, Pillars c p q := by
+  obtain ⟨p, q, pillars, _⟩ := h.exists_pillars_class order (fixedClass c + 1) (by simp)
+  exact ⟨p, q, pillars⟩
 
 lemma IsFullWait.exists_unique_twoPair_succ (order : 2 ≤ n) (h : IsFullWait (n + 1) c) :
     ∃ p q : Rank n, Pillars c p q ∧ TwoPair c p q ∧

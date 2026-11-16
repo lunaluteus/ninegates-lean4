@@ -42,4 +42,14 @@ lemma IsFullWait.fixedClass_reverse (h : IsFullWait m c) :
   push_cast
   rw [show (3 : ZMod 3) = 0 from ZMod.natCast_self 3, zero_mul, zero_add]
 
+lemma IsLiveFullWait.reverse {cap : ℕ} (h : IsLiveFullWait cap m c) :
+    IsLiveFullWait cap m (VirtualHand.reverse c) := by
+  rw [isLiveFullWait_iff] at h ⊢
+  exact ⟨h.1.reverse, fun i ↦ h.2 i.rev⟩
+
+@[simp]
+lemma isLiveFullWait_reverse_iff {cap : ℕ} :
+    IsLiveFullWait cap m (reverse c) ↔ IsLiveFullWait cap m c :=
+  ⟨fun h ↦ by simpa using h.reverse, IsLiveFullWait.reverse⟩
+
 end Mahjong.V3.VirtualHand
