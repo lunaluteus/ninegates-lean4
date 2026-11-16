@@ -25,6 +25,8 @@ public import Ninegates.V3.Minimal.Double.Minimal
 public import Ninegates.V3.Minimal.Criterion
 public import Ninegates.V3.Minimal.Alternating.Size
 public import Ninegates.V3.Minimal.Alternating.Prefix
+public import Ninegates.V3.Minimal.Alternating.Full
+public import Ninegates.V3.Minimal.Alternating.Scan
 public import Ninegates.V3.Examples
 public import Ninegates.V3.MovingExamples
 public import Ninegates.V3.GraphExamples

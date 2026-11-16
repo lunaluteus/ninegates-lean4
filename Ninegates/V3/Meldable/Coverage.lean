@@ -5,7 +5,7 @@ Authors: Luna Luteus
 -/
 module
 
-public import Ninegates.V3.Meldable.Canonical
+public import Ninegates.V3.Meldable.Scan
 
 /-! A boundary-sensitive bound on the tiles used by canonical sequences.
 This is the threshold hand in the paper's abundance proposition. -/
@@ -82,6 +82,18 @@ lemma VirtuallyMeldable.meldable_of_ge_threshold {c : VirtualHand n}
   rw [← equal, Placement.toHand_eq] at lower
   simp only [Pi.add_apply, Pi.smul_apply, smul_eq_mul] at lower
   have triplet_bound : -2 ≤ 3 * p.tripNum i := by linarith [upper, lower]
+  omega
+
+/-- The abundance estimate also applies to a single coordinate. -/
+lemma VirtuallyMeldable.canonicalTriplet_nonnegative_of_threshold {c : VirtualHand n}
+    (virtual : VirtuallyMeldable c) (i : Rank n) (large : abundanceThreshold i - 2 ≤ c i) :
+    0 ≤ canonicalTriplet c i := by
+  obtain ⟨p, ⟨canonical, equal⟩, _⟩ := virtual.unique_canonical
+  rw [← equal, canonical.canonicalTriplet_eq]
+  have upper := canonical.sequenceHand_le_threshold i
+  rw [← equal, Placement.toHand_eq] at large
+  simp only [Pi.add_apply, Pi.smul_apply, smul_eq_mul] at large
+  have triplet_bound : -2 ≤ 3 * p.tripNum i := by linarith [upper, large]
   omega
 
 end Mahjong.V3.VirtualHand

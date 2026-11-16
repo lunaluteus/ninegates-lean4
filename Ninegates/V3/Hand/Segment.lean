@@ -37,6 +37,12 @@ lemma size_singleAt {k : ℕ} (bound : k < 3 * n) : size (singleAt (n := n) k) =
     singleAt_eq_single (⟨k, bound⟩ : Rank n)]
   exact size_single _
 
+lemma rankSum_singleAt {k : ℕ} (bound : k < 3 * n) :
+    rankSum (singleAt (n := n) k) = (k : ℤ) + 1 := by
+  rw [show singleAt k = single (⟨k, bound⟩ : Rank n) from
+    singleAt_eq_single (⟨k, bound⟩ : Rank n), rankSum_single]
+  rfl
+
 lemma reverse_singleAt {k : ℕ} (bound : k < 3 * n) :
     reverse (singleAt (n := n) k) = singleAt (3 * n - 1 - k) := by
   ext i
